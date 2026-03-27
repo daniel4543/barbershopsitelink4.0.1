@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>💈 Haimov Barbershop</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root{
+  --c1:#1C1C1E;--c2:#3A3A3C;--c3:#636366;--c4:#AEAEB2;
+  --blue:#007AFF;--blue2:#0A84FF;--green:#34C759;--red:#FF3B30;--orange:#FF9500;--purple:#AF52DE;
+  --glass-bg:rgba(255,255,255,0.52);
+  --glass-border:rgba(255,255,255,0.82);
+  --glass-shadow:0 8px 32px rgba(80,100,200,0.18),0 1.5px 0 rgba(255,255,255,0.9) inset;
+  --glass-blur:blur(28px) saturate(2.2) brightness(1.06);
+  --chip-bg:rgba(255,255,255,0.38);
+  --chip-border:rgba(255,255,255,0.65);
+  --input-bg:rgba(255,255,255,0.3);
+  --input-border:rgba(255,255,255,0.6);
+  --body-bg:linear-gradient(135deg,#b8ccff 0%,#d8c8ff 40%,#ffd0c0 100%);
+}
+[data-theme=dark]{
+  --c1:#FFFFFF;--c2:#F2F2F7;--c3:#EBEBF5;--c4:#8E8E93;
+  --blue:#409CFF;--blue2:#0A84FF;--green:#30D158;--red:#FF453A;--orange:#FF9F0A;--purple:#BF5AF2;
+  --glass-bg:rgba(20,22,40,0.62);
+  --glass-border:rgba(255,255,255,0.14);
+  --glass-shadow:0 8px 40px rgba(0,0,0,0.55),0 1.5px 0 rgba(255,255,255,0.08) inset;
+  --glass-blur:blur(28px) saturate(1.8) brightness(0.88);
+  --chip-bg:rgba(255,255,255,0.07);
+  --chip-border:rgba(255,255,255,0.14);
+  --input-bg:rgba(255,255,255,0.07);
+  --input-border:rgba(255,255,255,0.14);
+  --body-bg:linear-gradient(135deg,#060b16 0%,#0a0616 50%,#160608 100%);
+}
+
+/* ═══ RESET ═══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
+/* ═══ BODY ═══ */
+body{
+  font-family:'Heebo',-apple-system,sans-serif;
+  min-height:100vh;
+  background:var(--body-bg);
+  display:flex;justify-content:center;align-items:flex-start;
+  padding:20px 16px 80px;overflow-x:hidden;
+  color:var(--c1);
+}
+
+/* ═══ ORBS ═══ */
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;}
+.orb1{width:420px;height:420px;background:radial-gradient(circle,rgba(110,155,255,.72) 0%,rgba(80,120,255,0) 70%);top:-120px;right:-100px;animation:o1 9s ease-in-out infinite alternate;}
+.orb2{width:320px;height:320px;background:radial-gradient(circle,rgba(170,100,255,.65) 0%,rgba(130,60,240,0) 70%);bottom:20px;left:-80px;animation:o2 12s ease-in-out infinite alternate;}
+.orb3{width:240px;height:240px;background:radial-gradient(circle,rgba(255,170,100,.6) 0%,rgba(255,120,50,0) 70%);top:42%;left:55%;animation:o3 7s ease-in-out infinite alternate;}
+[data-theme=dark] .orb1{background:radial-gradient(circle,rgba(40,90,220,.85) 0%,rgba(20,60,180,0) 70%);}
+[data-theme=dark] .orb2{background:radial-gradient(circle,rgba(100,30,200,.78) 0%,rgba(70,10,160,0) 70%);}
+[data-theme=dark] .orb3{background:radial-gradient(circle,rgba(200,55,30,.7) 0%,rgba(160,30,10,0) 70%);}
+@keyframes o1{to{transform:translate(-60px,70px) scale(1.2)}}
+@keyframes o2{to{transform:translate(50px,-60px) scale(.8)}}
+@keyframes o3{to{transform:translate(-30px,40px) scale(1.15)}}
+
+/* ═══ GLASS ═══ */
+.glass{
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+}
+
+/* ═══ THEME TOGGLE PILL (smooth slider) ═══ */
+.theme-pill{
+  position:fixed;top:16px;left:16px;z-index:1000;
+  display:flex;align-items:center;gap:0;
+  padding:4px;border-radius:99px;
+  width:76px;height:40px;
+  position:fixed;
+}
+.theme-track{
+  position:relative;width:76px;height:40px;border-radius:99px;
+  padding:4px;display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;
+}
+.theme-knob{
+  position:absolute;top:4px;left:4px;
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,#FFD60A,#FF9500);
+  box-shadow:0 2px 8px rgba(255,149,0,.4);
+  transition:transform .35s cubic-bezier(.34,1.4,.64,1),background .35s ease;
+  z-index:1;display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+[data-theme=dark] .theme-knob{
+  transform:translateX(36px);
+  background:linear-gradient(135deg,#3a3a6a,#1a1a3a);
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+.theme-icon-left,.theme-icon-right{font-size:14px;position:relative;z-index:0;line-height:1;padding:0 4px;opacity:.6;}
+[data-theme=dark] .theme-icon-left{opacity:.3;}
+[data-theme=dark] .theme-icon-right{opacity:.9;}
+
+/* ═══ LAYOUT ═══ */
+.app{position:relative;z-index:1;width:100%;max-width:440px;}
+.screen{display:none;}
+.screen.active{display:block;animation:scIn .4s cubic-bezier(.34,1.2,.64,1) both;}
+@keyframes scIn{from{opacity:0;transform:scale(.95) translateY(16px)}to{opacity:1;transform:none}}
+
+/* BACK BTN */
+.back-btn{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:7px 16px 7px 12px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:600;color:var(--blue);cursor:pointer;margin-bottom:14px;transition:all .15s;border:none;background:none;}
+.back-btn:active{transform:scale(.95);}
+.back-arrow{font-size:18px;line-height:1;}
+
+/* TOAST */
+#toast{position:fixed;bottom:34px;left:50%;transform:translateX(-50%) translateY(80px);z-index:9999;opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s;}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast-pill{background:rgba(18,18,22,.93);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-radius:99px;padding:12px 22px;display:flex;align-items:center;gap:9px;box-shadow:0 8px 40px rgba(0,0,0,.4);min-width:160px;max-width:300px;border:1px solid rgba(255,255,255,.12);}
+.toast-pill span{font-size:13px;font-weight:600;color:#fff;}
+
+/* ═══ HERO ═══ */
+.hero-card{border-radius:28px;padding:28px 22px;margin-bottom:14px;background:linear-gradient(145deg,rgba(26,111,255,.88),rgba(88,86,214,.88));border:1px solid rgba(255,255,255,.3);box-shadow:0 16px 60px rgba(0,80,200,.35);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);text-align:center;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:-60%;left:-20%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(255,255,255,.15) 0%,transparent 65%);pointer-events:none;}
+.hero-logo{width:80px;height:80px;border-radius:22px;margin:0 auto 16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.hero-logo img,.hero-logo-default{width:100%;height:100%;}
+.hero-logo-default{background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:36px;}
+.hero-title{font-size:28px;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:6px;}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.8);margin-bottom:20px;line-height:1.5;}
+
+/* LOCATION ROW in hero */
+.hero-location{display:flex;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,.85);font-size:13px;font-weight:600;margin-bottom:12px;}
+
+/* SERVICES */
+.service-card{border-radius:20px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.svc-ic{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.svc-info{flex:1;margin:0 12px;}
+.svc-name{font-size:15px;font-weight:700;color:var(--c1);}
+.svc-desc{font-size:12px;color:var(--c3);margin-top:2px;}
+.svc-price{font-size:18px;font-weight:900;color:var(--blue);}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:8px 14px 14px;}
+.gallery-item{border-radius:16px;overflow:hidden;aspect-ratio:1;background:var(--chip-bg);display:flex;align-items:center;justify-content:center;font-size:32px;border:1px solid var(--chip-border);position:relative;}
+.gallery-item img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.gallery-item .gal-del{position:absolute;top:4px;left:4px;background:rgba(255,59,48,.85);border:none;border-radius:50%;width:24px;height:24px;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;}
+
+/* REVIEWS */
+.review-card{border-radius:20px;padding:16px;margin-bottom:10px;}
+.review-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.review-avatar{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0A84FF,#5856d6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:800;flex-shrink:0;}
+.review-name{font-size:14px;font-weight:700;color:var(--c1);}
+.review-date{font-size:11px;color:var(--c4);}
+.review-text{font-size:14px;color:var(--c2);line-height:1.5;}
+.review-stars-input{display:flex;gap:6px;margin:10px 0;justify-content:center;}
+.star-btn{font-size:28px;cursor:pointer;transition:transform .15s;background:none;border:none;line-height:1;}
+
+/* NAV TABS */
+.pub-nav{display:flex;gap:6px;overflow-x:auto;padding:4px 0 12px;scrollbar-width:none;margin-bottom:4px;}
+.pub-nav::-webkit-scrollbar{display:none;}
+.pub-tab{flex-shrink:0;padding:7px 14px;border-radius:99px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--chip-border);font-family:'Heebo',sans-serif;transition:all .2s;color:var(--c3);background:var(--chip-bg);}
+.pub-tab.active{background:linear-gradient(135deg,#0A84FF,#007AFF);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(0,122,255,.35);}
+.pub-section{display:none;}
+.pub-section.active{display:block;animation:scIn .3s ease both;}
+
+/* ═══ AUTH / SETTINGS ═══ */
+.auth-wrap{min-height:calc(100vh - 80px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0;}
+.auth-logo{width:80px;height:80px;border-radius:22px;margin:0 auto 20px;overflow:hidden;}
+.auth-title{font-size:26px;font-weight:900;color:var(--c1);margin-bottom:4px;text-align:center;}
+.auth-sub{font-size:14px;color:var(--c3);margin-bottom:24px;text-align:center;}
+.auth-card{border-radius:28px;overflow:hidden;width:100%;margin-bottom:14px;}
+.auth-row{display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(120,120,128,.1);gap:12px;}
+[data-theme=dark] .auth-row{border-bottom-color:rgba(255,255,255,.07);}
+.auth-row:last-child{border-bottom:none;}
+.auth-icon{font-size:18px;flex-shrink:0;opacity:.75;}
+.auth-input{flex:1;background:transparent;border:none;outline:none;font-family:'Heebo',sans-serif;font-size:16px;font-weight:500;color:var(--c1);text-align:right;padding:15px 0;}
+.auth-input::placeholder{color:var(--c4);}
+.lang-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.lang-btn{flex:1;min-width:60px;padding:8px 6px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--chip-border);font-family:'Heebo',sans-serif;background:var(--chip-bg);color:var(--c3);transition:all .2s;text-align:center;}
+.lang-btn.active{background:linear-gradient(135deg,#0A84FF,#007AFF);color:#fff;border-color:transparent;}
+
+/* SETTINGS */
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(120,120,128,.08);}
+[data-theme=dark] .setting-row{border-bottom-color:rgba(255,255,255,.06);}
+.setting-row:last-child{border-bottom:none;}
+.setting-label{font-size:15px;font-weight:600;color:var(--c1);}
+.setting-sub{font-size:12px;color:var(--c3);margin-top:2px;}
+/* iOS-style toggle */
+.ios-toggle{position:relative;width:51px;height:31px;flex-shrink:0;}
+.ios-toggle input{opacity:0;width:0;height:0;position:absolute;}
+.ios-toggle-track{position:absolute;inset:0;border-radius:99px;background:#E5E5EA;transition:background .25s ease;cursor:pointer;}
+[data-theme=dark] .ios-toggle-track{background:#3A3A3C;}
+.ios-toggle input:checked + .ios-toggle-track{background:#34C759;}
+.ios-toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.34,1.4,.64,1);}
+.ios-toggle input:checked + .ios-toggle-track::after{transform:translateX(20px);}
+
+/* ═══ REGISTER ═══ */
+.reg-steps{display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
+.reg-step{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;background:rgba(120,120,128,.12);border:2px solid rgba(120,120,128,.2);color:var(--c4);transition:all .35s cubic-bezier(.34,1.56,.64,1);}
+.reg-step.active{background:linear-gradient(135deg,#0A84FF,#007AFF);border-color:rgba(0,122,255,.4);color:#fff;box-shadow:0 4px 16px rgba(0,122,255,.4);}
+.reg-step.done{background:linear-gradient(135deg,#30D158,#34C759);border-color:rgba(52,199,89,.4);color:#fff;box-shadow:0 4px 16px rgba(52,199,89,.35);}
+.reg-step-line{flex:1;height:2px;max-width:60px;background:rgba(120,120,128,.15);transition:background .4s;}
+.reg-step-line.done{background:linear-gradient(90deg,#34C759,#0A84FF);}
+.reg-card{border-radius:28px;overflow:hidden;margin-bottom:14px;}
+.reg-row{display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(120,120,128,.1);gap:12px;}
+[data-theme=dark] .reg-row{border-bottom-color:rgba(255,255,255,.07);}
+.reg-row:last-child{border-bottom:none;}
+.reg-icon{font-size:18px;flex-shrink:0;opacity:.75;}
+.reg-input{flex:1;background:transparent;border:none;outline:none;font-family:'Heebo',sans-serif;font-size:16px;font-weight:500;color:var(--c1);text-align:right;padding:15px 0;}
+.reg-input::placeholder{color:var(--c4);}
+.reg-terms{border-radius:18px;padding:14px 16px;margin-bottom:14px;}
+.reg-terms-label{display:flex;align-items:flex-start;gap:12px;cursor:pointer;}
+.reg-terms input[type=checkbox]{display:none;}
+.reg-checkbox-custom{width:22px;height:22px;min-width:22px;border-radius:7px;background:rgba(120,120,128,.1);border:2px solid rgba(120,120,128,.25);display:flex;align-items:center;justify-content:center;transition:all .2s cubic-bezier(.34,1.56,.64,1);margin-top:1px;}
+.reg-terms input:checked + .reg-checkbox-custom{background:linear-gradient(135deg,#30D158,#34C759);border-color:rgba(52,199,89,.5);box-shadow:0 2px 10px rgba(52,199,89,.4);}
+.reg-terms input:checked + .reg-checkbox-custom::after{content:'✓';font-size:13px;font-weight:900;color:#fff;}
+.reg-terms-text{font-size:13px;color:var(--c3);line-height:1.5;}
+
+/* ═══ BOOKING ═══ */
+.app-header{border-radius:28px;padding:20px 22px 18px;margin-bottom:14px;background:linear-gradient(145deg,rgba(26,111,255,.88),rgba(88,86,214,.88));border:1px solid rgba(255,255,255,.3);box-shadow:0 16px 60px rgba(0,80,200,.35);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);position:relative;overflow:hidden;}
+.app-header::before{content:'';position:absolute;top:-50%;left:-30%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(255,255,255,.18) 0%,transparent 65%);pointer-events:none;}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;position:relative;}
+.hdr-logo{width:44px;height:44px;border-radius:13px;overflow:hidden;flex-shrink:0;}
+.hdr-logo-default{width:100%;height:100%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.hdr-title{font-size:24px;font-weight:900;color:#fff;letter-spacing:-.5px;}
+.hdr-sub{font-size:13px;color:rgba(255,255,255,.8);margin-top:3px;}
+.user-row{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;margin-bottom:14px;border-radius:28px;}
+.user-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#007AFF,#0A84FF);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.4);}
+.user-name{font-size:15px;font-weight:700;color:var(--c1);}
+.user-meta{font-size:12px;color:var(--c3);}
+
+/* CALENDAR DATE PICKER */
+.cal-picker{padding:10px 14px 14px;}
+.cal-picker-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.cal-picker-month{font-size:16px;font-weight:800;color:var(--c1);}
+.cal-picker-nav{background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:10px;padding:5px 12px;font-size:14px;font-weight:700;color:var(--c1);cursor:pointer;font-family:'Heebo',sans-serif;}
+.cal-picker-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-picker-dayname{text-align:center;font-size:10px;font-weight:700;color:var(--c4);padding:4px 0;}
+.cal-picker-day{aspect-ratio:1;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:13px;font-weight:700;color:var(--c3);cursor:pointer;transition:all .18s;position:relative;}
+.cal-picker-day.has-slots{color:var(--c1);background:var(--chip-bg);border:1px solid var(--chip-border);}
+.cal-picker-day.has-slots:hover{background:rgba(0,122,255,.15);border-color:rgba(0,122,255,.4);}
+.cal-picker-day.selected{background:rgba(0,122,255,.2);border:2px solid rgba(0,122,255,.55);color:var(--blue);box-shadow:0 3px 12px rgba(0,122,255,.25);}
+.cal-picker-day.today.has-slots{border-color:rgba(0,122,255,.5);}
+.cal-day-dot{width:4px;height:4px;border-radius:50%;background:var(--green);margin-top:2px;}
+.cal-picker-day.selected .cal-day-dot{background:var(--blue);}
+
+/* SLOTS */
+.slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px;}
+.slot-btn{background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:20px;padding:15px 6px;cursor:pointer;text-align:center;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);transition:all .22s cubic-bezier(.34,1.56,.64,1);}
+.slot-btn:hover{background:rgba(0,122,255,.18);border-color:rgba(0,122,255,.45);transform:translateY(-2px) scale(1.04);}
+.slot-btn:active{transform:scale(.93);}
+.slot-time{font-size:19px;font-weight:800;color:var(--c1);letter-spacing:-.3px;}
+.slot-sub{font-size:10px;font-weight:600;color:var(--c4);margin-top:3px;}
+.no-slots{text-align:center;padding:28px 0;color:var(--c4);font-size:14px;}
+.no-slots .e{font-size:32px;margin-bottom:8px;}
+
+/* SUCCESS / COUNTDOWN */
+.success-banner{border-radius:28px;padding:16px 18px;margin-bottom:14px;display:none;align-items:center;gap:14px;background:rgba(52,199,89,.12);border:1px solid rgba(52,199,89,.3);animation:popIn .45s cubic-bezier(.34,1.56,.64,1);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);}
+.succ-ic{width:42px;height:42px;border-radius:13px;background:#34C759;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.countdown-banner{border-radius:28px;padding:16px 18px;margin-bottom:14px;display:none;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(255,149,0,.18),rgba(255,59,48,.1));border:1.5px solid rgba(255,149,0,.45);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);}
+.countdown-banner.active{display:flex;animation:popIn .3s ease;}
+.cd-icon{width:46px;height:46px;min-width:46px;border-radius:14px;background:linear-gradient(135deg,#FF9500,#FF3B30);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.cd-time{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FF9500,#FF3B30);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-variant-numeric:tabular-nums;}
+.cd-label{font-size:12px;color:var(--c3);font-weight:600;}
+.cd-info{font-size:13px;font-weight:700;color:var(--c1);margin-bottom:2px;}
+
+/* BUTTONS */
+.btn-primary{width:100%;background:linear-gradient(180deg,#0A84FF,#007AFF);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:15px 20px;font-family:'Heebo',sans-serif;font-size:16px;font-weight:700;color:#fff;cursor:pointer;box-shadow:0 6px 28px rgba(0,122,255,.45);transition:all .15s;}
+.btn-primary:active{transform:scale(.97);}
+.btn-primary:disabled{opacity:.45;pointer-events:none;}
+.btn-secondary{width:100%;background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:20px;padding:13px 20px;font-family:'Heebo',sans-serif;font-size:15px;font-weight:600;color:var(--blue);cursor:pointer;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);transition:all .15s;}
+.btn-secondary:active{transform:scale(.97);}
+.btn-ghost{background:none;border:none;font-family:'Heebo',sans-serif;font-size:13px;font-weight:600;color:var(--red);cursor:pointer;padding:5px 10px;border-radius:8px;transition:background .15s;}
+.btn-danger{background:linear-gradient(135deg,#FF453A,#FF3B30);border:none;border-radius:14px;padding:10px 16px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(255,59,48,.35);transition:all .12s;}
+.btn-danger:active{transform:scale(.95);}
+
+/* GLASS CARD */
+.glass-card{border-radius:28px;overflow:hidden;margin-bottom:14px;}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 8px;}
+.sec-title{font-size:15px;font-weight:700;color:var(--c1);}
+.sec-badge{font-size:12px;color:var(--c3);font-weight:600;background:rgba(120,120,128,.1);padding:3px 11px;border-radius:20px;border:1px solid rgba(120,120,128,.15);}
+.no-item{text-align:center;padding:20px;color:var(--c4);font-size:13px;}
+
+/* ═══ ADMIN ═══ */
+.admin-header{border-radius:28px;padding:20px 22px 18px;margin-bottom:14px;background:linear-gradient(145deg,rgba(255,149,0,.9),rgba(255,59,48,.9));border:1px solid rgba(255,255,255,.3);box-shadow:0 16px 60px rgba(200,60,0,.35);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);position:relative;overflow:hidden;}
+.admin-header::before{content:'';position:absolute;top:-50%;left:-30%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(255,255,255,.15) 0%,transparent 65%);pointer-events:none;}
+.admin-pill{background:rgba(255,255,255,.25);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.06em;border:1px solid rgba(255,255,255,.35);}
+.admin-tabs{display:flex;gap:6px;overflow-x:auto;padding:0 0 12px;scrollbar-width:none;}
+.admin-tabs::-webkit-scrollbar{display:none;}
+.admin-tab{flex-shrink:0;padding:8px 14px;border-radius:99px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--chip-border);font-family:'Heebo',sans-serif;transition:all .2s;color:var(--c3);background:var(--chip-bg);}
+.admin-tab.active{background:linear-gradient(135deg,#FF9500,#FF3B30);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(255,100,0,.35);}
+.admin-panel{display:none;}
+.admin-panel.active{display:block;}
+
+/* ADMIN INPUTS */
+.admin-row{display:flex;gap:10px;align-items:center;padding:12px 18px;}
+input[type=time].ios-time,input[type=date].ios-date,input[type=number].ios-num,input[type=text].ios-text,select.ios-select{
+  flex:1;background:var(--input-bg);border:1px solid var(--input-border);border-radius:14px;padding:10px 14px;
+  font-family:'Heebo',sans-serif;font-size:15px;font-weight:600;color:var(--c1);outline:none;text-align:center;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:border-color .15s,box-shadow .15s;
+}
+input[type=text].ios-text{text-align:right;}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,122,255,.15);}
+.btn-add{background:linear-gradient(180deg,#0A84FF,#007AFF);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:10px 18px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;box-shadow:0 4px 16px rgba(0,122,255,.38);transition:all .12s;white-space:nowrap;}
+.btn-add:active{transform:scale(.95);}
+.btn-add-green{background:linear-gradient(180deg,#30D158,#34C759);box-shadow:0 4px 16px rgba(52,199,89,.38);}
+.btn-add-orange{background:linear-gradient(180deg,#FF9F0A,#FF9500);box-shadow:0 4px 16px rgba(255,149,0,.38);}
+
+/* CHIPS */
+.chips-wrap{display:flex;flex-wrap:wrap;gap:7px;padding:10px 18px 14px;}
+.slot-chip{display:inline-flex;align-items:center;gap:7px;background:rgba(0,122,255,.1);border:1px solid rgba(0,122,255,.2);border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--blue);}
+.slot-chip button{background:none;border:none;cursor:pointer;color:var(--c4);font-size:16px;line-height:1;transition:color .1s;}
+.slot-chip button:hover{color:var(--red);}
+.date-chip-admin{display:inline-flex;align-items:center;gap:7px;background:rgba(52,199,89,.1);border:1px solid rgba(52,199,89,.22);border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--green);}
+.date-chip-admin button{background:none;border:none;cursor:pointer;color:var(--c4);font-size:16px;line-height:1;}
+.date-chip-admin button:hover{color:var(--red);}
+
+/* BOOKING CARDS */
+.booking-card{margin:10px 14px;border-radius:20px;overflow:hidden;border:1px solid rgba(120,120,128,.12);background:rgba(255,255,255,.35);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);}
+[data-theme=dark] .booking-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08);}
+.booking-card.urgent{background:rgba(255,149,0,.08);border-color:rgba(255,149,0,.35);border-right:3px solid #FF9500;}
+.bk-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid rgba(120,120,128,.1);}
+[data-theme=dark] .bk-card-header{border-bottom-color:rgba(255,255,255,.07);}
+.bk-client-name{font-size:16px;font-weight:700;color:var(--c1);}
+.bk-appt-time{font-size:12px;color:var(--blue);font-weight:600;margin-top:2px;}
+.bk-details{display:flex;flex-direction:column;}
+.bk-detail-row{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid rgba(120,120,128,.07);font-size:13px;font-weight:500;color:var(--c2);}
+[data-theme=dark] .bk-detail-row{border-bottom-color:rgba(255,255,255,.05);}
+.bk-detail-row:last-child{border-bottom:none;}
+.bk-detail-ic{font-size:15px;width:22px;text-align:center;flex-shrink:0;}
+.bk-num{width:34px;height:34px;border-radius:10px;background:rgba(0,122,255,.1);border:1px solid rgba(0,122,255,.18);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--blue);flex-shrink:0;}
+.bk-countdown{font-size:13px;font-weight:800;color:var(--orange);font-variant-numeric:tabular-nums;min-width:52px;text-align:center;}
+.bk-countdown.expired{color:var(--red);}
+
+/* STATUS */
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:800;}
+.status-pending{background:rgba(255,149,0,.15);color:var(--orange);border:1px solid rgba(255,149,0,.3);}
+.status-confirmed{background:rgba(0,122,255,.15);color:var(--blue);border:1px solid rgba(0,122,255,.3);}
+.status-arrived{background:rgba(52,199,89,.15);color:var(--green);border:1px solid rgba(52,199,89,.3);}
+.status-noshow{background:rgba(255,59,48,.15);color:var(--red);border:1px solid rgba(255,59,48,.3);}
+.status-cancelled{background:rgba(142,142,147,.15);color:var(--c4);border:1px solid rgba(142,142,147,.3);}
+.status-select{font-size:12px;font-weight:700;color:var(--c1);background:var(--input-bg);border:1px solid var(--input-border);border-radius:10px;padding:5px 10px;font-family:'Heebo',sans-serif;outline:none;cursor:pointer;}
+
+/* BULK */
+.bulk-card{border-radius:24px;padding:18px;margin-bottom:12px;}
+.bulk-title{font-size:15px;font-weight:800;color:var(--c1);margin-bottom:14px;}
+.form-group{margin-bottom:12px;}
+.form-label{font-size:12px;font-weight:700;color:var(--c4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:block;}
+.form-row{display:flex;gap:8px;}
+.day-pick-btn{padding:6px 10px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--chip-border);font-family:'Heebo',sans-serif;background:var(--chip-bg);color:var(--c3);transition:all .2s;}
+.day-pick-btn.active{background:linear-gradient(135deg,#0A84FF,#007AFF);color:#fff;border-color:transparent;}
+
+/* QUEUE VIEW */
+.queue-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px 14px 14px;}
+.queue-card{border-radius:20px;padding:16px;text-align:center;background:var(--chip-bg);border:1px solid var(--chip-border);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);cursor:pointer;transition:all .2s;}
+.queue-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.12);}
+.queue-card.active-now{border-color:rgba(52,199,89,.5);background:rgba(52,199,89,.08);}
+.queue-card.next-up{border-color:rgba(255,149,0,.5);background:rgba(255,149,0,.08);}
+.queue-avatar{width:52px;height:52px;border-radius:15px;background:linear-gradient(135deg,#0A84FF,#5856d6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:900;margin:0 auto 10px;}
+.queue-name{font-size:15px;font-weight:800;color:var(--c1);margin-bottom:4px;}
+.queue-time{font-size:22px;font-weight:900;color:var(--blue);margin-bottom:6px;font-variant-numeric:tabular-nums;}
+.queue-status-pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
+
+/* LOGO UPLOAD */
+.logo-upload-zone{border-radius:20px;padding:20px;text-align:center;border:2px dashed var(--chip-border);cursor:pointer;transition:all .2s;margin:12px 18px;}
+.logo-upload-zone:hover{border-color:var(--blue);background:rgba(0,122,255,.05);}
+.logo-preview{width:80px;height:80px;border-radius:20px;margin:0 auto 10px;overflow:hidden;}
+
+/* CALENDAR ADMIN */
+.cal-view-tabs{display:flex;gap:6px;padding:12px 18px 8px;}
+.cal-view-tab{flex:1;padding:8px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--chip-border);font-family:'Heebo',sans-serif;transition:all .2s;color:var(--c3);background:var(--chip-bg);text-align:center;}
+.cal-view-tab.active{background:linear-gradient(135deg,#0A84FF,#007AFF);color:#fff;border-color:transparent;}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;}
+.cal-nav-btn{background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:10px;padding:6px 14px;font-size:14px;font-weight:700;color:var(--c1);cursor:pointer;font-family:'Heebo',sans-serif;}
+.cal-month-label{font-size:15px;font-weight:800;color:var(--c1);}
+.cal-week-day{aspect-ratio:1;border-radius:10px;padding:4px;text-align:center;border:1px solid var(--chip-border);background:var(--chip-bg);cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.cal-week-day:hover{background:rgba(0,122,255,.1);border-color:rgba(0,122,255,.3);}
+.cal-week-day.has-slots{border-color:rgba(52,199,89,.4);background:rgba(52,199,89,.08);}
+.cal-week-day.today{border-color:rgba(0,122,255,.5);background:rgba(0,122,255,.1);}
+.cal-day-num{font-size:13px;font-weight:800;color:var(--c1);}
+.cal-day-name{font-size:9px;color:var(--c4);font-weight:600;margin-bottom:2px;}
+.cal-slot-count{font-size:9px;color:var(--green);font-weight:700;margin-top:2px;}
+
+/* NOTE TEXTAREA */
+.note-textarea{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:14px;padding:10px 14px;font-family:'Heebo',sans-serif;font-size:14px;color:var(--c1);outline:none;resize:none;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:border-color .15s;}
+.note-textarea:focus{border-color:var(--blue);}
+
+/* BAN */
+#banOverlay{display:none;position:fixed;inset:0;z-index:99999;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;background:linear-gradient(135deg,#0a0010 0%,#1a0020 60%,#100010 100%);}
+#banOverlay.active{display:flex;}
+.ban-icon{font-size:72px;margin-bottom:20px;animation:banPulse 2s ease-in-out infinite;}
+@keyframes banPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.ban-title{font-size:28px;font-weight:900;color:#fff;margin-bottom:10px;}
+.ban-sub{font-size:15px;color:rgba(255,255,255,.6);margin-bottom:30px;line-height:1.6;}
+.ban-timer{font-size:48px;font-weight:900;background:linear-gradient(135deg,#FF453A,#FF9F0A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-2px;margin-bottom:8px;font-variant-numeric:tabular-nums;}
+.ban-timer-label{font-size:12px;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.08em;}
+.ban-unlock-wrap{margin-top:28px;width:100%;max-width:300px;}
+.ban-unlock-label{font-size:12px;color:rgba(255,255,255,.4);font-weight:600;text-align:center;margin-bottom:10px;text-transform:uppercase;}
+.ban-unlock-row{display:flex;gap:8px;}
+.ban-password-input{flex:1;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 16px;font-family:'Heebo',sans-serif;font-size:16px;font-weight:600;color:#fff;outline:none;text-align:center;transition:border-color .2s;letter-spacing:3px;}
+.ban-password-input::placeholder{color:rgba(255,255,255,.25);letter-spacing:0;}
+.ban-password-input:focus{border-color:rgba(255,149,0,.6);}
+.ban-password-input.ban-input-error{border-color:rgba(255,69,58,.8);animation:shake .35s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.ban-unlock-btn{background:linear-gradient(135deg,#FF9500,#FF6000);border:none;border-radius:14px;padding:12px 18px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:800;color:#fff;cursor:pointer;transition:all .15s;}
+.ban-unlock-error{margin-top:8px;text-align:center;font-size:12px;font-weight:600;color:rgba(255,69,58,.9);min-height:16px;}
+
+/* MISC */
+.app-footer{text-align:center;padding:10px 0 10px;font-size:12px;color:var(--c4);line-height:1.6;}
+.app-footer a{color:var(--blue);text-decoration:none;font-weight:600;}
+.version-badge{display:inline-block;background:rgba(120,120,128,.1);border:1px solid rgba(120,120,128,.2);border-radius:99px;padding:2px 10px;font-size:10px;font-weight:700;color:var(--c4);margin-top:4px;}
+@keyframes popIn{from{opacity:0;transform:scale(.88) translateY(10px)}to{opacity:1;transform:none}}
+.divider{height:1px;background:rgba(120,120,128,.1);margin:0 18px;}
+[data-theme=dark] .divider{background:rgba(255,255,255,.07);}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-pill glass theme-track" onclick="toggleTheme()" id="themeTrack">
+  <span class="theme-icon-left">☀️</span>
+  <div class="theme-knob" id="themeKnob">🌙</div>
+  <span class="theme-icon-right">🌙</span>
+</div>
+
+<!-- TOAST -->
+<div id="toast"><div class="toast-pill"><span id="tIcon">✅</span><span id="tMsg"></span></div></div>
+
+<div class="app">
+
+<!-- ════ SPLASH ════ -->
+<div id="sSplash" class="screen active">
+  <div style="min-height:calc(100vh - 80px);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+
+    <div class="pub-nav">
+      <button class="pub-tab active" onclick="showPub('home',this)" data-i18n="nav_home">🏠 ראשי</button>
+      <button class="pub-tab" onclick="showPub('services',this)" data-i18n="nav_services">✂️ שירותים</button>
+      <button class="pub-tab" onclick="showPub('gallery',this)" data-i18n="nav_gallery">🖼️ גלריה</button>
+      <button class="pub-tab" onclick="showPub('reviews',this)" data-i18n="nav_reviews">⭐ ביקורות</button>
+    </div>
+
+    <!-- HOME -->
+    <div id="pub-home" class="pub-section active" style="width:100%;">
+      <div class="hero-card">
+        <div class="hero-logo">
+          <div class="hero-logo-default" id="heroLogoDefault">💈</div>
+          <img id="heroLogoImg" style="display:none;width:100%;height:100%;object-fit:cover;" alt="logo"/>
+        </div>
+        <div class="hero-title" id="heroTitle">💈 Haimov Barbershop</div>
+        <div class="hero-sub" data-i18n="hero_sub">קצצנו שיער מאז 2010 — בוא תיראה הכי טוב שאתה יכול</div>
+        <!-- Location info -->
+        <div class="hero-location">
+          <span>📍</span><span id="heroAddress">רחוב הרצל 12, תל אביב</span>
+        </div>
+        <div class="hero-location" style="margin-bottom:0;">
+          <span>📱</span><span dir="ltr">+972 054-457-0982</span>
+          <span style="margin-right:10px;">🕐</span><span id="heroHours">א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00</span>
+        </div>
+      </div>
+
+      <div class="splash-feats glass" style="border-radius:28px;overflow:hidden;margin-bottom:14px;width:100%;">
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid rgba(120,120,128,.12);">
+          <div style="width:42px;height:42px;border-radius:13px;background:rgba(0,122,255,.15);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;">⚡</div>
+          <div style="font-size:14px;color:var(--c2);font-weight:500;text-align:right;line-height:1.4;"><strong style="display:block;font-size:15px;color:var(--c1);font-weight:700;margin-bottom:2px;" data-i18n="feat1_title">קביעה מהירה</strong><span data-i18n="feat1_sub">בחר שעה ותאריך — תוך שניות</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid rgba(120,120,128,.12);">
+          <div style="width:42px;height:42px;border-radius:13px;background:rgba(52,199,89,.15);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;">✅</div>
+          <div style="font-size:14px;color:var(--c2);font-weight:500;text-align:right;line-height:1.4;"><strong style="display:block;font-size:15px;color:var(--c1);font-weight:700;margin-bottom:2px;" data-i18n="feat2_title">אישור מיידי</strong><span data-i18n="feat2_sub">קבל אישור עם כל פרטי התור</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;">
+          <div style="width:42px;height:42px;border-radius:13px;background:rgba(255,149,0,.15);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;">🗺️</div>
+          <div style="font-size:14px;color:var(--c2);font-weight:500;text-align:right;line-height:1.4;"><strong style="display:block;font-size:15px;color:var(--c1);font-weight:700;margin-bottom:2px;" data-i18n="feat3_title">מיקום</strong><span id="featLocation">רחוב הרצל 12, תל אביב</span></div>
+        </div>
+      </div>
+      <button class="btn-primary" style="max-width:320px;margin:0 auto 10px;display:block;" onclick="goTo('sLogin')" data-i18n="btn_book">קבע תור עכשיו ←</button>
+      <button class="btn-secondary" style="max-width:320px;margin:0 auto;display:block;" onclick="quickLogin()" data-i18n="btn_quick_login">כבר נרשמתי — כניסה מהירה</button>
+    </div>
+
+    <!-- SERVICES -->
+    <div id="pub-services" class="pub-section" style="width:100%;">
+      <div class="glass-card glass">
+        <div class="sec-hdr"><span class="sec-title" data-i18n="nav_services">✂️ שירותים ומחירים</span></div>
+        <div id="servicesList"></div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div id="pub-gallery" class="pub-section" style="width:100%;">
+      <div class="glass-card glass">
+        <div class="sec-hdr"><span class="sec-title" data-i18n="nav_gallery">🖼️ גלריית עבודות</span></div>
+        <div class="gallery-grid" id="publicGallery"></div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div id="pub-reviews" class="pub-section" style="width:100%;">
+      <div id="reviewsList"></div>
+      <div class="glass-card glass" id="reviewFormWrap" style="display:none;">
+        <div class="sec-hdr"><span class="sec-title" data-i18n="write_review">✍️ כתוב ביקורת</span></div>
+        <div style="padding:0 18px 18px;">
+          <div class="review-stars-input" id="reviewStarsInput">
+            <button class="star-btn" onclick="setReviewStar(1)">☆</button>
+            <button class="star-btn" onclick="setReviewStar(2)">☆</button>
+            <button class="star-btn" onclick="setReviewStar(3)">☆</button>
+            <button class="star-btn" onclick="setReviewStar(4)">☆</button>
+            <button class="star-btn" onclick="setReviewStar(5)">☆</button>
+          </div>
+          <textarea id="reviewText" class="note-textarea" rows="3" placeholder="ספר לנו..."></textarea>
+          <button class="btn-primary" style="margin-top:10px;" onclick="submitReview()" data-i18n="send_review">שלח ביקורת</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ LOGIN ════ -->
+<div id="sLogin" class="screen">
+  <button class="back-btn glass" onclick="goTo('sSplash')"><span class="back-arrow">→</span> <span data-i18n="back">חזרה</span></button>
+  <div class="auth-wrap" style="min-height:auto;">
+    <div style="font-size:60px;margin-bottom:16px;text-align:center;">💈</div>
+    <div class="auth-title" data-i18n="login_title">ברוך הבא</div>
+    <div class="auth-sub" data-i18n="login_sub">התחבר לחשבון שלך</div>
+    <div class="auth-card glass">
+      <div class="auth-row"><div class="auth-icon">📧</div><input id="loginEmail" class="auth-input reg-input" type="email" placeholder="אימייל" dir="ltr" autocomplete="email"/></div>
+      <div class="auth-row"><div class="auth-icon">🔒</div><input id="loginPass" class="auth-input reg-input" type="password" placeholder="סיסמה" dir="ltr" autocomplete="current-password"/></div>
+    </div>
+    <button class="btn-primary" style="margin-bottom:10px;" onclick="doLogin()" data-i18n="login_btn">כניסה</button>
+    <button class="btn-secondary" onclick="goTo('sRegister')" data-i18n="register_link">אין לך חשבון? הירשם</button>
+    <div style="margin-top:12px;text-align:center;">
+      <button style="background:none;border:none;font-family:'Heebo',sans-serif;font-size:13px;color:var(--blue);cursor:pointer;font-weight:600;" onclick="goTo('sSettings')" data-i18n="settings_link">⚙️ הגדרות</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ REGISTER ════ -->
+<div id="sRegister" class="screen">
+  <button class="back-btn glass" onclick="goTo('sLogin')"><span class="back-arrow">→</span> <span data-i18n="back">חזרה</span></button>
+  <div class="reg-steps">
+    <div class="reg-step active" id="stepDot1"><span>1</span></div>
+    <div class="reg-step-line" id="stepLine1"></div>
+    <div class="reg-step" id="stepDot2"><span>2</span></div>
+    <div class="reg-step-line" id="stepLine2"></div>
+    <div class="reg-step" id="stepDot3"><span>✓</span></div>
+  </div>
+  <div id="regStep1">
+    <div style="font-size:22px;font-weight:800;color:var(--c1);margin-bottom:4px;" data-i18n="reg_step1_title">פרטים אישיים 👤</div>
+    <div style="font-size:14px;color:var(--c3);margin-bottom:20px;" data-i18n="reg_step1_sub">שלב 1 — מי אתה?</div>
+    <div class="reg-card glass">
+      <div class="reg-row"><div class="reg-icon">👤</div><input id="regName" class="reg-input" type="text" placeholder="שם מלא *"/></div>
+      <div class="reg-row"><div class="reg-icon">📱</div><input id="regPhone" class="reg-input" type="tel" placeholder="טלפון *" dir="ltr"/></div>
+      <div class="reg-row" style="border-bottom:none;"><div class="reg-icon">📧</div><input id="regEmail" class="reg-input" type="email" placeholder="אימייל *" dir="ltr"/></div>
+    </div>
+    <button class="btn-primary" onclick="goRegStep2()">המשך ←</button>
+  </div>
+  <div id="regStep2" style="display:none;">
+    <div style="font-size:22px;font-weight:800;color:var(--c1);margin-bottom:4px;" data-i18n="reg_step2_title">סיסמה 🔒</div>
+    <div style="font-size:14px;color:var(--c3);margin-bottom:20px;" data-i18n="reg_step2_sub">שלב 2 — אבטח את החשבון</div>
+    <div class="reg-card glass">
+      <div class="reg-row"><div class="reg-icon">🔒</div><input id="regPass" class="reg-input" type="password" placeholder="סיסמה (מינימום 6 תווים)" dir="ltr"/></div>
+      <div class="reg-row" style="border-bottom:none;"><div class="reg-icon">🔑</div><input id="regPass2" class="reg-input" type="password" placeholder="אימות סיסמה" dir="ltr"/></div>
+    </div>
+    <div class="reg-terms glass" style="margin-bottom:14px;">
+      <label class="reg-terms-label">
+        <input type="checkbox" id="regTerms"/>
+        <span class="reg-checkbox-custom"></span>
+        <span class="reg-terms-text" data-i18n="terms_text">אני מאשר/ת את תנאי השימוש — אדאג להגיע בזמן לתור</span>
+      </label>
+    </div>
+    <button class="btn-primary" style="margin-bottom:10px;" onclick="doRegister()" data-i18n="create_account">צור חשבון ←</button>
+    <button class="btn-secondary" onclick="backRegStep1()" data-i18n="edit_details">← ערוך פרטים</button>
+  </div>
+</div>
+
+<!-- ════ BOOKING ════ -->
+<div id="sBooking" class="screen">
+  <button class="back-btn glass" onclick="goTo('sLogin')"><span class="back-arrow">→</span> <span data-i18n="back">חזרה</span></button>
+  <div class="app-header">
+    <div class="hdr-top">
+      <div>
+        <div class="hdr-title" id="bookingTitle">💈 Haimov</div>
+        <div class="hdr-sub" data-i18n="pick_appt">📍 קבע את התור שלך</div>
+      </div>
+      <div class="hdr-logo">
+        <div class="hdr-logo-default" id="bookingLogoDefault">💈</div>
+        <img id="bookingLogoImg" style="display:none;width:100%;height:100%;object-fit:cover;" alt="logo"/>
+      </div>
+    </div>
+  </div>
+  <div class="user-row glass">
+    <div><div class="user-name" id="displayName">שלום!</div><div class="user-meta" id="displayPhone"></div></div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button style="background:none;border:none;font-size:20px;cursor:pointer;" onclick="goTo('sSettings')" title="הגדרות">⚙️</button>
+      <div class="user-avatar" id="displayAvatar">?</div>
+    </div>
+  </div>
+  <div id="successBanner" class="success-banner glass">
+    <div class="succ-ic">✅</div>
+    <div><div style="font-size:14px;font-weight:700;color:var(--green);" data-i18n="appt_success">התור נקבע בהצלחה!</div><div id="successText" style="font-size:12px;color:var(--c3);margin-top:2px;"></div></div>
+  </div>
+  <div id="countdownBanner" class="countdown-banner glass">
+    <div class="cd-icon">⏳</div>
+    <div style="flex:1;"><div class="cd-info" data-i18n="appt_soon">התור שלך עוד מעט!</div><div class="cd-label" data-i18n="noshow_warn">אם לא תגיע — תיחסם ל-5 שעות</div></div>
+    <div><div class="cd-time" id="cdUserTimer">15:00</div><div class="cd-label" data-i18n="remaining">נותרו</div></div>
+  </div>
+  <!-- SQUARE CALENDAR PICKER -->
+  <div class="glass-card glass">
+    <div class="sec-hdr">
+      <span class="sec-title" data-i18n="pick_date">בחר תאריך 📅</span>
+      <span class="sec-badge" id="selectedDateLabel"></span>
+    </div>
+    <div class="cal-picker" id="calPicker"></div>
+  </div>
+  <div class="glass-card glass">
+    <div class="sec-hdr"><span class="sec-title" data-i18n="avail_times">שעות פנויות</span><span class="sec-badge" id="slotCount"></span></div>
+    <div id="slotsGrid" class="slots-grid"></div>
+    <div id="noSlots" class="no-slots" style="display:none;"><div class="e">😔</div><span data-i18n="no_slots">אין שעות פנויות לתאריך זה</span></div>
+  </div>
+</div>
+
+<!-- ════ SETTINGS ════ -->
+<div id="sSettings" class="screen">
+  <button class="back-btn glass" onclick="settingsBack()"><span class="back-arrow">→</span> <span data-i18n="back">חזרה</span></button>
+  <div style="font-size:22px;font-weight:900;color:var(--c1);margin-bottom:4px;">⚙️ <span data-i18n="settings">הגדרות</span></div>
+  <div style="font-size:13px;color:var(--c3);margin-bottom:18px;" id="settingsUserSub">חשבון אישי</div>
+
+  <!-- ACCOUNT INFO -->
+  <div class="glass-card glass" id="settingsAccountCard">
+    <div class="sec-hdr"><span class="sec-title" data-i18n="account">👤 חשבון</span></div>
+    <div class="setting-row">
+      <div><div class="setting-label" id="settingsDisplayName">—</div><div class="setting-sub" id="settingsDisplayEmail">—</div></div>
+      <button class="btn-ghost" onclick="logoutUser()" data-i18n="logout">התנתק</button>
+    </div>
+  </div>
+
+  <!-- LANGUAGE -->
+  <div class="glass-card glass">
+    <div class="sec-hdr"><span class="sec-title" data-i18n="language">🌍 שפה</span></div>
+    <div style="padding:10px 18px 14px;">
+      <div class="lang-row">
+        <button class="lang-btn" onclick="setLang('he',this)">עברית</button>
+        <button class="lang-btn" onclick="setLang('ru',this)">Русский</button>
+        <button class="lang-btn" onclick="setLang('en',this)">English</button>
+        <button class="lang-btn" onclick="setLang('ar',this)">العربية</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- THEME in settings -->
+  <div class="glass-card glass">
+    <div class="sec-hdr"><span class="sec-title" data-i18n="appearance">🎨 מראה</span></div>
+    <div class="setting-row" style="border-bottom:none;">
+      <div><div class="setting-label" data-i18n="dark_mode">מצב כהה</div></div>
+      <label class="ios-toggle"><input type="checkbox" id="darkModeToggle" onchange="setThemeFromToggle(this.checked)"/><div class="ios-toggle-track"></div></label>
+    </div>
+  </div>
+
+  <!-- ADMIN SECRET -->
+  <div class="glass-card glass">
+    <div class="sec-hdr"><span class="sec-title" data-i18n="admin_access">🔐 גישת מנהל</span></div>
+    <div id="adminAccessSection">
+      <div class="setting-row" id="adminToggleRow" style="display:none;border-bottom:none;">
+        <div><div class="setting-label" data-i18n="admin_mode">מצב מנהל</div><div class="setting-sub" data-i18n="admin_mode_sub">הפעל/כבה גישת מנהל</div></div>
+        <label class="ios-toggle"><input type="checkbox" id="adminModeToggle" onchange="toggleAdminMode(this.checked)"/><div class="ios-toggle-track"></div></label>
+      </div>
+      <div id="adminSecretSection" style="padding:12px 18px 14px;">
+        <div style="font-size:13px;color:var(--c3);margin-bottom:10px;" data-i18n="admin_secret_hint">הזן את קוד הסוד של המנהל לפעם אחת</div>
+        <div style="display:flex;gap:8px;">
+          <input id="adminSecretInput" type="password" class="ios-date" style="flex:1;" placeholder="קוד סוד"/>
+          <button class="btn-add" onclick="submitAdminSecret()">✓</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:20px;"></div>
+</div>
+
+<!-- ════ ADMIN ════ -->
+<div id="sAdmin" class="screen">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+    <button class="back-btn glass" style="margin-bottom:0;" onclick="logoutAdmin()"><span class="back-arrow">→</span> יציאה</button>
+    <button class="btn-add btn-add-orange" style="border-radius:99px;padding:7px 14px;font-size:13px;" onclick="goTo('sAdmin2')">📺 תצוגת תור</button>
+  </div>
+  <div class="admin-header">
+    <div class="hdr-top">
+      <div><div class="hdr-title" style="color:#fff;">פאנל ניהול 🛠️</div><div style="font-size:13px;color:rgba(255,255,255,.8);margin-top:3px;">💈 Haimov Barbershop</div></div>
+      <span class="admin-pill">ADMIN</span>
+    </div>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="admin-tab active" onclick="switchAdminTab('tBookings',this)">📋 תורים</button>
+    <button class="admin-tab" onclick="switchAdminTab('tCalendar',this)">📅 לוח שנה</button>
+    <button class="admin-tab" onclick="switchAdminTab('tSlots',this)">⏰ שעות</button>
+    <button class="admin-tab" onclick="switchAdminTab('tReviews',this)">⭐ ביקורות</button>
+    <button class="admin-tab" onclick="switchAdminTab('tAdminSettings',this)">⚙️ הגדרות</button>
+  </div>
+
+  <!-- BOOKINGS -->
+  <div id="tBookings" class="admin-panel active">
+    <div id="adminCountdownBanner" class="countdown-banner glass">
+      <div class="cd-icon">🔔</div>
+      <div style="flex:1;"><div class="cd-info" id="adminCdInfo">תור פעיל</div><div class="cd-label">בטל תור לאישור הגעה</div></div>
+      <div><div class="cd-time" id="cdAdminTimer">15:00</div><div class="cd-label">נותרו</div></div>
+    </div>
+    <div class="glass-card glass">
+      <div class="sec-hdr"><span class="sec-title">תורים קיימים</span><span class="sec-badge" id="bookingCount"></span></div>
+      <div id="bookingsList"></div>
+      <div id="noBookings" class="no-item" style="display:none;"><div style="font-size:24px;margin-bottom:5px;">📭</div>אין תורים עדיין</div>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div id="tCalendar" class="admin-panel">
+    <div class="glass-card glass">
+      <div class="cal-view-tabs">
+        <button class="cal-view-tab active" onclick="setCalView('week',this)">שבוע</button>
+        <button class="cal-view-tab" onclick="setCalView('month',this)">חודש</button>
+      </div>
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="calNav(-1)">→</button>
+        <div class="cal-month-label" id="calLabel">מרץ 2026</div>
+        <button class="cal-nav-btn" onclick="calNav(1)">←</button>
+      </div>
+      <div id="calGrid"></div>
+    </div>
+    <div class="glass-card glass">
+      <div class="sec-hdr"><span class="sec-title">📋 העתק שבוע</span></div>
+      <div class="admin-row" style="flex-wrap:wrap;gap:8px;">
+        <div style="flex:1;"><div style="font-size:11px;color:var(--c4);font-weight:700;margin-bottom:4px;text-align:center;">מהשבוע</div><input id="copyFromDate" type="date" class="ios-date"/></div>
+        <div style="flex:1;"><div style="font-size:11px;color:var(--c4);font-weight:700;margin-bottom:4px;text-align:center;">לשבוע</div><input id="copyToDate" type="date" class="ios-date"/></div>
+      </div>
+      <div style="padding:0 18px 14px;"><button class="btn-add btn-add-orange" style="width:100%;border-radius:16px;" onclick="copyWeek()">העתק שבוע ←</button></div>
+    </div>
+  </div>
+
+  <!-- SLOTS -->
+  <div id="tSlots" class="admin-panel">
+    <!-- BULK -->
+    <div class="bulk-card glass">
+      <div class="bulk-title">⚡ יצירת לוח זמנים מהיר</div>
+      <div class="form-group">
+        <label class="form-label">תקופה</label>
+        <div class="form-row"><input id="bulkFrom" type="date" class="ios-date"/><input id="bulkTo" type="date" class="ios-date"/></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">שעות עבודה</label>
+        <div class="form-row"><input id="bulkStart" type="time" class="ios-time" value="09:00"/><input id="bulkEnd" type="time" class="ios-time" value="18:00"/></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">אורך תור (דקות)</label>
+        <select id="bulkInterval" class="ios-select"><option value="30">30 דקות</option><option value="45" selected>45 דקות</option><option value="55">55 דקות</option><option value="60">60 דקות</option><option value="90">90 דקות</option></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">בפר (דקות)</label>
+        <select id="bulkBuffer" class="ios-select"><option value="0">ללא</option><option value="5">5 דקות</option><option value="10" selected>10 דקות</option><option value="15">15 דקות</option></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ימים</label>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;" id="dayPicker">
+          <button class="day-pick-btn active" data-d="0">א׳</button><button class="day-pick-btn active" data-d="1">ב׳</button><button class="day-pick-btn active" data-d="2">ג׳</button><button class="day-pick-btn active" data-d="3">ד׳</button><button class="day-pick-btn active" data-d="4">ה׳</button><button class="day-pick-btn active" data-d="5">ו׳</button><button class="day-pick-btn" data-d="6">ש׳</button>
+        </div>
+      </div>
+      <button class="btn-add btn-add-green" style="width:100%;border-radius:16px;" onclick="generateBulkSlots()">⚡ צור סלוטים</button>
+      <div id="bulkPreview" style="margin-top:10px;font-size:12px;color:var(--c3);text-align:center;"></div>
+    </div>
+    <!-- MANUAL -->
+    <div class="glass-card glass">
+      <div style="padding:12px 18px 4px;"><span style="font-size:12px;font-weight:700;color:var(--c3);text-transform:uppercase;letter-spacing:.06em;">הוסף תאריך</span></div>
+      <div class="admin-row"><input id="newDate" type="date" class="ios-date"/><button class="btn-add btn-add-green" onclick="addDate()">+ הוסף</button></div>
+      <div id="adminDatesWrap" class="chips-wrap"></div>
+      <div id="adminNoDates" style="display:none;text-align:center;padding:10px;color:var(--c4);font-size:13px;">אין תאריכים</div>
+    </div>
+    <div class="glass-card glass">
+      <div style="padding:12px 18px 4px;"><span style="font-size:12px;font-weight:700;color:var(--c3);text-transform:uppercase;letter-spacing:.06em;">הוסף שעה לתאריך</span></div>
+      <div class="admin-row" style="flex-wrap:wrap;gap:8px;">
+        <select id="slotDateSelect" class="ios-select" style="flex:1;min-width:120px;"><option value="">בחר תאריך</option></select>
+        <input id="newSlotTime" type="time" class="ios-time" style="flex:1;min-width:100px;"/>
+        <button class="btn-add" onclick="addSlot()">+ הוסף</button>
+      </div>
+      <div id="adminSlotsWrap" class="chips-wrap"></div>
+      <div id="adminNoSlots" style="display:none;text-align:center;padding:10px;color:var(--c4);font-size:13px;">בחר תאריך</div>
+    </div>
+    <!-- DELETE ALL -->
+    <div class="glass-card glass">
+      <div class="sec-hdr"><span class="sec-title" style="color:var(--red);">🗑️ מחיקה מלאה</span></div>
+      <div style="padding:0 18px 14px;display:flex;gap:10px;">
+        <button class="btn-danger" style="flex:1;" onclick="confirmDeleteAll('dates')">מחק כל התאריכים</button>
+        <button class="btn-danger" style="flex:1;" onclick="confirmDeleteAll('slots')">מחק כל השעות</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div id="tReviews" class="admin-panel">
+    <div class="glass-card glass">
+      <div class="sec-hdr"><span class="sec-title">ביקורות לאישור ⭐</span><span class="sec-badge" id="pendingReviewCount"></span></div>
+      <div id="adminReviewsList"></div>
+      <div id="noAdminReviews" class="no-item" style="display:none;"><div style="font-size:24px;margin-bottom:5px;">✅</div>אין ביקורות ממתינות</div>
+    </div>
+  </div>
+
+  <!-- ADMIN SETTINGS -->
+  <div id="tAdminSettings" class="admin-panel">
+    <!-- Logo -->
+    <div class="glass-card glass">
+      <div class="sec-hdr"><span class="sec-title">🎨 לוגו ושם</span></div>
+      <div style="padding:0 18px 10px;"><input type="text" id="shopNameInput" class="ios-text" style="width:100%;" placeholder="שם הברברשופ"/></div>
+      <div class="logo-upload-zone" onclick="document.getElementById('logoFileInput').click()">
+        <div class="logo-preview" id="logoPreview">
+          <div id="logoPreviewDefault" style="width:100%;height:100%;background:linear-gradient(135deg,#1a6fff,#5856d6);display:flex;align-items:center;justify-content:center;font-size:32px;border-radius:20px;">💈</div>
+          <img id="logoPreviewImg" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:20px;" alt="logo"/>
+        </div>
+        <div style="font-size:14px;font-weight:600;color:var(--c3);">לחץ להעלאת לוגו</div>
+        <div style="font-size:11px;color:var(--c4);margin-top:4px;">PNG / JPG עד 2MB</div>
+      </div>
+      <input type="file" id="logoFileInput" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)"/>
+      <div style="padding:0 18px 14px;"><button class="btn-add btn-add-green" style="width:100%;border-radius:16px;" onclick="saveSettings()">שמור ✓</button></div>
+    </div>
+    <!-- Info -->
+    <div class="glass-card glass">
+      <div class="sec-hdr"><span class="sec-title">📍 פרטי העסק</span></div>
+      <div class="admin-row" style="flex-wrap:wrap;gap:8px;flex-direction:column;align-items:stretch;">
+        <input type="text" id="settingsAddress" class="ios-text" placeholder="כתובת"/>
+        <input type="text" id="settingsHours" class="ios-text" placeholder="שעות פעילות"/>
+      </div>
+      <div style="padding:0 18px 14px;"><button class="btn-add btn-add-orange" style="width:100%;border-radius:16px;" onclick="saveBusinessInfo()">שמור פרטים ✓</button></div>
+    </div>
+    <!-- Gallery management -->
+    <div class="glass-card glass">
+      <div class="sec-hdr"><span class="sec-title">🖼️ ניהול גלריה</span></div>
+      <div class="gallery-grid" id="adminGallery"></div>
+      <div style="padding:0 18px 14px;">
+        <button class="btn-add btn-add-green" style="width:100%;border-radius:16px;" onclick="document.getElementById('galleryFileInput').click()">+ הוסף תמונה</button>
+        <input type="file" id="galleryFileInput" accept="image/*" style="display:none;" onchange="addGalleryImage(event)"/>
+      </div>
+    </div>
+    <!-- Services management -->
+    <div class="glass-card glass">
+      <div class="sec-hdr"><span class="sec-title">✂️ ניהול שירותים</span></div>
+      <div id="adminServicesList"></div>
+      <div class="admin-row" style="flex-wrap:wrap;gap:8px;">
+        <input type="text" id="newSvcName" class="ios-text" placeholder="שם שירות" style="flex:2;"/>
+        <input type="text" id="newSvcPrice" class="ios-text" placeholder="₪מחיר" style="flex:1;"/>
+        <button class="btn-add btn-add-green" onclick="addService()">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ ADMIN QUEUE VIEW ════ -->
+<div id="sAdmin2" class="screen">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+    <button class="back-btn glass" style="margin-bottom:0;" onclick="goTo('sAdmin')"><span class="back-arrow">→</span> חזרה</button>
+    <div style="font-size:14px;font-weight:700;color:var(--c1);" id="queueDateTime"></div>
+  </div>
+  <div class="admin-header" style="background:linear-gradient(145deg,rgba(52,199,89,.9),rgba(0,122,255,.85));">
+    <div class="hdr-top">
+      <div><div class="hdr-title" style="color:#fff;">📺 תצוגת תור</div><div style="font-size:13px;color:rgba(255,255,255,.8);margin-top:3px;">מי בתור עכשיו</div></div>
+      <span class="admin-pill">LIVE</span>
+    </div>
+  </div>
+  <div id="queueGrid" class="queue-grid"></div>
+  <div class="glass-card glass">
+    <div class="sec-hdr"><span class="sec-title">📋 כל התורים היום</span></div>
+    <div id="todayList"></div>
+    <div id="noTodayList" class="no-item" style="display:none;"><div style="font-size:24px;margin-bottom:5px;">📭</div>אין תורים היום</div>
+  </div>
+</div>
+
+<!-- BAN -->
+<div id="banOverlay">
+  <div class="ban-icon">🚫</div>
+  <div class="ban-title">הגישה חסומה</div>
+  <div class="ban-sub">לא הגעת לתור שלך.<br/>הגישה לאפליקציה חסומה.</div>
+  <div class="ban-timer" id="banTimer">05:00:00</div>
+  <div class="ban-timer-label">זמן שנותר</div>
+  <div class="ban-unlock-wrap">
+    <div class="ban-unlock-label">יש לך קוד שחרור?</div>
+    <div class="ban-unlock-row">
+      <input id="banPasswordInput" class="ban-password-input" type="password" placeholder="קוד..." dir="ltr" maxlength="20" oninput="this.classList.remove('ban-input-error')"/>
+      <button class="ban-unlock-btn" onclick="tryUnlockBan()">שחרר</button>
+    </div>
+    <div id="banUnlockError" class="ban-unlock-error"></div>
+  </div>
+</div>
+
+<div class="app-footer">
+  <div dir="ltr">📞 <a href="tel:+972054457098">+972 054-457-0982</a></div>
+  <div data-i18n="footer_site">רוצה אתר כזה? פנה אלינו</div>
+  <div class="version-badge">v0.4.0</div>
+</div>
+
+</div><!-- /app -->
+
+<!-- ════════════════ CONFIRM MODAL ════════════════ -->
+<div id="confirmModal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+  <div class="glass" style="max-width:320px;width:90%;border-radius:28px;padding:24px;text-align:center;">
+    <div style="font-size:36px;margin-bottom:12px;" id="confirmIcon">⚠️</div>
+    <div style="font-size:18px;font-weight:800;color:var(--c1);margin-bottom:8px;" id="confirmTitle">אתה בטוח?</div>
+    <div style="font-size:14px;color:var(--c3);margin-bottom:20px;" id="confirmMsg">פעולה זו אינה הפיכה.</div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-secondary" style="flex:1;" onclick="closeConfirm()">ביטול</button>
+      <button class="btn-danger" style="flex:1;" id="confirmOkBtn">מחק</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  I18N
+// ═══════════════════════════════════════════════
+const LANGS={
+  he:{
+    nav_home:'🏠 ראשי',nav_services:'✂️ שירותים',nav_gallery:'🖼️ גלריה',nav_reviews:'⭐ ביקורות',
+    hero_sub:'קצצנו שיער מאז 2010 — בוא תיראה הכי טוב שאתה יכול',
+    feat1_title:'קביעה מהירה',feat1_sub:'בחר שעה ותאריך — תוך שניות',
+    feat2_title:'אישור מיידי',feat2_sub:'קבל אישור עם כל פרטי התור',
+    feat3_title:'מיקום',
+    btn_book:'קבע תור עכשיו ←',btn_quick_login:'כבר נרשמתי — כניסה מהירה',
+    back:'חזרה',login_title:'ברוך הבא',login_sub:'התחבר לחשבון שלך',
+    login_btn:'כניסה',register_link:'אין לך חשבון? הירשם',settings_link:'⚙️ הגדרות',
+    reg_step1_title:'פרטים אישיים 👤',reg_step1_sub:'שלב 1 — מי אתה?',
+    reg_step2_title:'סיסמה 🔒',reg_step2_sub:'שלב 2 — אבטח את החשבון',
+    terms_text:'אני מאשר/ת את תנאי השימוש — אדאג להגיע בזמן לתור',
+    create_account:'צור חשבון ←',edit_details:'← ערוך פרטים',
+    pick_appt:'📍 קבע את התור שלך',appt_success:'התור נקבע בהצלחה!',
+    appt_soon:'התור שלך עוד מעט!',noshow_warn:'אם לא תגיע — תיחסם ל-5 שעות',remaining:'נותרו',
+    pick_date:'בחר תאריך 📅',avail_times:'שעות פנויות',no_slots:'אין שעות פנויות לתאריך זה',
+    settings:'הגדרות',account:'👤 חשבון',logout:'התנתק',language:'🌍 שפה',
+    appearance:'🎨 מראה',dark_mode:'מצב כהה',admin_access:'🔐 גישת מנהל',
+    admin_mode:'מצב מנהל',admin_mode_sub:'הפעל/כבה גישת מנהל',
+    admin_secret_hint:'הזן את קוד הסוד של המנהל לפעם אחת',
+    write_review:'✍️ כתוב ביקורת',send_review:'שלח ביקורת',
+    footer_site:'רוצה אתר כזה? פנה אלינו',
+  },
+  ru:{
+    nav_home:'🏠 Главная',nav_services:'✂️ Услуги',nav_gallery:'🖼️ Галерея',nav_reviews:'⭐ Отзывы',
+    hero_sub:'Стрижём с 2010 — выгляди максимально круто',
+    feat1_title:'Быстрая запись',feat1_sub:'Выбери время и дату — за секунды',
+    feat2_title:'Мгновенное подтверждение',feat2_sub:'Получи подтверждение с деталями',
+    feat3_title:'Местоположение',
+    btn_book:'Записаться сейчас →',btn_quick_login:'Уже зарегистрирован — войти',
+    back:'Назад',login_title:'Добро пожаловать',login_sub:'Войдите в аккаунт',
+    login_btn:'Войти',register_link:'Нет аккаунта? Зарегистрируйся',settings_link:'⚙️ Настройки',
+    reg_step1_title:'Личные данные 👤',reg_step1_sub:'Шаг 1 — Кто ты?',
+    reg_step2_title:'Пароль 🔒',reg_step2_sub:'Шаг 2 — Защити аккаунт',
+    terms_text:'Принимаю условия — приду вовремя',
+    create_account:'Создать аккаунт →',edit_details:'← Изменить данные',
+    pick_appt:'📍 Запись на стрижку',appt_success:'Запись создана!',
+    appt_soon:'Твоя запись скоро!',noshow_warn:'Не придёшь — блокировка на 5 часов',remaining:'осталось',
+    pick_date:'Выбери дату 📅',avail_times:'Свободное время',no_slots:'Нет свободного времени',
+    settings:'Настройки',account:'👤 Аккаунт',logout:'Выйти',language:'🌍 Язык',
+    appearance:'🎨 Оформление',dark_mode:'Тёмная тема',admin_access:'🔐 Доступ администратора',
+    admin_mode:'Режим администратора',admin_mode_sub:'Включить/выключить',
+    admin_secret_hint:'Введи секретный код один раз для постоянного доступа',
+    write_review:'✍️ Написать отзыв',send_review:'Отправить',
+    footer_site:'Хочешь такой сайт? Обращайся',
+  },
+  en:{
+    nav_home:'🏠 Home',nav_services:'✂️ Services',nav_gallery:'🖼️ Gallery',nav_reviews:'⭐ Reviews',
+    hero_sub:'Cutting hair since 2010 — look your absolute best',
+    feat1_title:'Quick Booking',feat1_sub:'Pick time & date in seconds',
+    feat2_title:'Instant Confirmation',feat2_sub:'Get confirmation with all details',
+    feat3_title:'Location',
+    btn_book:'Book Now →',btn_quick_login:'Already registered — Sign in',
+    back:'Back',login_title:'Welcome back',login_sub:'Sign in to your account',
+    login_btn:'Sign In',register_link:'No account? Register',settings_link:'⚙️ Settings',
+    reg_step1_title:'Personal Info 👤',reg_step1_sub:'Step 1 — Who are you?',
+    reg_step2_title:'Password 🔒',reg_step2_sub:'Step 2 — Secure your account',
+    terms_text:'I agree to the terms — I will arrive on time',
+    create_account:'Create Account →',edit_details:'← Edit Details',
+    pick_appt:'📍 Book Your Appointment',appt_success:'Appointment booked!',
+    appt_soon:'Your appointment is soon!',noshow_warn:'No-show = 5 hour block',remaining:'left',
+    pick_date:'Pick a Date 📅',avail_times:'Available Times',no_slots:'No available slots for this date',
+    settings:'Settings',account:'👤 Account',logout:'Sign Out',language:'🌍 Language',
+    appearance:'🎨 Appearance',dark_mode:'Dark Mode',admin_access:'🔐 Admin Access',
+    admin_mode:'Admin Mode',admin_mode_sub:'Toggle admin access',
+    admin_secret_hint:'Enter admin secret code once for permanent access',
+    write_review:'✍️ Write a Review',send_review:'Submit',
+    footer_site:'Want a site like this? Contact us',
+  },
+  ar:{
+    nav_home:'🏠 الرئيسية',nav_services:'✂️ الخدمات',nav_gallery:'🖼️ المعرض',nav_reviews:'⭐ التقييمات',
+    hero_sub:'نقص الشعر منذ 2010 — ابدُ بأفضل مظهر',
+    feat1_title:'حجز سريع',feat1_sub:'اختر الوقت والتاريخ في ثوانٍ',
+    feat2_title:'تأكيد فوري',feat2_sub:'احصل على تأكيد مع كل التفاصيل',
+    feat3_title:'الموقع',
+    btn_book:'احجز الآن ←',btn_quick_login:'لديك حساب؟ ادخل',
+    back:'رجوع',login_title:'أهلاً بك',login_sub:'سجّل الدخول إلى حسابك',
+    login_btn:'دخول',register_link:'ليس لديك حساب؟ سجّل',settings_link:'⚙️ الإعدادات',
+    reg_step1_title:'البيانات الشخصية 👤',reg_step1_sub:'الخطوة 1',
+    reg_step2_title:'كلمة المرور 🔒',reg_step2_sub:'الخطوة 2 — أمّن حسابك',
+    terms_text:'أوافق على الشروط — سأحضر في الوقت المحدد',
+    create_account:'إنشاء حساب ←',edit_details:'← تعديل البيانات',
+    pick_appt:'📍 احجز موعدك',appt_success:'تم الحجز بنجاح!',
+    appt_soon:'موعدك قريب!',noshow_warn:'إذا لم تحضر — حظر 5 ساعات',remaining:'متبقي',
+    pick_date:'اختر التاريخ 📅',avail_times:'الأوقات المتاحة',no_slots:'لا توجد أوقات متاحة',
+    settings:'الإعدادات',account:'👤 الحساب',logout:'تسجيل الخروج',language:'🌍 اللغة',
+    appearance:'🎨 المظهر',dark_mode:'الوضع الداكن',admin_access:'🔐 صلاحية المدير',
+    admin_mode:'وضع المدير',admin_mode_sub:'تفعيل/تعطيل',
+    admin_secret_hint:'أدخل الكود السري مرة واحدة للوصول الدائم',
+    write_review:'✍️ اكتب تقييماً',send_review:'إرسال',
+    footer_site:'تريد موقعاً كهذا؟ تواصل معنا',
+  }
+};
+let currentLang='he';
+function setLang(lang,btn){
+  currentLang=lang;
+  try{localStorage.setItem('bb_lang',lang);}catch{}
+  // RTL for he/ar
+  const rtl=lang==='he'||lang==='ar';
+  document.documentElement.dir=rtl?'rtl':'ltr';
+  document.documentElement.lang=lang;
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.dataset.i18n;
+    if(LANGS[lang]&&LANGS[lang][key])el.textContent=LANGS[lang][key];
+  });
+  // Highlight active lang btn
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  else{
+    document.querySelectorAll('.lang-btn').forEach(b=>{
+      if(b.textContent.includes(lang==='he'?'עברית':lang==='ru'?'Рус':lang==='en'?'Eng':'عرب'))b.classList.add('active');
+    });
+  }
+  // Update nav tabs
+  renderServicesTab();
+}
+function applyLangBtn(){
+  const map={he:0,ru:1,en:2,ar:3};
+  const btns=document.querySelectorAll('.lang-btn');
+  btns.forEach(b=>b.classList.remove('active'));
+  if(btns[map[currentLang]])btns[map[currentLang]].classList.add('active');
+}
+
+// ═══ THEME ═══
+function toggleTheme(){
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  setTheme(isDark?'light':'dark');
+}
+function setTheme(t){
+  const d=t==='dark';
+  document.documentElement.setAttribute('data-theme',d?'dark':'');
+  document.getElementById('themeKnob').textContent=d?'🌙':'☀️';
+  document.getElementById('darkModeToggle').checked=d;
+  try{localStorage.setItem('bb_theme',t);}catch{}
+}
+function setThemeFromToggle(checked){setTheme(checked?'dark':'light');}
+
+// ═══ NAV ═══
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='sAdmin2')renderQueueView();
+  if(id==='sBooking'){renderCalPicker();renderSlots();}
+}
+function showPub(id,btn){
+  document.querySelectorAll('.pub-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.pub-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('pub-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='reviews')renderPublicReviews();
+  if(id==='gallery')renderPublicGallery();
+}
+function switchAdminTab(id,btn){
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='tCalendar')renderCal();
+  if(id==='tReviews')renderAdminReviews();
+  if(id==='tAdminSettings'){renderAdminGallery();renderAdminServicesList();}
+}
+function settingsBack(){
+  if(currentUser)goTo('sBooking');else goTo('sLogin');
+}
+
+// ═══ TOAST ═══
+let _tt=null;
+function toast(msg,icon='✅',ms=3300){
+  document.getElementById('tMsg').textContent=msg;
+  document.getElementById('tIcon').textContent=icon;
+  document.getElementById('toast').classList.add('show');
+  if(_tt)clearTimeout(_tt);
+  _tt=setTimeout(()=>document.getElementById('toast').classList.remove('show'),ms);
+}
+
+// ═══ CONFIRM MODAL ═══
+let _confirmCallback=null;
+function showConfirm(icon,title,msg,okLabel,cb){
+  document.getElementById('confirmIcon').textContent=icon;
+  document.getElementById('confirmTitle').textContent=title;
+  document.getElementById('confirmMsg').textContent=msg;
+  document.getElementById('confirmOkBtn').textContent=okLabel;
+  document.getElementById('confirmModal').style.display='flex';
+  _confirmCallback=cb;
+  document.getElementById('confirmOkBtn').onclick=()=>{closeConfirm();cb();};
+}
+function closeConfirm(){document.getElementById('confirmModal').style.display='none';}
+
+// ═══ CONSTANTS ═══
+const ADMIN_HASH='8732578c0ee9f91e577bf8b5215d294c574147769312b3a43d5f10d9f5fe1d45';
+async function hashStr(s){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+// ═══ JSONBIN ═══
+const BIN_ID='69c391f6c3097a1dd559d814';
+const API_KEY='$2a$10$v1/7vM1rC5XtblIbZvXcCuiIdILBf7pbbjI/v5PgnjpvDdmDjPtiW';
+const BIN_URL=`https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const HDR={'Content-Type':'application/json','X-Access-Key':API_KEY,'X-Bin-Versioning':'false'};
+const LS_KEY='bb_state_v4';
+let useLocal=false;
+let state={
+  dates:{},bookings:[],counter:0,reviews:[],
+  settings:{name:'💈 Haimov Barbershop',logo:'',address:'רחוב הרצל 12, תל אביב',hours:'א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00'},
+  gallery:[],
+  services:[
+    {id:1,name:'תספורת גבר',desc:'תספורת מקצועית כולל שטיפה',price:'₪60',icon:'✂️'},
+    {id:2,name:'גילוח זקן',desc:'גילוח מסורתי עם תער',price:'₪40',icon:'🪒'},
+    {id:3,name:'תספורת + זקן',desc:'חבילה מלאה',price:'₪90',icon:'💈'},
+    {id:4,name:'תספורת ילד',desc:'עד גיל 12',price:'₪40',icon:'👦'},
+  ],
+  users:{}
+};
+
+function withTimeout(p,ms){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),ms))]);}
+function loadLocal(){try{const s=localStorage.getItem(LS_KEY);return s?JSON.parse(s):null;}catch{return null;}}
+function saveLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify(state));}catch{}}
+async function loadCloud(){
+  const r=await withTimeout(fetch(BIN_URL,{headers:{'X-Access-Key':API_KEY}}),8000);
+  if(!r.ok)throw new Error(`GET ${r.status}`);const d=await r.json();if(!d.record)throw new Error('no record');return d.record;
+}
+async function saveCloud(){
+  // Don't save giant base64 images to cloud — strip gallery/logo from cloud save
+  const cloudState={...state,gallery:state.gallery.map(g=>({...g,src:''})),settings:{...state.settings,logo:''}};
+  const r=await withTimeout(fetch(BIN_URL,{method:'PUT',headers:HDR,body:JSON.stringify(cloudState)}),8000);
+  if(!r.ok)throw new Error(`PUT ${r.status}`);
+}
+async function save(){
+  if(useLocal){saveLocal();return;}
+  try{await saveCloud();}catch{}
+  saveLocal(); // always save locally
+}
+async function load(){
+  try{const d=await loadCloud();useLocal=false;return d;}
+  catch{useLocal=true;return loadLocal()||state;}
+}
+function setLoading(on){document.querySelectorAll('.slot-btn,.btn-primary').forEach(b=>b.disabled=on);}
+function normalizeState(r){
+  return{
+    dates:(r.dates&&typeof r.dates==='object'&&!Array.isArray(r.dates))?r.dates:{},
+    bookings:Array.isArray(r.bookings)?r.bookings:[],
+    counter:typeof r.counter==='number'?r.counter:0,
+    reviews:Array.isArray(r.reviews)?r.reviews:[],
+    settings:r.settings||{name:'💈 Haimov Barbershop',logo:'',address:'רחוב הרצל 12, תל אביב',hours:'א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00'},
+    gallery:Array.isArray(r.gallery)?r.gallery:[],
+    services:Array.isArray(r.services)?r.services:state.services,
+    users:r.users||{}
+  };
+}
+
+// ═══ ISRAEL TIME ═══
+function ilNow(){
+  const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jerusalem',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  const get=t=>p.find(x=>x.type===t).value;
+  return{date:`${get('year')}-${get('month')}-${get('day')}`,time:`${get('hour')}:${get('minute')}`};
+}
+async function cleanPast(){
+  const{date:today,time:now}=ilNow();let changed=false;
+  for(const d of Object.keys(state.dates)){
+    if(d<today){delete state.dates[d];changed=true;}
+    else if(d===today){
+      const b=state.dates[d].length;
+      state.dates[d]=state.dates[d].filter(t=>t>now);
+      if(state.dates[d].length<b)changed=true;
+      if(!state.dates[d].length){delete state.dates[d];changed=true;}
+    }
+  }
+  if(changed)try{await save();}catch{}
+}
+
+// Friday 15:00 cap
+function capFridaySlots(dateStr,slots){
+  const dt=new Date(dateStr+'T12:00:00');
+  if(dt.getDay()===5) return slots.filter(t=>t<='15:00');
+  return slots;
+}
+
+// ═══ BAN ═══
+const BAN_KEY='bb_ban_until',NOSHOW_KEY='bb_noshow';
+function getBanUntil(){try{return parseInt(localStorage.getItem(BAN_KEY)||'0');}catch{return 0;}}
+function setBanUntil(ts){try{localStorage.setItem(BAN_KEY,String(ts));}catch{}}
+function getPending(){try{const v=localStorage.getItem(NOSHOW_KEY);return v?JSON.parse(v):null;}catch{return null;}}
+function setPending(v){try{localStorage.setItem(NOSHOW_KEY,v?JSON.stringify(v):'');}catch{}}
+let _banInterval=null;
+function checkBan(){const u=getBanUntil();if(u>Date.now()){showBan(u);return true;}return false;}
+function showBan(until){
+  document.getElementById('banOverlay').classList.add('active');
+  if(_banInterval)clearInterval(_banInterval);
+  _banInterval=setInterval(()=>{
+    const l=Math.max(0,until-Date.now());
+    if(!l){clearInterval(_banInterval);localStorage.removeItem(BAN_KEY);localStorage.removeItem(NOSHOW_KEY);document.getElementById('banOverlay').classList.remove('active');return;}
+    const h=Math.floor(l/3600000),m=Math.floor((l%3600000)/60000),s=Math.floor((l%60000)/1000);
+    document.getElementById('banTimer').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  },1000);
+}
+async function tryUnlockBan(){
+  const inp=document.getElementById('banPasswordInput');
+  const h=await hashStr(inp.value.trim());
+  if(h===ADMIN_HASH){
+    localStorage.removeItem(BAN_KEY);localStorage.removeItem(NOSHOW_KEY);
+    if(_banInterval){clearInterval(_banInterval);_banInterval=null;}
+    document.getElementById('banOverlay').classList.remove('active');
+    inp.value='';document.getElementById('banUnlockError').textContent='';
+    toast('הגישה שוחררה ✅','🔓');
+  }else{
+    document.getElementById('banUnlockError').textContent='קוד שגוי ✗';
+    inp.classList.add('ban-input-error');inp.value='';
+    setTimeout(()=>document.getElementById('banUnlockError').textContent='',2500);
+  }
+}
+function checkNoShowPenalty(){
+  const p=getPending();if(!p)return;
+  const still=state.bookings.some(b=>b.id===p.bookingId);
+  if(!still){setPending(null);return;}
+  const[yr,mo,dy]=p.date.split('-').map(Number);const[hr,mn]=p.time.split(':').map(Number);
+  const dl=new Date(yr,mo-1,dy,hr,mn,0).getTime()+15*60*1000;
+  if(Date.now()>=dl){const bu=Date.now()+5*60*60*1000;setBanUntil(bu);setPending(null);showBan(bu);toast('לא הגעת לתור — חסימה ל-5 שעות 🚫','🚫');}
+}
+function registerNoShow(b){setPending({bookingId:b.id,date:b.date,time:b.time});}
+document.addEventListener('DOMContentLoaded',()=>{
+  const inp=document.getElementById('banPasswordInput');
+  if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter')tryUnlockBan();});
+});
+
+// ═══ SETTINGS / LOGO ═══
+function applySettings(){
+  const s=state.settings||{};
+  const name=s.name||'💈 Haimov Barbershop';
+  const addr=s.address||'רחוב הרצל 12, תל אביב';
+  const hrs=s.hours||'א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00';
+  document.getElementById('heroTitle').textContent=name;
+  document.getElementById('bookingTitle').textContent=name;
+  const ael=document.getElementById('heroAddress');if(ael)ael.textContent=addr;
+  const hel=document.getElementById('heroHours');if(hel)hel.textContent=hrs;
+  const fel=document.getElementById('featLocation');if(fel)fel.textContent=addr;
+  const ni=document.getElementById('shopNameInput');if(ni)ni.value=name;
+  const ai=document.getElementById('settingsAddress');if(ai)ai.value=addr;
+  const hi=document.getElementById('settingsHours');if(hi)hi.value=hrs;
+  // Logo
+  const logo=s.logo||'';
+  [['heroLogoImg','heroLogoDefault'],['bookingLogoImg','bookingLogoDefault'],['logoPreviewImg','logoPreviewDefault']].forEach(([imgId,defId])=>{
+    const img=document.getElementById(imgId);const def=document.getElementById(defId);
+    if(!img||!def)return;
+    if(logo){img.src=logo;img.style.display='block';def.style.display='none';}
+    else{img.style.display='none';def.style.display=def.tagName==='DIV'?'flex':'block';}
+  });
+}
+function handleLogoUpload(e){
+  const file=e.target.files[0];if(!file)return;
+  if(file.size>2*1024*1024){toast('גדול מדי (מקסימום 2MB)','⚠️');return;}
+  const r=new FileReader();r.onload=ev=>{if(!state.settings)state.settings={};state.settings.logo=ev.target.result;applySettings();toast('לוגו עודכן — לחץ שמור','ℹ️');};r.readAsDataURL(file);
+}
+async function saveSettings(){
+  if(!state.settings)state.settings={};
+  state.settings.name=document.getElementById('shopNameInput').value.trim()||'💈 Haimov Barbershop';
+  await save();applySettings();toast('הגדרות נשמרו ✅','✅');
+}
+async function saveBusinessInfo(){
+  if(!state.settings)state.settings={};
+  state.settings.address=document.getElementById('settingsAddress').value.trim();
+  state.settings.hours=document.getElementById('settingsHours').value.trim();
+  await save();applySettings();toast('פרטים נשמרו ✅','✅');
+}
+
+// ═══ GALLERY ═══
+function renderPublicGallery(){
+  const wrap=document.getElementById('publicGallery');
+  const imgs=state.gallery||[];
+  if(!imgs.length){wrap.innerHTML='<div style="grid-column:span 2;text-align:center;padding:20px;color:var(--c4);font-size:14px;">אין תמונות בגלריה</div>';return;}
+  wrap.innerHTML=imgs.map((g,i)=>`<div class="gallery-item"><img src="${g.src}" alt="gallery"/></div>`).join('');
+}
+function renderAdminGallery(){
+  const wrap=document.getElementById('adminGallery');
+  const imgs=state.gallery||[];
+  if(!imgs.length){wrap.innerHTML='<div style="grid-column:span 2;text-align:center;padding:20px;color:var(--c4);font-size:14px;">לחץ להוסיף תמונות</div>';return;}
+  wrap.innerHTML=imgs.map((g,i)=>`<div class="gallery-item"><img src="${g.src}" alt="gallery"/><button class="gal-del" onclick="deleteGalleryImg(${i})" title="מחק">×</button></div>`).join('');
+}
+function addGalleryImage(e){
+  const file=e.target.files[0];if(!file)return;
+  if(file.size>2*1024*1024){toast('גדול מדי','⚠️');return;}
+  const r=new FileReader();r.onload=async ev=>{
+    if(!state.gallery)state.gallery=[];
+    state.gallery.push({src:ev.target.result});
+    await save();renderAdminGallery();toast('תמונה נוספה ✅','🖼️');
+  };r.readAsDataURL(file);
+  e.target.value='';
+}
+async function deleteGalleryImg(i){
+  showConfirm('🗑️','מחק תמונה?','לא ניתן לשחזר.','מחק',async()=>{
+    state.gallery.splice(i,1);await save();renderAdminGallery();toast('תמונה נמחקה','ℹ️');
+  });
+}
+
+// ═══ SERVICES ═══
+function renderServicesTab(){
+  const list=document.getElementById('servicesList');if(!list)return;
+  const svcs=state.services||[];
+  list.innerHTML=svcs.map(s=>`<div class="service-card glass" style="margin:8px 14px;">
+    <div style="width:46px;height:46px;border-radius:14px;background:rgba(0,122,255,.15);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">${s.icon||'✂️'}</div>
+    <div style="flex:1;margin:0 12px;"><div style="font-size:15px;font-weight:700;color:var(--c1);">${s.name}</div><div style="font-size:12px;color:var(--c3);margin-top:2px;">${s.desc||''}</div></div>
+    <div style="font-size:18px;font-weight:900;color:var(--blue);">${s.price}</div>
+  </div>`).join('')+'<div style="height:8px;"></div>';
+}
+function renderAdminServicesList(){
+  const list=document.getElementById('adminServicesList');if(!list)return;
+  const svcs=state.services||[];
+  if(!svcs.length){list.innerHTML='<div class="no-item">אין שירותים</div>';return;}
+  list.innerHTML=svcs.map(s=>`<div class="bk-detail-row" style="border-bottom:1px solid rgba(120,120,128,.08);padding:10px 18px;">
+    <span class="bk-detail-ic">${s.icon||'✂️'}</span>
+    <span style="flex:1;font-size:14px;font-weight:600;color:var(--c1);">${s.name}</span>
+    <span style="color:var(--blue);font-weight:700;">${s.price}</span>
+    <button class="btn-ghost" style="padding:3px 8px;font-size:12px;" onclick="deleteService(${s.id})">מחק</button>
+  </div>`).join('');
+}
+async function addService(){
+  const name=document.getElementById('newSvcName').value.trim();
+  const price=document.getElementById('newSvcPrice').value.trim();
+  if(!name||!price){toast('נא למלא שם ומחיר','⚠️');return;}
+  if(!state.services)state.services=[];
+  state.services.push({id:Date.now(),name,price,desc:'',icon:'✂️'});
+  document.getElementById('newSvcName').value='';document.getElementById('newSvcPrice').value='';
+  await save();renderAdminServicesList();renderServicesTab();toast('שירות נוסף ✅','✅');
+}
+async function deleteService(id){
+  state.services=state.services.filter(s=>s.id!==id);
+  await save();renderAdminServicesList();renderServicesTab();toast('שירות נמחק','ℹ️');
+}
+
+// ═══ AUTH / USER SYSTEM ═══
+let currentUser=null;
+let isAdminMode=false;
+
+function loadUser(){try{const u=localStorage.getItem('bb_user');return u?JSON.parse(u):null;}catch{return null;}}
+function saveUserLocal(u){try{localStorage.setItem('bb_user',JSON.stringify(u));}catch{}}
+function getLocalBooked(){try{return JSON.parse(localStorage.getItem('bb_booked')||'false');}catch{return false;}}
+function setLocalBooked(v){try{localStorage.setItem('bb_booked',JSON.stringify(v));}catch{}}
+function isAdminUnlocked(){try{return localStorage.getItem('bb_admin_unlocked')==='1';}catch{return false;}}
+function setAdminUnlocked(v){try{localStorage.setItem('bb_admin_unlocked',v?'1':'0');}catch{}}
+
+function goRegStep2(){
+  const name=document.getElementById('regName').value.trim();
+  const phone=document.getElementById('regPhone').value.trim();
+  const email=document.getElementById('regEmail').value.trim();
+  if(!name){toast('נא להזין שם','⚠️');return;}
+  if(!phone||phone.length<7){toast('נא להזין טלפון תקין','⚠️');return;}
+  if(!email||!email.includes('@')){toast('נא להזין אימייל תקין','⚠️');return;}
+  document.getElementById('stepDot1').classList.add('done');document.getElementById('stepDot1').classList.remove('active');
+  document.getElementById('stepLine1').classList.add('done');document.getElementById('stepDot2').classList.add('active');
+  document.getElementById('regStep1').style.display='none';document.getElementById('regStep2').style.display='block';
+}
+function backRegStep1(){
+  document.getElementById('stepDot1').classList.remove('done');document.getElementById('stepDot1').classList.add('active');
+  document.getElementById('stepLine1').classList.remove('done');document.getElementById('stepDot2').classList.remove('active');
+  document.getElementById('regStep2').style.display='none';document.getElementById('regStep1').style.display='block';
+}
+async function doRegister(){
+  const name=document.getElementById('regName').value.trim();
+  const phone=document.getElementById('regPhone').value.trim();
+  const email=document.getElementById('regEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('regPass').value;
+  const pass2=document.getElementById('regPass2').value;
+  const terms=document.getElementById('regTerms').checked;
+  if(!terms){toast('יש לאשר תנאי שימוש','⚠️');return;}
+  if(pass.length<6){toast('סיסמה — מינימום 6 תווים','⚠️');return;}
+  if(pass!==pass2){toast('הסיסמאות אינן תואמות','⚠️');return;}
+  // Check if email taken
+  if(state.users&&state.users[email]){toast('אימייל זה כבר רשום','⚠️');return;}
+  const passHash=await hashStr(pass);
+  if(!state.users)state.users={};
+  state.users[email]={name,phone,email,passHash,registeredAt:Date.now()};
+  await save();
+  const user={name,phone,email};
+  currentUser=user;saveUserLocal(user);
+  document.getElementById('stepDot2').classList.add('done');document.getElementById('stepDot2').classList.remove('active');
+  document.getElementById('stepLine2').classList.add('done');document.getElementById('stepDot3').classList.add('done');
+  goToBooking();toast(`שלום ${name}! ✅`,'🎉');
+}
+async function doLogin(){
+  const email=document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('loginPass').value;
+  if(!email||!pass){toast('נא למלא את כל השדות','⚠️');return;}
+  const passHash=await hashStr(pass);
+  // Admin check by name hash (legacy)
+  if(passHash===ADMIN_HASH||email==='admin'){
+    goTo('sAdmin');renderAdmin();toast('ברוך הבא, מנהל 👋','🔐');return;
+  }
+  const user=state.users&&state.users[email];
+  if(!user){toast('אימייל לא נמצא','⚠️');return;}
+  if(user.passHash!==passHash){toast('סיסמה שגויה','⚠️');return;}
+  currentUser={name:user.name,phone:user.phone,email:user.email};
+  saveUserLocal(currentUser);
+  // Check admin mode
+  if(isAdminUnlocked()){
+    const adminActive=localStorage.getItem('bb_admin_active')==='1';
+    if(adminActive){goTo('sAdmin');renderAdmin();toast('מצב מנהל פעיל','🔐');return;}
+  }
+  goToBooking();toast(`שלום ${user.name}! 👋`,'✅');
+}
+function goToBooking(){
+  goTo('sBooking');
+  renderUserInfo();renderCalPicker();renderSlots();
+  if(getLocalBooked()&&state.bookings.length){
+    const last=state.bookings.filter(b=>b.userEmail===currentUser?.email).pop();
+    if(last){document.getElementById('successText').textContent=`№${last.id} | ${last.dateHe} | ${last.time}`;document.getElementById('successBanner').style.display='flex';}
+  }
+}
+function quickLogin(){
+  const u=loadUser();
+  if(!u){goTo('sLogin');return;}
+  currentUser=u;goToBooking();toast(`שלום ${u.name}! 👋`,'✅');
+}
+function renderUserInfo(){
+  if(!currentUser)return;
+  document.getElementById('displayName').textContent=`שלום, ${currentUser.name}! 👋`;
+  document.getElementById('displayPhone').textContent=currentUser.phone||currentUser.email||'';
+  document.getElementById('displayAvatar').textContent=currentUser.name[0]||'?';
+  startTick();
+  // Update settings card
+  const dn=document.getElementById('settingsDisplayName');if(dn)dn.textContent=currentUser.name;
+  const de=document.getElementById('settingsDisplayEmail');if(de)de.textContent=currentUser.email||currentUser.phone||'';
+  const sub=document.getElementById('settingsUserSub');if(sub)sub.textContent=currentUser.email||'';
+  // Show/hide admin toggle
+  const adminRow=document.getElementById('adminToggleRow');
+  const adminSecret=document.getElementById('adminSecretSection');
+  if(isAdminUnlocked()){
+    if(adminRow)adminRow.style.display='flex';
+    if(adminSecret)adminSecret.style.display='none';
+    const tog=document.getElementById('adminModeToggle');
+    if(tog)tog.checked=localStorage.getItem('bb_admin_active')==='1';
+  }else{
+    if(adminRow)adminRow.style.display='none';
+    if(adminSecret)adminSecret.style.display='block';
+  }
+}
+function logoutUser(){
+  currentUser=null;try{localStorage.removeItem('bb_user');}catch{}
+  goTo('sLogin');toast('התנתקת','ℹ️');
+}
+function logoutAdmin(){goTo('sBooking');toast('יצאת מפאנל הניהול','ℹ️');}
+
+// Admin secret in settings
+async function submitAdminSecret(){
+  const val=document.getElementById('adminSecretInput').value.trim();
+  const h=await hashStr(val);
+  if(h===ADMIN_HASH){
+    setAdminUnlocked(true);
+    document.getElementById('adminSecretSection').style.display='none';
+    document.getElementById('adminToggleRow').style.display='flex';
+    toast('קוד מנהל אושר! כעת ניתן להפעיל/כבות מצב מנהל','🔐');
+  }else{toast('קוד שגוי','⚠️');}
+  document.getElementById('adminSecretInput').value='';
+}
+function toggleAdminMode(on){
+  localStorage.setItem('bb_admin_active',on?'1':'0');
+  if(on&&currentUser){goTo('sAdmin');renderAdmin();toast('מצב מנהל הופעל','🔐');}
+  else toast('מצב מנהל כובה','ℹ️');
+}
+
+// ═══ CALENDAR PICKER (square grid) ═══
+let calPickerOffset=0;
+let selectedDate=null;
+const DAY_HE_SHORT=['א','ב','ג','ד','ה','ו','ש'];
+const MON_HE=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+function renderCalPicker(){
+  const wrap=document.getElementById('calPicker');if(!wrap)return;
+  const base=new Date();base.setDate(1);base.setMonth(base.getMonth()+calPickerOffset);
+  const year=base.getFullYear(),month=base.getMonth();
+  const label=document.getElementById('selectedDateLabel');
+  // header
+  const monthName=MON_HE[month]+' '+year;
+  let html=`<div class="cal-picker-header">
+    <button class="cal-picker-nav" onclick="calPickerNav(-1)">→</button>
+    <div class="cal-picker-month">${monthName}</div>
+    <button class="cal-picker-nav" onclick="calPickerNav(1)">←</button>
+  </div><div class="cal-picker-grid">`;
+  // day names
+  DAY_HE_SHORT.forEach(d=>html+=`<div class="cal-picker-dayname">${d}׳</div>`);
+  // empty cells
+  const firstDow=new Date(year,month,1).getDay();
+  for(let i=0;i<firstDow;i++)html+=`<div></div>`;
+  // days
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const todayStr=ilNow().date;
+  for(let d=1;d<=daysInMonth;d++){
+    const dateStr=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const rawSlots=state.dates[dateStr]||[];
+    const slots=capFridaySlots(dateStr,rawSlots);
+    const hasSlots=slots.length>0;
+    const isSelected=dateStr===selectedDate;
+    const isToday=dateStr===todayStr;
+    html+=`<div class="cal-picker-day${hasSlots?' has-slots':''}${isSelected?' selected':''}${isToday?' today':''}"
+      onclick="${hasSlots?`selectCalDate('${dateStr}')`:''}" style="${!hasSlots?'opacity:.35;cursor:default;':''}">
+      <span style="font-size:13px;font-weight:700;">${d}</span>
+      ${hasSlots?`<div class="cal-day-dot"></div>`:''}
+    </div>`;
+  }
+  html+=`</div>`;
+  wrap.innerHTML=html;
+  if(selectedDate&&label)label.textContent=fmtDate(selectedDate);
+}
+function calPickerNav(dir){calPickerOffset+=dir;renderCalPicker();}
+function selectCalDate(d){
+  selectedDate=d;
+  const label=document.getElementById('selectedDateLabel');
+  if(label)label.textContent=fmtDate(d);
+  renderCalPicker();renderSlots();
+}
+function fmtDate(d){if(!d)return'';const dt=new Date(d+'T12:00:00');return`${dt.getDate()}/${dt.getMonth()+1}/${dt.getFullYear()}`;}
+
+// ═══ SLOTS ═══
+function renderSlots(){
+  const grid=document.getElementById('slotsGrid'),none=document.getElementById('noSlots'),cnt=document.getElementById('slotCount');
+  if(!grid)return;
+  const rawSlots=(selectedDate&&state.dates[selectedDate])||[];
+  const slots=capFridaySlots(selectedDate||'',rawSlots).sort();
+  cnt.textContent=slots.length?`${slots.length} שעות`:'';
+  if(!slots.length){grid.innerHTML='';none.style.display='block';return;}
+  none.style.display='none';
+  grid.innerHTML=slots.map(t=>`<button class="slot-btn" onclick="bookSlot('${t}')"><div class="slot-time">${t}</div><div class="slot-sub">פנוי</div></button>`).join('');
+}
+
+// ═══ BOOK ═══
+async function bookSlot(time){
+  if(!currentUser){toast('נא להתחבר תחילה','⚠️');return;}
+  if(!selectedDate){toast('נא לבחור תאריך','⚠️');return;}
+  if(getLocalBooked()){toast('כבר קבעת תור ממכשיר זה','🚫');return;}
+  setLoading(true);toast('שומר תור...','⏳',10000);
+  try{
+    const fresh=await load();state=normalizeState(fresh);
+    if(!state.dates[selectedDate]||!state.dates[selectedDate].includes(time)){toast('שעה זו כבר נלקחה 😔','⚠️');renderSlots();return;}
+    state.dates[selectedDate]=state.dates[selectedDate].filter(s=>s!==time);
+    if(!state.dates[selectedDate].length)delete state.dates[selectedDate];
+    state.counter++;
+    const b={id:state.counter,name:currentUser.name,phone:currentUser.phone,email:currentUser.email||'',userEmail:currentUser.email||'',time,date:selectedDate,dateHe:fmtDate(selectedDate),status:'pending',note:'',haircut:''};
+    state.bookings.push(b);await save();setLocalBooked(true);registerNoShow(b);
+    document.getElementById('successText').textContent=`№${b.id} | ${b.dateHe} | ${b.time}`;
+    document.getElementById('successBanner').style.display='flex';
+    renderCalPicker();renderSlots();toast('התור נקבע בהצלחה! 🎉','✅');
+  }catch(e){toast('שגיאת חיבור','⚠️');console.error(e);}
+  finally{setLoading(false);}
+}
+
+// ═══ ADMIN RENDER ═══
+function renderAdmin(){renderBookings();renderAdminDates();renderAdminSlots();renderAdminReviews();renderCal();applySettings();renderAdminGallery();renderAdminServicesList();}
+
+const STATUS_LABELS={pending:'⏳ ממתין',confirmed:'✅ אושר',arrived:'🟢 הגיע',noshow:'🔴 לא הגיע',cancelled:'❌ בוטל'};
+const STATUS_CSS={pending:'status-pending',confirmed:'status-confirmed',arrived:'status-arrived',noshow:'status-noshow',cancelled:'status-cancelled'};
+
+function bookingDeadlineMs(b){
+  const[yr,mo,dy]=b.date.split('-').map(Number);const[hr,mn]=b.time.split(':').map(Number);
+  return new Date(yr,mo-1,dy,hr,mn,0).getTime()+15*60*1000;
+}
+
+function renderBookings(){
+  const list=document.getElementById('bookingsList'),none=document.getElementById('noBookings'),cnt=document.getElementById('bookingCount');
+  cnt.textContent=state.bookings.length?`${state.bookings.length} תורים`:'';
+  if(!state.bookings.length){list.innerHTML='';none.style.display='block';return;}
+  none.style.display='none';
+  const now=Date.now();
+  const sorted=[...state.bookings].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  list.innerHTML=sorted.map(b=>{
+    const dl=bookingDeadlineMs(b);const start=dl-15*60*1000;
+    const isActive=now>=start&&now<dl;const isExpired=now>=dl;
+    const left=Math.max(0,dl-now);
+    const mm=String(Math.floor(left/60000)).padStart(2,'0');const ss=String(Math.floor((left%60000)/1000)).padStart(2,'0');
+    const timerHtml=isActive?`<div class="bk-countdown" id="bkcd_${b.id}">${mm}:${ss}</div>`:isExpired?`<div class="bk-countdown expired">פג</div>`:'';
+    const emailRow=b.email?`<div class="bk-detail-row"><span class="bk-detail-ic">✉️</span><span dir="ltr">${b.email}</span></div>`:'';
+    const haircutRow=`<div class="bk-detail-row"><span class="bk-detail-ic">✂️</span><input type="text" class="reg-input" style="padding:2px 0;font-size:13px;" placeholder="סוג תספורת..." value="${b.haircut||''}" onchange="setBookingHaircut(${b.id},this.value)"/></div>`;
+    const status=b.status||'pending';
+    const noteRow=`<div class="bk-detail-row"><span class="bk-detail-ic">📝</span><input type="text" class="reg-input" style="padding:2px 0;font-size:13px;" placeholder="הערה..." value="${b.note||''}" onchange="setBookingNote(${b.id},this.value)"/></div>`;
+    return `<div class="booking-card${isActive?' urgent':''}" id="bkrow_${b.id}">
+      <div class="bk-card-header">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="bk-num">№${b.id}</div>
+          <div><div class="bk-client-name">${b.name}</div><div class="bk-appt-time">📅 ${b.dateHe||b.date} 🕐 ${b.time}</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">${timerHtml}<button class="btn-ghost" onclick="cancelBooking(${b.id})">ביטול</button></div>
+      </div>
+      <div class="bk-details">
+        <div class="bk-detail-row"><span class="bk-detail-ic">📱</span><span dir="ltr">${b.phone||'—'}</span></div>
+        ${emailRow}
+        ${haircutRow}
+        <div class="bk-detail-row">
+          <span class="bk-detail-ic">🏷️</span>
+          <select class="status-select" onchange="setBookingStatus(${b.id},this.value)">
+            ${Object.entries(STATUS_LABELS).map(([k,v])=>`<option value="${k}"${k===status?' selected':''}>${v}</option>`).join('')}
+          </select>
+          <span class="status-badge ${STATUS_CSS[status]}" style="margin-right:6px;">${STATUS_LABELS[status]}</span>
+        </div>
+        ${noteRow}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function setBookingStatus(id,status){
+  const b=state.bookings.find(x=>x.id===id);if(!b)return;b.status=status;
+  if(status==='arrived'||status==='cancelled'){const p=getPending();if(p&&p.bookingId===id)setPending(null);}
+  // if arrived → allow review
+  if(status==='arrived'&&b.userEmail){
+    const u=state.users&&state.users[b.userEmail];
+    if(u&&!u.canReview)u.canReview=true;
+    await save();
+  }else await save();
+  renderBookings();toast(`סטטוס: ${STATUS_LABELS[status]}`,'✅');
+}
+async function setBookingNote(id,note){const b=state.bookings.find(x=>x.id===id);if(!b)return;b.note=note;await save();}
+async function setBookingHaircut(id,haircut){const b=state.bookings.find(x=>x.id===id);if(!b)return;b.haircut=haircut;await save();}
+async function cancelBooking(id){
+  const b=state.bookings.find(x=>x.id===id);if(!b)return;
+  if(state.dates[b.date]&&!state.dates[b.date].includes(b.time))state.dates[b.date].push(b.time);
+  else if(!state.dates[b.date])state.dates[b.date]=[b.time];
+  state.bookings=state.bookings.filter(x=>x.id!==id);
+  try{await save();const p=getPending();if(p&&p.bookingId===id)setPending(null);setLocalBooked(false);renderAdmin();renderCalPicker();renderSlots();toast(`תור №${id} בוטל`,'ℹ️');}
+  catch{toast('שגיאת שמירה','⚠️');}
+}
+
+// ═══ ADMIN DATES / SLOTS ═══
+function renderAdminDates(){
+  const wrap=document.getElementById('adminDatesWrap'),none=document.getElementById('adminNoDates');
+  const dates=Object.keys(state.dates).sort();
+  if(!dates.length){wrap.innerHTML='';none.style.display='block';return;}
+  none.style.display='none';
+  wrap.innerHTML=dates.map(d=>`<div class="date-chip-admin">${fmtDate(d)}<button onclick="removeDate('${d}')">×</button></div>`).join('');
+  const sel=document.getElementById('slotDateSelect');const prev=sel.value;
+  sel.innerHTML='<option value="">בחר תאריך</option>'+dates.map(d=>`<option value="${d}">${fmtDate(d)}</option>`).join('');
+  if(prev&&dates.includes(prev))sel.value=prev;
+}
+function renderAdminSlots(){
+  const wrap=document.getElementById('adminSlotsWrap'),none=document.getElementById('adminNoSlots');
+  const d=document.getElementById('slotDateSelect').value;
+  if(!d){wrap.innerHTML='';none.style.display='block';none.textContent='בחר תאריך';return;}
+  const slots=capFridaySlots(d,(state.dates[d]||[])).sort();
+  if(!slots.length){wrap.innerHTML='';none.style.display='block';none.textContent='אין שעות';return;}
+  none.style.display='none';
+  wrap.innerHTML=slots.map(t=>`<div class="slot-chip">${t}<button onclick="removeSlot('${d}','${t}')">×</button></div>`).join('');
+}
+async function addDate(){
+  const d=document.getElementById('newDate').value;if(!d){toast('אנא בחר תאריך','⚠️');return;}
+  if(state.dates[d]!==undefined){toast('תאריך קיים','⚠️');return;}
+  state.dates[d]=[];try{await save();document.getElementById('newDate').value='';renderAdmin();renderCalPicker();toast(`${fmtDate(d)} נוסף`,'✅');}catch{toast('שגיאת שמירה','⚠️');}
+}
+async function removeDate(d){delete state.dates[d];try{await save();renderAdmin();renderCalPicker();renderSlots();toast('תאריך הוסר','ℹ️');}catch{toast('שגיאת שמירה','⚠️');}}
+async function addSlot(){
+  const d=document.getElementById('slotDateSelect').value;const t=document.getElementById('newSlotTime').value;
+  if(!d){toast('בחר תאריך','⚠️');return;}if(!t){toast('בחר שעה','⚠️');return;}
+  // Friday cap
+  const dt=new Date(d+'T12:00:00');if(dt.getDay()===5&&t>'15:00'){toast('בימי שישי עד 15:00 בלבד','⚠️');return;}
+  if(!state.dates[d])state.dates[d]=[];
+  if(state.dates[d].includes(t)){toast('שעה קיימת','⚠️');return;}
+  state.dates[d].push(t);try{await save();document.getElementById('newSlotTime').value='';renderAdmin();renderCalPicker();renderSlots();toast(`${t} נוספה`,'✅');}catch{toast('שגיאת שמירה','⚠️');}
+}
+async function removeSlot(d,t){
+  if(!state.dates[d])return;state.dates[d]=state.dates[d].filter(s=>s!==t);
+  try{await save();renderAdmin();renderCalPicker();renderSlots();toast(`${t} הוסרה`,'ℹ️');}catch{toast('שגיאת שמירה','⚠️');}
+}
+
+// DELETE ALL
+function confirmDeleteAll(type){
+  if(type==='dates'){
+    showConfirm('🗑️','מחק כל התאריכים?','כל התאריכים והשעות ימחקו לצמיתות.','מחק הכל',async()=>{
+      state.dates={};await save();renderAdmin();renderCalPicker();renderSlots();toast('כל התאריכים נמחקו','ℹ️');
+    });
+  }else{
+    showConfirm('🗑️','מחק כל השעות?','כל השעות מכל התאריכים ימחקו.','מחק הכל',async()=>{
+      Object.keys(state.dates).forEach(d=>{state.dates[d]=[];});await save();renderAdmin();renderCalPicker();renderSlots();toast('כל השעות נמחקו','ℹ️');
+    });
+  }
+}
+
+// ═══ BULK SLOTS ═══
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.day-pick-btn').forEach(btn=>btn.addEventListener('click',()=>btn.classList.toggle('active')));
+});
+async function generateBulkSlots(){
+  const from=document.getElementById('bulkFrom').value;const to=document.getElementById('bulkTo').value;
+  const start=document.getElementById('bulkStart').value;const end=document.getElementById('bulkEnd').value;
+  const interval=parseInt(document.getElementById('bulkInterval').value);
+  const buffer=parseInt(document.getElementById('bulkBuffer').value);
+  if(!from||!to||from>to){toast('בחר תקופה תקינה','⚠️');return;}
+  const activeDays=new Set([...document.querySelectorAll('.day-pick-btn.active')].map(b=>parseInt(b.dataset.d)));
+  if(!activeDays.size){toast('בחר לפחות יום אחד','⚠️');return;}
+  let total=0,days=0;
+  const cur=new Date(from+'T12:00:00');const endDate=new Date(to+'T12:00:00');
+  while(cur<=endDate){
+    const dow=cur.getDay();
+    if(activeDays.has(dow)){
+      const ds=cur.toISOString().slice(0,10);
+      if(!state.dates[ds])state.dates[ds]=[];
+      let[sh,sm]=start.split(':').map(Number);const[eh,em]=end.split(':').map(Number);
+      // Apply friday cap
+      const isFri=dow===5;
+      const endMins=isFri?Math.min(eh*60+em,15*60):eh*60+em;
+      while(true){
+        const sm2=sh*60+sm;if(sm2+interval>endMins)break;
+        const tStr=`${String(sh).padStart(2,'0')}:${String(sm).padStart(2,'0')}`;
+        if(!state.dates[ds].includes(tStr)){state.dates[ds].push(tStr);total++;}
+        const nxt=sm2+interval+buffer;sh=Math.floor(nxt/60);sm=nxt%60;
+      }
+      days++;
+    }
+    cur.setDate(cur.getDate()+1);
+  }
+  try{await save();renderAdmin();renderCalPicker();renderSlots();document.getElementById('bulkPreview').textContent=`✅ ${total} סלוטים ב-${days} ימים`;toast(`✅ ${total} סלוטים`,'✅');}
+  catch{toast('שגיאת שמירה','⚠️');}
+}
+
+// ═══ COPY WEEK ═══
+async function copyWeek(){
+  const from=document.getElementById('copyFromDate').value;const to=document.getElementById('copyToDate').value;
+  if(!from||!to){toast('בחר שבועות','⚠️');return;}
+  const src=new Date(from+'T12:00:00');const tgt=new Date(to+'T12:00:00');
+  const srcSun=new Date(src);srcSun.setDate(src.getDate()-src.getDay());
+  const tgtSun=new Date(tgt);tgtSun.setDate(tgt.getDate()-tgt.getDay());
+  let copied=0;
+  for(let i=0;i<7;i++){
+    const sd=new Date(srcSun);sd.setDate(srcSun.getDate()+i);
+    const td=new Date(tgtSun);td.setDate(tgtSun.getDate()+i);
+    const ss=sd.toISOString().slice(0,10);const ts=td.toISOString().slice(0,10);
+    if(state.dates[ss]&&state.dates[ss].length){
+      state.dates[ts]=[...(state.dates[ts]||[]),...state.dates[ss].filter(t=>!(state.dates[ts]||[]).includes(t))];
+      copied+=state.dates[ss].length;
+    }
+  }
+  try{await save();renderAdmin();renderCalPicker();toast(`✅ ${copied} סלוטים הועתקו`,'✅');}catch{toast('שגיאת שמירה','⚠️');}
+}
+
+// ═══ CALENDAR ADMIN ═══
+let calView='week',calOffset=0;
+function setCalView(v,btn){calView=v;calOffset=0;document.querySelectorAll('.cal-view-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCal();}
+function calNav(dir){calOffset+=dir;renderCal();}
+function renderCal(){
+  const grid=document.getElementById('calGrid'),label=document.getElementById('calLabel');if(!grid)return;
+  const now=new Date();
+  if(calView==='week'){
+    const base=new Date(now);base.setDate(now.getDate()-now.getDay()+calOffset*7);
+    const days=[];for(let i=0;i<7;i++){const d=new Date(base);d.setDate(base.getDate()+i);days.push(d);}
+    label.textContent=`${days[0].getDate()}/${days[0].getMonth()+1} — ${days[6].getDate()}/${days[6].getMonth()+1}/${days[6].getFullYear()}`;
+    grid.innerHTML=`<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 14px 14px;">
+      ${days.map(d=>{
+        const str=d.toISOString().slice(0,10);const slots=capFridaySlots(str,state.dates[str]||[]);const isToday=str===ilNow().date;
+        return `<div class="cal-week-day${slots.length?' has-slots':''}${isToday?' today':''}" onclick="jumpToSlots('${str}')">
+          <div class="cal-day-name">${DAY_HE_SHORT[d.getDay()]}׳</div><div class="cal-day-num">${d.getDate()}</div>
+          ${slots.length?`<div class="cal-slot-count">${slots.length}⏰</div>`:''}
+        </div>`;
+      }).join('')}
+    </div>`;
+  }else{
+    const base=new Date(now.getFullYear(),now.getMonth()+calOffset,1);
+    const month=base.getMonth(),year=base.getFullYear();
+    label.textContent=MON_HE[month]+' '+year;
+    const firstDow=base.getDay();const dim=new Date(year,month+1,0).getDate();
+    const cells=[];for(let i=0;i<firstDow;i++)cells.push(null);for(let d=1;d<=dim;d++)cells.push(new Date(year,month,d));
+    grid.innerHTML=`<div style="padding:0 14px 14px;">
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px;">
+        ${DAY_HE_SHORT.map(d=>`<div style="text-align:center;font-size:10px;font-weight:700;color:var(--c4);padding:4px 0;">${d}׳</div>`).join('')}
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">
+        ${cells.map(d=>{
+          if(!d)return`<div></div>`;
+          const str=d.toISOString().slice(0,10);const slots=capFridaySlots(str,state.dates[str]||[]);const isToday=str===ilNow().date;
+          return `<div class="cal-week-day${slots.length?' has-slots':''}${isToday?' today':''}" style="padding:4px 2px;min-height:36px;" onclick="jumpToSlots('${str}')">
+            <div class="cal-day-num" style="font-size:12px;">${d.getDate()}</div>
+            ${slots.length?`<div class="cal-slot-count">${slots.length}⏰</div>`:''}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }
+}
+function jumpToSlots(str){
+  const tabs=document.querySelectorAll('.admin-tab');switchAdminTab('tSlots',tabs[2]);
+  const sel=document.getElementById('slotDateSelect');if(sel){sel.value=str;renderAdminSlots();}
+  toast(`${fmtDate(str)}`,'📅');
+}
+
+// ═══ QUEUE VIEW ═══
+function renderQueueView(){
+  const now=ilNow();
+  const todayStr=now.date;
+  document.getElementById('queueDateTime').textContent=`${todayStr} | ${now.time}`;
+  const todayBookings=state.bookings.filter(b=>b.date===todayStr&&b.status!=='cancelled').sort((a,b)=>a.time.localeCompare(b.time));
+  // Active (current) and next
+  const nowMins=parseInt(now.time.split(':')[0])*60+parseInt(now.time.split(':')[1]);
+  let active=null,next=null;
+  for(const b of todayBookings){
+    const[h,m]=b.time.split(':').map(Number);const bm=h*60+m;
+    if(bm<=nowMins&&nowMins<bm+60){active=b;}
+    else if(bm>nowMins&&!next){next=b;}
+  }
+  const qg=document.getElementById('queueGrid');
+  qg.innerHTML='';
+  const makeCard=(b,label,cls)=>{
+    const div=document.createElement('div');
+    div.className=`queue-card ${cls}`;
+    div.innerHTML=`<div class="queue-avatar">${b.name[0]||'?'}</div>
+      <div class="queue-name">${b.name}</div>
+      <div class="queue-time">${b.time}</div>
+      <div class="queue-status-pill ${STATUS_CSS[b.status||'pending']}">${label}</div>
+      ${b.haircut?`<div style="font-size:11px;color:var(--c3);margin-top:4px;">✂️ ${b.haircut}</div>`:''}
+      <div style="font-size:11px;color:var(--c4);margin-top:4px;">📱 ${b.phone||'—'}</div>`;
+    qg.appendChild(div);
+  };
+  if(active)makeCard(active,'🟢 עכשיו','active-now');
+  if(next)makeCard(next,'⏭️ הבא','next-up');
+  if(!active&&!next){qg.innerHTML='<div style="grid-column:span 2;text-align:center;padding:20px;color:var(--c4);font-size:14px;">אין תורים פעילים כרגע</div>';}
+  // Today full list
+  const list=document.getElementById('todayList'),none=document.getElementById('noTodayList');
+  if(!todayBookings.length){list.innerHTML='';none.style.display='block';return;}
+  none.style.display='none';
+  list.innerHTML=todayBookings.map(b=>`<div class="bk-detail-row" style="padding:10px 18px;">
+    <span class="bk-detail-ic">🕐</span>
+    <span style="font-weight:700;min-width:44px;">${b.time}</span>
+    <span style="flex:1;font-size:14px;font-weight:600;color:var(--c1);">${b.name}</span>
+    ${b.haircut?`<span style="font-size:12px;color:var(--c3);">✂️ ${b.haircut}</span>`:''}
+    <span class="status-badge ${STATUS_CSS[b.status||'pending']}" style="font-size:10px;">${STATUS_LABELS[b.status||'pending']}</span>
+  </div>`).join('');
+  // Refresh every 30s
+  setTimeout(()=>{if(document.getElementById('sAdmin2').classList.contains('active'))renderQueueView();},30000);
+}
+
+// ═══ REVIEWS ═══
+let reviewStarVal=0;
+function setReviewStar(v){
+  reviewStarVal=v;
+  document.querySelectorAll('.star-btn').forEach((b,i)=>{b.textContent=i<v?'★':'☆';});
+}
+async function submitReview(){
+  if(!currentUser){toast('יש להתחבר','⚠️');return;}
+  // Check if user is allowed (admin approved haircut)
+  const canReview=state.users&&state.users[currentUser.email]&&state.users[currentUser.email].canReview;
+  if(!canReview){toast('ניתן לכתוב ביקורת רק לאחר קבלת שירות מאושר','⚠️');return;}
+  if(!reviewStarVal){toast('בחר דירוג','⚠️');return;}
+  const text=document.getElementById('reviewText').value.trim();
+  if(!text){toast('כתוב ביקורת','⚠️');return;}
+  if(!state.reviews)state.reviews=[];
+  state.reviews.push({id:Date.now(),name:currentUser.name,stars:reviewStarVal,text,date:new Date().toLocaleDateString('he-IL'),approved:false,userEmail:currentUser.email});
+  await save();document.getElementById('reviewText').value='';setReviewStar(0);
+  toast('ביקורת נשלחה לאישור ✅','⭐');
+}
+function renderPublicReviews(){
+  const list=document.getElementById('reviewsList');
+  const fw=document.getElementById('reviewFormWrap');
+  const approved=(state.reviews||[]).filter(r=>r.approved);
+  if(!approved.length){list.innerHTML='<div class="glass-card glass"><div class="no-item"><div style="font-size:24px;margin-bottom:5px;">⭐</div>היה הראשון לכתוב ביקורת!</div></div>';} 
+  else list.innerHTML=approved.map(r=>`<div class="review-card glass">
+    <div class="review-header">
+      <div class="review-avatar">${r.name[0]||'?'}</div>
+      <div><div class="review-name">${r.name}</div><div class="review-date">${r.date}</div></div>
+      <div style="margin-right:auto;font-size:16px;color:#FFD60A;">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
+    </div>
+    <div class="review-text">${r.text}</div>
+  </div>`).join('');
+  // Show form only if logged in and can review
+  if(fw){
+    const canReview=currentUser&&state.users&&state.users[currentUser.email]&&state.users[currentUser.email].canReview;
+    fw.style.display=canReview?'block':'none';
+  }
+}
+function renderAdminReviews(){
+  const list=document.getElementById('adminReviewsList'),none=document.getElementById('noAdminReviews');
+  const pending=(state.reviews||[]).filter(r=>!r.approved);
+  document.getElementById('pendingReviewCount').textContent=pending.length?`${pending.length} ממתינות`:'';
+  if(!pending.length){list.innerHTML='';none.style.display='block';return;}
+  none.style.display='none';
+  list.innerHTML=pending.map(r=>`<div class="booking-card" style="margin:10px 14px;">
+    <div class="bk-card-header">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#0A84FF,#5856d6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;">${r.name[0]||'?'}</div>
+        <div><div class="bk-client-name">${r.name}</div><div style="font-size:13px;color:#FFD60A;">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div></div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn-add btn-add-green" style="padding:6px 12px;border-radius:10px;font-size:12px;" onclick="approveReview(${r.id})">✓ אשר</button>
+        <button class="btn-ghost" onclick="deleteReview(${r.id})">מחק</button>
+      </div>
+    </div>
+    <div class="bk-detail-row"><span class="bk-detail-ic">💬</span><span>${r.text}</span></div>
+  </div>`).join('');
+}
+async function approveReview(id){const r=(state.reviews||[]).find(x=>x.id===id);if(!r)return;r.approved=true;await save();renderAdminReviews();toast('אושרה ✅','⭐');}
+async function deleteReview(id){state.reviews=(state.reviews||[]).filter(x=>x.id!==id);await save();renderAdminReviews();toast('נמחקה','ℹ️');}
+
+// ═══ LIVE TICK ═══
+let _tickInterval=null;
+function startTick(){if(_tickInterval)return;_tickInterval=setInterval(tickAll,1000);}
+function tickAll(){
+  const now=Date.now();const p=getPending();
+  const ub=document.getElementById('countdownBanner'),ut=document.getElementById('cdUserTimer');
+  if(p&&ub&&ut){
+    const[yr,mo,dy]=p.date.split('-').map(Number);const[hr,mn]=p.time.split(':').map(Number);
+    const st=new Date(yr,mo-1,dy,hr,mn,0).getTime();const dl=st+15*60*1000;
+    if(now>=st&&now<dl){ub.classList.add('active');const l=dl-now;ut.textContent=`${String(Math.floor(l/60000)).padStart(2,'0')}:${String(Math.floor((l%60000)/1000)).padStart(2,'0')}`;}
+    else ub.classList.remove('active');
+  }else if(ub)ub.classList.remove('active');
+  const ab=document.getElementById('adminCountdownBanner'),at=document.getElementById('cdAdminTimer'),ai=document.getElementById('adminCdInfo');
+  if(ab){
+    let best=null,minLeft=Infinity;
+    for(const b of state.bookings){
+      const[yr,mo,dy]=b.date.split('-').map(Number);const[hr,mn]=b.time.split(':').map(Number);
+      const st=new Date(yr,mo-1,dy,hr,mn,0).getTime();const dl=st+15*60*1000;
+      if(now>=st&&now<dl){const l=dl-now;if(l<minLeft){minLeft=l;best=b;}}
+    }
+    if(best&&at&&ai){ab.classList.add('active');at.textContent=`${String(Math.floor(minLeft/60000)).padStart(2,'0')}:${String(Math.floor((minLeft%60000)/1000)).padStart(2,'0')}`;ai.textContent=`${best.name} — ${best.time}`;}
+    else ab.classList.remove('active');
+  }
+  for(const b of state.bookings){
+    const el=document.getElementById(`bkcd_${b.id}`);if(!el)continue;
+    const[yr,mo,dy]=b.date.split('-').map(Number);const[hr,mn]=b.time.split(':').map(Number);
+    const st=new Date(yr,mo-1,dy,hr,mn,0).getTime();const dl=st+15*60*1000;
+    if(now>=st&&now<dl){const l=dl-now;el.textContent=`${String(Math.floor(l/60000)).padStart(2,'0')}:${String(Math.floor((l%60000)/1000)).padStart(2,'0')}`;}
+  }
+}
+
+// ═══ INIT ═══
+(async()=>{
+  checkBan();
+  try{
+    const d=await load();state=normalizeState(d);
+    await cleanPast();applySettings();renderServicesTab();
+    // restore theme
+    try{const t=localStorage.getItem('bb_theme');if(t)setTheme(t);}catch{}
+    // restore lang
+    try{const l=localStorage.getItem('bb_lang');if(l)setLang(l,null);}catch{}
+    applyLangBtn();
+    // quick login attempt
+    const u=loadUser();
+    if(u&&u.email&&state.users&&state.users[u.email]){
+      currentUser=u;
+    }
+    setInterval(async()=>{await cleanPast();renderCalPicker();renderSlots();checkNoShowPenalty();},60000);
+    checkNoShowPenalty();startTick();
+    document.getElementById('slotDateSelect').addEventListener('change',renderAdminSlots);
+    renderPublicReviews();renderPublicGallery();
+  }catch(e){
+    state={dates:{},bookings:[],counter:0,reviews:[],settings:{name:'💈 Haimov Barbershop',logo:'',address:'רחוב הרצל 12, תל אביב',hours:'א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00'},gallery:[],services:state.services,users:{}};
+    useLocal=true;console.error('Init:',e);
+  }
+})();
+</script>
+</body>
+</html>
