@@ -256,7 +256,7 @@ body{
 
 /* ══ HERO SPLASH PHOTO ══ */
 .splash-photo{width:100%;border-radius:20px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;}
-.splash-photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;animation:photoFadeIn .8s ease .2s both;}
+.splash-photo img{width:100%;height:100%;object-fit:cover;display:block;}
 @keyframes photoFadeIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:none}}
 
 /* ══ LOGO ANIMATE ══ */
@@ -337,9 +337,9 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
 .phone-suffix::placeholder{color:var(--c4);}
 
 /* ══ GALLERY SLIDESHOW ══ */
-.splash-photo{aspect-ratio:16/9;border-radius:18px;overflow:hidden;margin-bottom:14px;background:var(--chip);}
-#galSlides{width:100%;flex-shrink:0;}
-#galSlides > div{flex-shrink:0;width:100%;height:100%;}
+.splash-photo{width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;margin-bottom:14px;background:var(--chip);position:relative;}
+#galSlides{display:flex;height:100%;}
+#galSlides > div{flex:0 0 100%;width:100%;height:100%;overflow:hidden;}
 #galSlides img{width:100%;height:100%;object-fit:cover;display:block;}
 .gal-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45);transition:all .25s;cursor:pointer;}
 .gal-dot.active{background:#fff;width:18px;border-radius:3px;}
@@ -875,16 +875,16 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
   &nbsp;·&nbsp;
   <span data-i18n="footer_site">רוצה אתר? פנה אלינו</span>
   &nbsp;·&nbsp;
-  <span style="opacity:.55;">v0.6.0</span>
+  <span style="opacity:.55;">v0.6.1</span>
 </div>
 <div class="watermark">HAIMOV BARBERSHOP · PROTECTED</div>
 
 <script>
 /* ================================================================
-   HAIMOV BARBERSHOP v0.6.0
+   HAIMOV BARBERSHOP v0.6.1
    Built with: HTML + CSS + JS  |  Cloud: JSONBin.io + localStorage
    Roles: Admin / Curator / Client
-   © 2026 Haimov Barbershop — by daniel krinets
+   © 2026 Haimov Barbershop — Protected work by daniel krinets
    ================================================================ */
 'use strict';
 
@@ -1033,8 +1033,8 @@ function renderSplashPhoto(){
   }
   if(empty)empty.style.display='none';
   galCurrent=0;
-  slides.style.width=(imgs.length*100)+'%';
-  slides.innerHTML=imgs.map(g=>`<div style="width:${100/imgs.length}%;"><img src="${g.src}" alt="${g.caption||''}"/></div>`).join('');
+  slides.style.width='100%';
+  slides.innerHTML=imgs.map(g=>`<div><img src="${g.src}" alt="${g.caption||''}"/></div>`).join('');
   dots.innerHTML=imgs.map((_,i)=>`<div class="gal-dot${i===0?' active':''}" onclick="event.stopPropagation();galGoTo(${i})"></div>`).join('');
   galUpdateSlide();
   if(galTimer)clearInterval(galTimer);
@@ -1050,7 +1050,7 @@ function galUpdateSlide(){
   const imgs=state.gallery||[];if(!imgs.length)return;
   const slides=document.getElementById('galSlides');
   const dots=document.getElementById('galDots');
-  if(slides)slides.style.transform=`translateX(${document.documentElement.dir==='rtl'?'':'-'}${galCurrent*(100/imgs.length)}%)`;
+  if(slides)slides.style.transform=`translateX(-${galCurrent*100}%)`;
   if(dots)dots.querySelectorAll('.gal-dot').forEach((d,i)=>d.classList.toggle('active',i===galCurrent));
 }
 
@@ -1142,8 +1142,10 @@ function norm(r){
     if(loc.users)Object.keys(loc.users).forEach(k=>{
       if(s.users[k]&&loc.users[k]?.avatar)s.users[k].avatar=loc.users[k].avatar;
     });
-    // if local has more recent services (cloud might lag), prefer local
-    if(loc.services?.length>0&&loc.counter>=s.counter)s.services=loc.services;
+    // local services always win (admin edits happen locally, cloud may lag)
+    if(loc.services?.length>0)s.services=loc.services;
+    // local dates/bookings: only use local if cloud has nothing
+    // (cloud is authoritative for dates/bookings since multi-device)
   }
   return s;
 }
@@ -1467,10 +1469,10 @@ function renderAGal(){
 }
 function addGalImg(e){
   const f=e.target.files[0];if(!f)return;if(f.size>2*1024*1024){toast('עד 2MB','⚠️');return;}
-  const r=new FileReader();r.onload=ev=>{if(!state.gallery)state.gallery=[];state.gallery.push({src:ev.target.result});lsSave();renderAGal();renderSplashPhoto();toast(t('add_photo'),'🖼️');};
+  const r=new FileReader();r.onload=async ev=>{if(!state.gallery)state.gallery=[];state.gallery.push({src:ev.target.result,caption:''});lsSave();renderAGal();renderSplashPhoto();renderGalPublic('publicGallery');toast(t('add_photo'),'🖼️');};
   r.readAsDataURL(f);e.target.value='';
 }
-function delGalImg(i){showModal('🗑️','מחק?','','מחק',()=>{state.gallery.splice(i,1);lsSave();renderAGal();toast('נמחק','ℹ️');});}
+function delGalImg(i){showModal('🗑️','מחק?','','מחק',()=>{state.gallery.splice(i,1);lsSave();renderAGal();renderSplashPhoto();renderGalPublic('publicGallery');toast('נמחק','ℹ️');});}
 
 // ══ SERVICES ══
 function renderSvcPublic(id){
@@ -1649,7 +1651,15 @@ async function bookSlot(time){
   document.querySelectorAll('.slot-btn').forEach(b=>b.disabled=true);
   toast('שומר...','⏳',8000);
   try{
-    const fresh=await load();state=norm(fresh);
+    const fresh=await load();
+    const prevServices=state.services; // preserve admin's local services
+    const prevGallery=state.gallery;   // preserve local gallery
+    const prevSettings=state.settings; // preserve logo etc
+    state=norm(fresh);
+    // Restore local-only data that norm() might have lost
+    if(prevServices?.length)state.services=prevServices;
+    if(prevGallery?.length)state.gallery=prevGallery;
+    if(prevSettings?.logo)state.settings.logo=prevSettings.logo;
     if(!state.dates[selDate]?.includes(time)){toast('שעה זו כבר נלקחה 😔','⚠️');renderSlots();return;}
     state.dates[selDate]=state.dates[selDate].filter(s=>s!==time);
     if(!state.dates[selDate].length)delete state.dates[selDate];
