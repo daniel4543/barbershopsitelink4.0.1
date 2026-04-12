@@ -938,7 +938,7 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
 <div class="app-footer">
   <span dir="ltr">📞 <a href="tel:+972054457098">+972 054-457-0982</a></span>
   &nbsp;·&nbsp;
-  <span data-i18n="footer_site">רוצה אתר? פנה אלינו (אם הכניסה לא עובדת תשתמש ב-כרום)</span>
+  <span data-i18n="footer_site">רוצה אתר? פנה אלינו</span>
   &nbsp;·&nbsp;
   <span style="opacity:.55;">v0.6.2</span>
 </div>
@@ -1174,7 +1174,7 @@ async function save(){
   try{
     await cloudSave(); // always try cloud — don't let useLocal block it
   }catch(e){
-    console.warn('cloud save failed:',e.message);
+    // cloud save failed silently, localStorage has the data
   }
 }
 async function load(){
@@ -1192,7 +1192,7 @@ async function load(){
     }catch{}
     return d;
   }catch(e){
-    console.warn('cloud load failed, using localStorage:',e.message);
+    // cloud unavailable, using localStorage cache
     return lsLoad()||state;
   }
 }
@@ -1625,10 +1625,11 @@ function clearSvcPick(){
   document.getElementById('calSlotsWrap').style.display='none';
 }
 function renderCP(){
-  const grid=document.getElementById('cpGrid'),mEl=document.getElementById('cpMonth');if(!grid)return;
+  const grid=document.getElementById('cpGrid');if(!grid)return;
+  const mEl=document.getElementById('cpMonth');
   const now=new Date();const base=new Date(now.getFullYear(),now.getMonth()+cpOffset,1);
   const yr=base.getFullYear(),mo=base.getMonth();
-  mEl.textContent=`${MON_HE[mo]} ${yr}`;
+  if(mEl)mEl.textContent=`${MON_HE[mo]} ${yr}`;
   let h='';DAY_HE.forEach(d=>h+=`<div class="cal-dn">${d}׳</div>`);
   const fd=base.getDay();for(let i=0;i<fd;i++)h+=`<div></div>`;
   const dim=new Date(yr,mo+1,0).getDate();const ts=ilNow().date;
@@ -1647,11 +1648,13 @@ function pickDate(d){selDate=d;renderCP();renderSlots();}
 
 // ══ SLOTS ══
 function renderSlots(){
-  const g=document.getElementById('slotsGrid'),n=document.getElementById('noSlots'),c=document.getElementById('slotCnt');if(!g)return;
+  const g=document.getElementById('slotsGrid');if(!g)return;
+  const noSl=document.getElementById('noSlots');
+  const cnt=document.getElementById('slotCnt');
   const slots=capFri(selDate||'',(selDate&&state.dates[selDate])||[]).sort();
-  c.textContent=slots.length?`${slots.length} ${t('avail_times').includes(' ')?'שעות':''}`:' ';
-  if(!slots.length){g.innerHTML='';n.style.display='block';return;}
-  n.style.display='none';
+  if(cnt)cnt.textContent=slots.length?`${slots.length} שעות`:'';
+  if(!slots.length){g.innerHTML='';if(noSl)noSl.style.display='block';return;}
+  if(noSl)noSl.style.display='none';
   g.innerHTML=slots.map(s=>`<button class="slot-btn glass" onclick="bookSlot('${s}')"><div class="slot-time">${s}</div><div class="slot-sub">✓</div></button>`).join('');
 }
 
@@ -1782,10 +1785,12 @@ const SC={pending:'s-p',confirmed:'s-c',arrived:'s-a',noshow:'s-n',cancelled:'s-
 function dlMs(b){const[y,mo,d]=b.date.split('-').map(Number);const[h,m]=b.time.split(':').map(Number);return new Date(y,mo-1,d,h,m,0).getTime()+15*60*1000;}
 
 function renderBookings(){
-  const list=document.getElementById('bookList'),none=document.getElementById('noBook'),cnt=document.getElementById('bookCnt');
-  cnt.textContent=`${state.bookings.length} ${t('bookings')}`;
-  if(!state.bookings.length){list.innerHTML='';none.style.display='block';return;}
-  none.style.display='none';
+  const list=document.getElementById('bookList');if(!list)return;
+  const none=document.getElementById('noBook');
+  const cnt=document.getElementById('bookCnt');
+  if(cnt)cnt.textContent=`${state.bookings.length} ${t('bookings')}`;
+  if(!state.bookings.length){list.innerHTML='';if(none)none.style.display='block';return;}
+  if(none)none.style.display='none';
   const now=Date.now();
   list.innerHTML=[...state.bookings].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).map(b=>{
     const dl=dlMs(b);const st=dl-15*60*1000;const isAct=now>=st&&now<dl;
@@ -1837,9 +1842,10 @@ async function cancelBook(id){
 // ══ ADMIN CAL ══
 let acOffset=0;
 function renderAC(){
-  const g=document.getElementById('acGrid'),m=document.getElementById('acMonth');if(!g)return;
+  const g=document.getElementById('acGrid');if(!g)return;
+  const m=document.getElementById('acMonth');
   const now=new Date();const base=new Date(now.getFullYear(),now.getMonth()+acOffset,1);
-  const yr=base.getFullYear(),mo=base.getMonth();m.textContent=`${MON_HE[mo]} ${yr}`;
+  const yr=base.getFullYear(),mo=base.getMonth();if(m)m.textContent=`${MON_HE[mo]} ${yr}`;
   let h='';DAY_HE.forEach(d=>h+=`<div class="cal-dn">${d}׳</div>`);
   const fd=base.getDay();for(let i=0;i<fd;i++)h+=`<div></div>`;
   const dim=new Date(yr,mo+1,0).getDate();const ts=ilNow().date;
@@ -1857,22 +1863,26 @@ function jumpSlot(ds){const sel=document.getElementById('slotDateSel');if(sel){s
 
 // ══ DATES/SLOTS ══
 function renderADates(){
-  const w=document.getElementById('aDatesWrap'),n=document.getElementById('aNoDates');
+  const w=document.getElementById('aDatesWrap');if(!w)return;
+  const n=document.getElementById('aNoDates');
   const dates=Object.keys(state.dates).sort();
-  if(!dates.length){w.innerHTML='';n.style.display='block';return;}
-  n.style.display='none';
+  if(!dates.length){w.innerHTML='';if(n)n.style.display='block';return;}
+  if(n)n.style.display='none';
   w.innerHTML=dates.map(d=>`<div class="chip chip-g">${fmtDate(d)}<button onclick="rmDate('${d}')">×</button></div>`).join('');
-  const sel=document.getElementById('slotDateSel');const prev=sel.value;
+  const sel=document.getElementById('slotDateSel');if(!sel)return;
+  const prev=sel.value;
   sel.innerHTML=`<option value="">${t('pick_date')}</option>`+dates.map(d=>`<option value="${d}">${fmtDate(d)}</option>`).join('');
   if(prev&&dates.includes(prev))sel.value=prev;
 }
 function renderASlots(){
-  const w=document.getElementById('aSlotsWrap'),n=document.getElementById('aNoSlots');
-  const d=document.getElementById('slotDateSel').value;
-  if(!d){w.innerHTML='';n.style.display='block';n.textContent=t('pick_date');return;}
+  const w=document.getElementById('aSlotsWrap');if(!w)return;
+  const n=document.getElementById('aNoSlots');
+  const selEl=document.getElementById('slotDateSel');if(!selEl)return;
+  const d=selEl.value;
+  if(!d){w.innerHTML='';if(n){n.style.display='block';n.textContent=t('pick_date');}return;}
   const slots=capFri(d,state.dates[d]||[]).sort();
-  if(!slots.length){w.innerHTML='';n.style.display='block';n.textContent='אין שעות';return;}
-  n.style.display='none';
+  if(!slots.length){w.innerHTML='';if(n){n.style.display='block';n.textContent='אין שעות';}return;}
+  if(n)n.style.display='none';
   w.innerHTML=slots.map(s=>`<div class="chip">${s}<button onclick="rmSlot('${d}','${s}')">×</button></div>`).join('');
 }
 async function addDate(){
@@ -1961,8 +1971,9 @@ async function copyWeek(){
 
 // ══ USERS ══
 function renderUsers(){
-  const el=document.getElementById('usersList'),cnt=document.getElementById('usersCnt');if(!el)return;
-  const us=Object.values(state.users||{});cnt.textContent=`${us.length}`;
+  const el=document.getElementById('usersList');if(!el)return;
+  const cnt=document.getElementById('usersCnt');
+  const us=Object.values(state.users||{});if(cnt)cnt.textContent=`${us.length}`;
   if(!us.length){el.innerHTML='<div style="padding:16px;text-align:center;color:var(--c4);">אין משתמשים</div>';return;}
   el.innerHTML=us.map(u=>`
     <div class="user-item">
@@ -2057,11 +2068,13 @@ async function doReview(which){
   toast('נשלח לאישור ✅','⭐');
 }
 function renderARv(){
-  const list=document.getElementById('aRvList'),none=document.getElementById('aNoRv'),cnt=document.getElementById('rvPendCnt');
+  const list=document.getElementById('aRvList');if(!list)return;
+  const none=document.getElementById('aNoRv');
+  const cnt=document.getElementById('rvPendCnt');
   const pend=(state.reviews||[]).filter(r=>!r.approved);
-  cnt.textContent=pend.length?`${pend.length}`:' ';
-  if(!pend.length){list.innerHTML='';none.style.display='block';return;}
-  none.style.display='none';
+  if(cnt)cnt.textContent=pend.length?`${pend.length}`:' ';
+  if(!pend.length){list.innerHTML='';if(none)none.style.display='block';return;}
+  if(none)none.style.display='none';
   list.innerHTML=pend.map(r=>`<div class="bk-card" style="margin-bottom:10px;">
     <div class="bk-hdr">
       <div style="display:flex;align-items:center;gap:8px;">
@@ -2270,7 +2283,9 @@ function tickAll(){
     if(now>=st&&now<dl){ub.classList.add('show');const l=dl-now;ut.textContent=`${String(Math.floor(l/60000)).padStart(2,'0')}:${String(Math.floor((l%60000)/1000)).padStart(2,'0')}`;}
     else ub.classList.remove('show');
   }else if(ub)ub.classList.remove('show');
-  const ab=document.getElementById('adminCdBanner'),at=document.getElementById('cdAdmin'),ai=document.getElementById('adminCdInfo');
+  const ab=document.getElementById('adminCdBanner');
+  const at=document.getElementById('cdAdmin');
+  const ai=document.getElementById('adminCdInfo');
   if(ab){
     let best=null,ml=Infinity;
     for(const b of state.bookings){
