@@ -539,16 +539,43 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
     </div>
   </div>
 
-  <!-- Countdown -->
-  <div id="cntBanner" class="banner banner-orange">
-    <div class="bn-ic bn-ic-o">⏳</div>
-    <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--c1);" data-i18n="appt_soon">התור שלך עוד מעט!</div><div style="font-size:11px;color:var(--c3);" data-i18n="noshow_warn">הגעה בזמן חשובה!</div></div>
-    <div style="text-align:center;"><div class="cd-time" id="cdUser">15:00</div><div style="font-size:10px;color:var(--c3);" data-i18n="remaining">נותרו</div></div>
-  </div>
+
 
   <!-- Panels -->
   <div id="bp-main" class="panel active">
-    <!-- Step 1: Service picker -->
+    <!-- My appointment (populated by updateMyAppt) -->
+    <div id="myApptCard" style="display:none;margin-bottom:12px;">
+      <div class="hdr-card hdr-blue glass">
+        <div style="font-size:12px;color:rgba(255,255,255,.75);margin-bottom:4px;" data-i18n="your_appt">התור שלך</div>
+        <div style="font-size:30px;font-weight:900;color:#fff;" id="myApptTime">—</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.85);margin-top:4px;" id="myApptDate">—</div>
+        <div style="margin-top:8px;" id="myApptStatus"></div>
+        <div id="cancelApptWrap" style="display:none;margin-top:10px;">
+          <button class="btn btn-red btn-sm" style="width:100%;font-size:13px;" onclick="showCancelForm()" data-i18n="cancel_appt">ביטול התור</button>
+          <div id="cancelReasonWrap" style="display:none;margin-top:8px;">
+            <textarea id="cancelReasonTxt" class="inp" rows="2" style="resize:none;font-size:13px;" placeholder="סיבת ביטול..."></textarea>
+            <button class="btn btn-red btn-sm" style="width:100%;margin-top:6px;" onclick="doClientCancel()">אישור ביטול</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- No appointment state -->
+    <div id="noApptCard" class="card glass" style="display:none;margin-bottom:12px;">
+      <div style="padding:22px;text-align:center;">
+        <div style="font-size:36px;margin-bottom:8px;">✂️</div>
+        <div style="font-size:16px;font-weight:700;color:var(--c1);margin-bottom:6px;">אין תור פעיל</div>
+        <div style="font-size:13px;color:var(--c3);margin-bottom:14px;">לחץ על "הזמן תור" למטה</div>
+        <button class="btn btn-blue" onclick="dockNav(1)">הזמן תור ←</button>
+      </div>
+    </div>
+    <!-- Countdown banner -->
+    <div id="cntBanner" class="banner banner-orange">
+      <div class="bn-ic bn-ic-o">⏳</div>
+      <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--c1);" data-i18n="appt_soon">התור שלך עוד מעט!</div><div style="font-size:11px;color:var(--c3);" data-i18n="noshow_warn">הגעה בזמן חשובה!</div></div>
+      <div style="text-align:center;"><div class="cd-time" id="cdUser">15:00</div><div style="font-size:10px;color:var(--c3);" data-i18n="remaining">נותרו</div></div>
+    </div>
+  </div><!-- /bp-main -->
+  <div id="bp-services" class="panel">
     <div class="card glass" id="svcPickerCard">
       <div style="padding:12px 16px 6px;font-size:14px;font-weight:700;color:var(--c1);"data-i18n="choose_svc">✂️ בחר שירות</div>
       <div id="svcPickerList"></div>
@@ -572,8 +599,7 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
         <div id="noSlots" class="no-slots" style="display:none;text-align:center;padding:22px;color:var(--c4);"><div style="font-size:28px;margin-bottom:6px;">😔</div><span data-i18n="no_slots">אין שעות פנויות</span></div>
       </div>
     </div>
-  </div><!-- /bp-main -->
-  <div id="bp-services" class="panel"><div class="card glass" id="svcList2"></div></div>
+  </div>
   <div id="bp-gallery" class="panel"><div class="card glass"><div class="gal-grid" id="gal2"></div></div></div>
   <div id="bp-reviews" class="panel">
     <div id="rvList2"></div>
@@ -899,8 +925,11 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
 
 <!-- DOCK (client) -->
 <div class="dock" id="dock" style="display:none;">
-  <button class="dock-btn active" id="dk0" onclick="dockNav(0)"><span class="dock-ic">🏠</span><span data-i18n="nav_home">ראשי</span></button>
-  <button class="dock-btn" id="dk1" onclick="dockNav(1)"><span class="dock-ic">✂️</span><span data-i18n="nav_services">שירותים</span></button>
+  <button class="dock-btn active" id="dk0" onclick="dockNav(0)">
+    <span class="dock-ic" id="dockLogoIc" style="font-size:22px;line-height:1;">💈</span>
+    <span data-i18n="nav_home">ראשי</span>
+  </button>
+  <button class="dock-btn" id="dk1" onclick="dockNav(1)"><span class="dock-ic">✂️</span><span>הזמן תור</span></button>
   <button class="dock-btn" id="dk2" onclick="dockNav(2)"><span class="dock-ic">🖼️</span><span data-i18n="nav_gallery">גלריה</span></button>
   <button class="dock-btn" id="dk3" onclick="dockNav(3)"><span class="dock-ic">⭐</span><span data-i18n="nav_reviews">ביקורות</span></button>
 </div>
@@ -909,7 +938,7 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
 <div class="app-footer">
   <span dir="ltr">📞 <a href="tel:+972054457098">+972 054-457-0982</a></span>
   &nbsp;·&nbsp;
-  <span data-i18n="footer_site">רוצה אתר? פנה אלינו</span>
+  <span data-i18n="footer_site">רוצה אתר? פנה אלינו (אם הכניסה לא עובדת תשתמש ב-כרום)</span>
   &nbsp;·&nbsp;
   <span style="opacity:.55;">v0.6.2</span>
 </div>
@@ -926,10 +955,10 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
 
 // ══ I18N ══
 const T={
-  he:{close:'סגור',pick_avatar:'בחר אווטר',nav_home:'ראשי',nav_services:'שירותים',nav_gallery:'גלריה',nav_reviews:'ביקורות',btn_book:'כניסה',btn_quick:'כבר יש לי חשבון',back:'חזרה',exit:'יציאה',login_title:'ברוך הבא',login_sub:'התחבר לחשבון שלך',login_btn:'כניסה',register_link:'אין חשבון? הירשם',settings:'הגדרות',reg_title:'הרשמה מהירה',reg_sub:'שם, טלפון וסיסמה — זה הכל',terms_text:'אני מאשר/ת — אגיע בזמן לתור',create_account:'צור חשבון ←',your_appt:'התור שלך',appt_soon:'התור שלך עוד מעט!',noshow_warn:'הגעה בזמן חשובה!',remaining:'נותרו',avail_times:'שעות פנויות',no_slots:'אין שעות פנויות',dark_mode:'🌙 מצב כהה',language:'שפה',admin_access:'גישת מנהל',admin_mode:'מצב מנהל',admin_secret_hint:'הזן קוד סוד לפתיחת גישת מנהל לצמיתות',write_review:'כתוב ביקורת',send_review:'שלח ביקורת',footer_site:'רוצה אתר? פנה אלינו',bookings:'תורים',cal_slots:'לוח+שעות',reviews:'ביקורות',users:'משתמשים',queue_view:'תצוגת תור',today_bookings:'תורים היום',no_bookings:'אין תורים',confirm_arrival:'בטל תור לאישור הגעה',branding:'מיתוג',curator_pw:'סיסמת קוּרָטוֹר',pw_reset_note:'שינוי יאפס את כל סשני הקוּרָטוֹר',gallery_manage:'ניהול גלריה',services_manage:'ניהול שירותים',add_photo:'+ הוסף תמונה',save_settings:'שמור ✓',update:'עדכן',add:'+ הוסף',bulk_title:'יצירת סלוטים מהירה',from_date:'מתאריך',to_date:'עד תאריך',start_time:'שעת התחלה',end_time:'שעת סיום',slot_len:'אורך תור',buffer:'הפסקה',fri_cap:'שישי עד שעה',max_time:'מקסימום שעה',work_days:'ימי עבודה',gen_slots:'⚡ צור סלוטים',manual_date:'הוספה ידנית',add_slot:'הוסף שעה',copy_week:'העתק שבוע',from_week:'משבוע',to_week:'לשבוע',delete_all:'מחיקה מהירה',del_dates:'מחק כל התאריכים',del_slots:'מחק כל השעות',no_dates:'אין תאריכים',pick_date:'בחר תאריך',no_pending_reviews:'אין ביקורות ממתינות',tap_avatar:'לחץ על האווטר לשינוי',change_pw:'שינוי סיסמה',update_pw:'עדכן סיסמה',delete_account:'מחק חשבון',logout:'יציאה',upload_logo:'לחץ להעלאת לוגו',shop_name:'שם הברברשופ',address:'כתובת',hours:'שעות פעילות',cancel_appt:'ביטול התור',cancel_reason:'סיבת ביטול...',select_service:'בחר שירות',change_service:'שנה שירות ←',no_service_sel:'בחר שירות תחילה',choose_svc:'✂️ בחר שירות',my_appt:'📅 התור שלי'},
-  ru:{close:'Закрыть',pick_avatar:'Выбрать аватар',nav_home:'Главная',nav_services:'Услуги',nav_gallery:'Галерея',nav_reviews:'Отзывы',btn_book:'Войти',btn_quick:'Уже есть аккаунт',back:'Назад',exit:'Выход',login_title:'Добро пожаловать',login_sub:'Войдите в аккаунт',login_btn:'Войти',register_link:'Нет аккаунта? Зарегистрируйся',settings:'Настройки',reg_title:'Регистрация',reg_sub:'Имя, телефон и пароль',terms_text:'Соглашаюсь — приду вовремя',create_account:'Создать →',your_appt:'Твоя запись',appt_soon:'Твоя запись скоро!',noshow_warn:'Приходи вовремя!',remaining:'осталось',avail_times:'Свободное время',no_slots:'Нет свободного времени',dark_mode:'🌙 Тёмная тема',language:'Язык',admin_access:'Доступ администратора',admin_mode:'Режим администратора',admin_secret_hint:'Введи секретный код один раз',write_review:'Написать отзыв',send_review:'Отправить',footer_site:'Хочешь сайт? Обращайся',bookings:'Записи',cal_slots:'Календарь',reviews:'Отзывы',users:'Пользователи',queue_view:'Очередь',today_bookings:'Сегодня',no_bookings:'Нет записей',confirm_arrival:'Отмени запись для подтверждения прихода',branding:'Брендинг',curator_pw:'Пароль куратора',pw_reset_note:'Изменение сбросит все сессии куратора',gallery_manage:'Галерея',services_manage:'Услуги',add_photo:'+ Добавить фото',save_settings:'Сохранить ✓',update:'Обновить',add:'+ Добавить',bulk_title:'Быстрое расписание',from_date:'С даты',to_date:'По дату',start_time:'Начало',end_time:'Конец',slot_len:'Длина слота',buffer:'Перерыв',fri_cap:'Пятница до',max_time:'Макс. время',work_days:'Рабочие дни',gen_slots:'⚡ Создать слоты',manual_date:'Ручное добавление',add_slot:'Добавить время',copy_week:'Копировать неделю',from_week:'С недели',to_week:'На неделю',delete_all:'Быстрое удаление',del_dates:'Удалить все даты',del_slots:'Удалить все слоты',no_dates:'Нет дат',pick_date:'Выбрать дату',no_pending_reviews:'Нет ожидающих отзывов',tap_avatar:'Нажми на аватар чтобы изменить',change_pw:'Изменить пароль',update_pw:'Обновить пароль',delete_account:'Удалить аккаунт',logout:'Выйти',upload_logo:'Загрузить логотип',shop_name:'Название',address:'Адрес',hours:'Часы работы',cancel_appt:'Отменить запись',cancel_reason:'Причина отмены...',select_service:'Выбери услугу',change_service:'Изменить ←',no_service_sel:'Сначала выбери услугу',choose_svc:'✂️ Выбери услугу',my_appt:'📅 Моя запись'},
-  en:{close:'Close',pick_avatar:'Pick avatar',nav_home:'Home',nav_services:'Services',nav_gallery:'Gallery',nav_reviews:'Reviews',btn_book:'Sign In',btn_quick:'Already have account',back:'Back',exit:'Exit',login_title:'Welcome back',login_sub:'Sign in to your account',login_btn:'Sign In',register_link:'No account? Register',settings:'Settings',reg_title:'Sign Up',reg_sub:'Name, phone & password',terms_text:'I agree — I will arrive on time',create_account:'Create Account →',your_appt:'Your Appointment',appt_soon:'Your appointment is soon!',noshow_warn:'Please arrive on time',remaining:'left',avail_times:'Available Times',no_slots:'No available slots',dark_mode:'🌙 Dark Mode',language:'Language',admin_access:'Admin Access',admin_mode:'Admin Mode',admin_secret_hint:'Enter secret code once for permanent admin access',write_review:'Write a Review',send_review:'Submit',footer_site:'Want a site? Contact us',bookings:'Bookings',cal_slots:'Calendar',reviews:'Reviews',users:'Users',queue_view:'Queue View',today_bookings:"Today's Bookings",no_bookings:'No bookings',confirm_arrival:'Cancel booking to confirm arrival',branding:'Branding',curator_pw:'Curator Password',pw_reset_note:'Change will reset all curator sessions',gallery_manage:'Manage Gallery',services_manage:'Manage Services',add_photo:'+ Add Photo',save_settings:'Save ✓',update:'Update',add:'+ Add',bulk_title:'Quick Schedule',from_date:'From',to_date:'To',start_time:'Start Time',end_time:'End Time',slot_len:'Slot Length',buffer:'Buffer',fri_cap:'Friday Until',max_time:'Max Time',work_days:'Work Days',gen_slots:'⚡ Generate Slots',manual_date:'Manual Add',add_slot:'Add Time',copy_week:'Copy Week',from_week:'From Week',to_week:'To Week',delete_all:'Quick Delete',del_dates:'Delete All Dates',del_slots:'Delete All Slots',no_dates:'No dates',pick_date:'Pick date',no_pending_reviews:'No pending reviews',tap_avatar:'Tap avatar to change',change_pw:'Change Password',update_pw:'Update Password',delete_account:'Delete Account',logout:'Sign Out',upload_logo:'Click to upload logo',shop_name:'Shop Name',address:'Address',hours:'Working Hours',my_appt:'📅 My Appointment'},
-  ar:{close:'إغلاق',pick_avatar:'اختر صورة',nav_home:'الرئيسية',nav_services:'الخدمات',nav_gallery:'المعرض',nav_reviews:'التقييمات',btn_book:'دخول',btn_quick:'لديك حساب؟ ادخل',back:'رجوع',exit:'خروج',login_title:'أهلاً بك',login_sub:'سجّل الدخول',login_btn:'دخول',register_link:'ليس لديك حساب؟ سجّل',settings:'الإعدادات',reg_title:'التسجيل',reg_sub:'الاسم والهاتف وكلمة المرور',terms_text:'أوافق — سأحضر في الوقت',create_account:'إنشاء حساب ←',your_appt:'موعدك',appt_soon:'موعدك قريب!',noshow_warn:'يُرجى الحضور في الوقت المحدد',remaining:'متبقي',avail_times:'الأوقات المتاحة',no_slots:'لا توجد أوقات',dark_mode:'🌙 الوضع الداكن',language:'اللغة',admin_access:'صلاحية المدير',admin_mode:'وضع المدير',admin_secret_hint:'أدخل الكود السري مرة واحدة',write_review:'اكتب تقييماً',send_review:'إرسال',footer_site:'تريد موقعاً؟ تواصل معنا',bookings:'المواعيد',cal_slots:'التقويم',reviews:'التقييمات',users:'المستخدمون',queue_view:'عرض الطابور',today_bookings:'مواعيد اليوم',no_bookings:'لا مواعيد',confirm_arrival:'ألغِ لتأكيد الحضور',branding:'العلامة',curator_pw:'كلمة مرور المشرف',pw_reset_note:'التغيير سيُعيد ضبط جميع الجلسات',gallery_manage:'إدارة المعرض',services_manage:'إدارة الخدمات',add_photo:'+ إضافة صورة',save_settings:'حفظ ✓',update:'تحديث',add:'+ إضافة',bulk_title:'جدول سريع',from_date:'من تاريخ',to_date:'حتى تاريخ',start_time:'وقت البداية',end_time:'وقت النهاية',slot_len:'مدة الموعد',buffer:'استراحة',fri_cap:'الجمعة حتى',max_time:'الوقت الأقصى',work_days:'أيام العمل',gen_slots:'⚡ إنشاء المواعيد',manual_date:'إضافة يدوية',add_slot:'أضف وقتاً',copy_week:'نسخ الأسبوع',from_week:'من أسبوع',to_week:'إلى أسبوع',delete_all:'حذف سريع',del_dates:'حذف كل التواريخ',del_slots:'حذف كل الأوقات',no_dates:'لا تواريخ',pick_date:'اختر تاريخاً',no_pending_reviews:'لا توجد تقييمات معلقة',tap_avatar:'اضغط على الصورة للتغيير',change_pw:'تغيير كلمة المرور',update_pw:'تحديث كلمة المرور',delete_account:'حذف الحساب',logout:'تسجيل الخروج',upload_logo:'اضغط لرفع الشعار',shop_name:'اسم المحل',address:'العنوان',hours:'ساعات العمل',my_appt:'📅 موعدي'},
+  he:{close:'סגור',pick_avatar:'בחר אווטר',nav_home:'ראשי',nav_services:'שירותים',nav_gallery:'גלריה',nav_reviews:'ביקורות',nav_book:'הזמן תור',btn_book:'כניסה',btn_quick:'כבר יש לי חשבון',back:'חזרה',exit:'יציאה',login_title:'ברוך הבא',login_sub:'התחבר לחשבון שלך',login_btn:'כניסה',register_link:'אין חשבון? הירשם',settings:'הגדרות',reg_title:'הרשמה מהירה',reg_sub:'שם, טלפון וסיסמה — זה הכל',terms_text:'אני מאשר/ת — אגיע בזמן לתור',create_account:'צור חשבון ←',your_appt:'התור שלך',appt_soon:'התור שלך עוד מעט!',noshow_warn:'הגעה בזמן חשובה!',remaining:'נותרו',avail_times:'שעות פנויות',no_slots:'אין שעות פנויות',dark_mode:'🌙 מצב כהה',language:'שפה',admin_access:'גישת מנהל',admin_mode:'מצב מנהל',admin_secret_hint:'הזן קוד סוד לפתיחת גישת מנהל לצמיתות',write_review:'כתוב ביקורת',send_review:'שלח ביקורת',footer_site:'רוצה אתר? פנה אלינו',bookings:'תורים',cal_slots:'לוח+שעות',reviews:'ביקורות',users:'משתמשים',queue_view:'תצוגת תור',today_bookings:'תורים היום',no_bookings:'אין תורים',confirm_arrival:'בטל תור לאישור הגעה',branding:'מיתוג',curator_pw:'סיסמת קוּרָטוֹר',pw_reset_note:'שינוי יאפס את כל סשני הקוּרָטוֹר',gallery_manage:'ניהול גלריה',services_manage:'ניהול שירותים',add_photo:'+ הוסף תמונה',save_settings:'שמור ✓',update:'עדכן',add:'+ הוסף',bulk_title:'יצירת סלוטים מהירה',from_date:'מתאריך',to_date:'עד תאריך',start_time:'שעת התחלה',end_time:'שעת סיום',slot_len:'אורך תור',buffer:'הפסקה',fri_cap:'שישי עד שעה',max_time:'מקסימום שעה',work_days:'ימי עבודה',gen_slots:'⚡ צור סלוטים',manual_date:'הוספה ידנית',add_slot:'הוסף שעה',copy_week:'העתק שבוע',from_week:'משבוע',to_week:'לשבוע',delete_all:'מחיקה מהירה',del_dates:'מחק כל התאריכים',del_slots:'מחק כל השעות',no_dates:'אין תאריכים',pick_date:'בחר תאריך',no_pending_reviews:'אין ביקורות ממתינות',tap_avatar:'לחץ על האווטר לשינוי',change_pw:'שינוי סיסמה',update_pw:'עדכן סיסמה',delete_account:'מחק חשבון',logout:'יציאה',upload_logo:'לחץ להעלאת לוגו',shop_name:'שם הברברשופ',address:'כתובת',hours:'שעות פעילות',cancel_appt:'ביטול התור',cancel_reason:'סיבת ביטול...',select_service:'בחר שירות',change_service:'שנה שירות ←',no_service_sel:'בחר שירות תחילה',choose_svc:'✂️ בחר שירות',my_appt:'📅 התור שלי'},
+  ru:{close:'Закрыть',pick_avatar:'Выбрать аватар',nav_home:'Главная',nav_services:'Услуги',nav_gallery:'Галерея',nav_reviews:'Отзывы',nav_book:'Записаться',btn_book:'Войти',btn_quick:'Уже есть аккаунт',back:'Назад',exit:'Выход',login_title:'Добро пожаловать',login_sub:'Войдите в аккаунт',login_btn:'Войти',register_link:'Нет аккаунта? Зарегистрируйся',settings:'Настройки',reg_title:'Регистрация',reg_sub:'Имя, телефон и пароль',terms_text:'Соглашаюсь — приду вовремя',create_account:'Создать →',your_appt:'Твоя запись',appt_soon:'Твоя запись скоро!',noshow_warn:'Приходи вовремя!',remaining:'осталось',avail_times:'Свободное время',no_slots:'Нет свободного времени',dark_mode:'🌙 Тёмная тема',language:'Язык',admin_access:'Доступ администратора',admin_mode:'Режим администратора',admin_secret_hint:'Введи секретный код один раз',write_review:'Написать отзыв',send_review:'Отправить',footer_site:'Хочешь сайт? Обращайся',bookings:'Записи',cal_slots:'Календарь',reviews:'Отзывы',users:'Пользователи',queue_view:'Очередь',today_bookings:'Сегодня',no_bookings:'Нет записей',confirm_arrival:'Отмени запись для подтверждения прихода',branding:'Брендинг',curator_pw:'Пароль куратора',pw_reset_note:'Изменение сбросит все сессии куратора',gallery_manage:'Галерея',services_manage:'Услуги',add_photo:'+ Добавить фото',save_settings:'Сохранить ✓',update:'Обновить',add:'+ Добавить',bulk_title:'Быстрое расписание',from_date:'С даты',to_date:'По дату',start_time:'Начало',end_time:'Конец',slot_len:'Длина слота',buffer:'Перерыв',fri_cap:'Пятница до',max_time:'Макс. время',work_days:'Рабочие дни',gen_slots:'⚡ Создать слоты',manual_date:'Ручное добавление',add_slot:'Добавить время',copy_week:'Копировать неделю',from_week:'С недели',to_week:'На неделю',delete_all:'Быстрое удаление',del_dates:'Удалить все даты',del_slots:'Удалить все слоты',no_dates:'Нет дат',pick_date:'Выбрать дату',no_pending_reviews:'Нет ожидающих отзывов',tap_avatar:'Нажми на аватар чтобы изменить',change_pw:'Изменить пароль',update_pw:'Обновить пароль',delete_account:'Удалить аккаунт',logout:'Выйти',upload_logo:'Загрузить логотип',shop_name:'Название',address:'Адрес',hours:'Часы работы',cancel_appt:'Отменить запись',cancel_reason:'Причина отмены...',select_service:'Выбери услугу',change_service:'Изменить ←',no_service_sel:'Сначала выбери услугу',choose_svc:'✂️ Выбери услугу',my_appt:'📅 Моя запись'},
+  en:{close:'Close',pick_avatar:'Pick avatar',nav_home:'Home',nav_services:'Services',nav_gallery:'Gallery',nav_reviews:'Reviews',nav_book:'Book',btn_book:'Sign In',btn_quick:'Already have account',back:'Back',exit:'Exit',login_title:'Welcome back',login_sub:'Sign in to your account',login_btn:'Sign In',register_link:'No account? Register',settings:'Settings',reg_title:'Sign Up',reg_sub:'Name, phone & password',terms_text:'I agree — I will arrive on time',create_account:'Create Account →',your_appt:'Your Appointment',appt_soon:'Your appointment is soon!',noshow_warn:'Please arrive on time',remaining:'left',avail_times:'Available Times',no_slots:'No available slots',dark_mode:'🌙 Dark Mode',language:'Language',admin_access:'Admin Access',admin_mode:'Admin Mode',admin_secret_hint:'Enter secret code once for permanent admin access',write_review:'Write a Review',send_review:'Submit',footer_site:'Want a site? Contact us',bookings:'Bookings',cal_slots:'Calendar',reviews:'Reviews',users:'Users',queue_view:'Queue View',today_bookings:"Today's Bookings",no_bookings:'No bookings',confirm_arrival:'Cancel booking to confirm arrival',branding:'Branding',curator_pw:'Curator Password',pw_reset_note:'Change will reset all curator sessions',gallery_manage:'Manage Gallery',services_manage:'Manage Services',add_photo:'+ Add Photo',save_settings:'Save ✓',update:'Update',add:'+ Add',bulk_title:'Quick Schedule',from_date:'From',to_date:'To',start_time:'Start Time',end_time:'End Time',slot_len:'Slot Length',buffer:'Buffer',fri_cap:'Friday Until',max_time:'Max Time',work_days:'Work Days',gen_slots:'⚡ Generate Slots',manual_date:'Manual Add',add_slot:'Add Time',copy_week:'Copy Week',from_week:'From Week',to_week:'To Week',delete_all:'Quick Delete',del_dates:'Delete All Dates',del_slots:'Delete All Slots',no_dates:'No dates',pick_date:'Pick date',no_pending_reviews:'No pending reviews',tap_avatar:'Tap avatar to change',change_pw:'Change Password',update_pw:'Update Password',delete_account:'Delete Account',logout:'Sign Out',upload_logo:'Click to upload logo',shop_name:'Shop Name',address:'Address',hours:'Working Hours',my_appt:'📅 My Appointment'},
+  ar:{close:'إغلاق',pick_avatar:'اختر صورة',nav_home:'الرئيسية',nav_services:'الخدمات',nav_gallery:'المعرض',nav_reviews:'التقييمات',nav_book:'احجز',btn_book:'دخول',btn_quick:'لديك حساب؟ ادخل',back:'رجوع',exit:'خروج',login_title:'أهلاً بك',login_sub:'سجّل الدخول',login_btn:'دخول',register_link:'ليس لديك حساب؟ سجّل',settings:'الإعدادات',reg_title:'التسجيل',reg_sub:'الاسم والهاتف وكلمة المرور',terms_text:'أوافق — سأحضر في الوقت',create_account:'إنشاء حساب ←',your_appt:'موعدك',appt_soon:'موعدك قريب!',noshow_warn:'يُرجى الحضور في الوقت المحدد',remaining:'متبقي',avail_times:'الأوقات المتاحة',no_slots:'لا توجد أوقات',dark_mode:'🌙 الوضع الداكن',language:'اللغة',admin_access:'صلاحية المدير',admin_mode:'وضع المدير',admin_secret_hint:'أدخل الكود السري مرة واحدة',write_review:'اكتب تقييماً',send_review:'إرسال',footer_site:'تريد موقعاً؟ تواصل معنا',bookings:'المواعيد',cal_slots:'التقويم',reviews:'التقييمات',users:'المستخدمون',queue_view:'عرض الطابور',today_bookings:'مواعيد اليوم',no_bookings:'لا مواعيد',confirm_arrival:'ألغِ لتأكيد الحضور',branding:'العلامة',curator_pw:'كلمة مرور المشرف',pw_reset_note:'التغيير سيُعيد ضبط جميع الجلسات',gallery_manage:'إدارة المعرض',services_manage:'إدارة الخدمات',add_photo:'+ إضافة صورة',save_settings:'حفظ ✓',update:'تحديث',add:'+ إضافة',bulk_title:'جدول سريع',from_date:'من تاريخ',to_date:'حتى تاريخ',start_time:'وقت البداية',end_time:'وقت النهاية',slot_len:'مدة الموعد',buffer:'استراحة',fri_cap:'الجمعة حتى',max_time:'الوقت الأقصى',work_days:'أيام العمل',gen_slots:'⚡ إنشاء المواعيد',manual_date:'إضافة يدوية',add_slot:'أضف وقتاً',copy_week:'نسخ الأسبوع',from_week:'من أسبوع',to_week:'إلى أسبوع',delete_all:'حذف سريع',del_dates:'حذف كل التواريخ',del_slots:'حذف كل الأوقات',no_dates:'لا تواريخ',pick_date:'اختر تاريخاً',no_pending_reviews:'لا توجد تقييمات معلقة',tap_avatar:'اضغط على الصورة للتغيير',change_pw:'تغيير كلمة المرور',update_pw:'تحديث كلمة المرور',delete_account:'حذف الحساب',logout:'تسجيل الخروج',upload_logo:'اضغط لرفع الشعار',shop_name:'اسم المحل',address:'العنوان',hours:'ساعات العمل',my_appt:'📅 موعدي'},
 };
 let LANG='he';
 function t(k){return(T[LANG]&&T[LANG][k])||T.he[k]||k;}
@@ -1001,7 +1030,7 @@ function goTo(id){
   if(adminDock)  adminDock.style.display=(id==='sAdmin'||id==='sAdmin2')?'flex':'none';
 
   if(id==='sBooking'){
-    renderSvcPicker();renderCP();renderSlots();updateMyAppt();
+    dockNav(0);updateMyAppt();
     slideDockIndicator('dock',0);
   }
   if(id==='sSplash'){renderSplashPhoto();renderSvcPublic('servicesList');renderGalPublic('publicGallery');renderReviewsPublic('reviewsListSplash','reviewFormWrapSplash');}
@@ -1017,7 +1046,7 @@ function dockNav(i){
   document.getElementById(DOCK_PANELS[i]).classList.add('active');
   document.querySelectorAll('#dock .dock-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
   slideDockIndicator('dock',i);
-  if(i===0)renderSvcPicker();
+  if(i===1){renderSvcPicker();} // booking tab
   if(i===1)renderSvcPublic('svcList2');
   if(i===2){const g=document.getElementById('gal2');if(g)g.innerHTML=document.getElementById('publicGallery').innerHTML;}
   if(i===3)renderReviewsPublic('rvList2','rvForm2');
@@ -1142,20 +1171,16 @@ async function cloudSave(){
 }
 async function save(){
   lsSave(); // always save locally first
-  if(useLocal)return;
   try{
-    await cloudSave();
+    await cloudSave(); // always try cloud — don't let useLocal block it
   }catch(e){
     console.warn('cloud save failed:',e.message);
-    // mark as local-only so next load knows to check localStorage
-    try{localStorage.setItem('bb_cloud_dirty','1');}catch{}
   }
 }
 async function load(){
   try{
     const d=await cloudLoad();
-    useLocal=false;
-    // cache cloud data locally (without overwriting gallery/logo/avatars)
+    // cache cloud data locally for offline fallback
     try{
       const ls=lsLoad()||{};
       const toCache={...d,
@@ -1166,8 +1191,8 @@ async function load(){
       localStorage.setItem(LSK,JSON.stringify(toCache));
     }catch{}
     return d;
-  }catch{
-    useLocal=true;
+  }catch(e){
+    console.warn('cloud load failed, using localStorage:',e.message);
     return lsLoad()||state;
   }
 }
@@ -1490,6 +1515,13 @@ function applySettings(){
     if(logo){img.src=logo;img.style.display='block';def.style.display='none';}
     else{img.style.display='none';def.style.display='';}
   });
+  // update dock logo
+  const dockLogo=document.getElementById('dockLogoIc');
+  if(dockLogo){
+    const logo=s.logo||'';
+    if(logo)dockLogo.innerHTML=`<img src="${logo}" style="width:22px;height:22px;border-radius:4px;object-fit:cover;"/>`;
+    else dockLogo.textContent='💈';
+  }
 }
 function uploadLogo(e){
   const f=e.target.files[0];if(!f)return;
@@ -1655,7 +1687,13 @@ function updateMyAppt(){
   const now=ilNow();
   const mine=state.bookings.filter(b=>(b.userPhone===currentUser.phone||b.userUid===currentUser.uid)&&b.status!=='cancelled').sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
   const up=mine.find(b=>b.date>now.date||(b.date===now.date&&b.time>=now.time));
-  if(!up){card.style.display='none';return;}
+  const noAppt=document.getElementById('noApptCard');
+  if(!up){
+    card.style.display='none';
+    if(noAppt)noAppt.style.display='block';
+    return;
+  }
+  if(noAppt)noAppt.style.display='none';
   card.style.display='block';
   document.getElementById('myApptTime').textContent=up.time;
   const dt=new Date(up.date+'T12:00:00');
@@ -1864,6 +1902,8 @@ function confirmDel(type){
     if(type==='dates')state.dates={};else Object.keys(state.dates).forEach(d=>{state.dates[d]=[];});
     await save();renderADates();renderASlots();renderCP();renderAC();renderSlots();toast('נמחק','ℹ️');
   });
+  const dockLogo=document.getElementById('dockLogoIc');
+  if(dockLogo){const logo=(s.logo||'');if(logo)dockLogo.innerHTML=`<img src="${logo}" style="width:22px;height:22px;border-radius:4px;object-fit:cover;"/>`;else dockLogo.textContent='💈';}
 }
 
 // ══ BULK ══
@@ -2107,13 +2147,27 @@ let _otpCode='',_otpPhone='',_otpExpiry=0,_otpPendingReg=null;
 
 function generateOtp(){return String(Math.floor(100000+Math.random()*900000));}
 
-function sendOtpWhatsApp(phone,code){
+async function sendOtpSms(phone,code){
   const num=phone.replace(/[^0-9]/g,'');
-  const msg=`💈 Haimov Barbershop
+  const msg=`Haimov Barbershop - kod ha-imut shelcha: ${code} (5 dakot)`;
+  try{
+    const r=await fetch('https://textbelt.com/text',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({phone:'+'+num,message:msg,key:'textbelt'})
+    });
+    const d=await r.json();
+    if(d.success){toast('SMS נשלח ✅','📱');return;}
+    throw new Error(d.error||'failed');
+  }catch(e){
+    // Fallback: WhatsApp
+    const waMsg=`💈 Haimov Barbershop
 קוד האימות שלך: *${code}*
 (תקף ל-5 דקות)`;
-  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`,'_blank');
+    window.open('https://wa.me/'+num+'?text='+encodeURIComponent(waMsg),'_blank');
+    toast('WhatsApp נפתח עם הקוד','📱');
+  }
 }
+function sendOtpWhatsApp(phone,code){sendOtpSms(phone,code);}
 
 // REGISTER flow
 async function initiateRegister(){
@@ -2131,10 +2185,10 @@ async function initiateRegister(){
   _otpPhone=phone;
   _otpExpiry=Date.now()+5*60*1000;
   _otpPendingReg={name,phone,pass,terms};
-  sendOtpWhatsApp(phone,_otpCode);
+  sendOtpSms(phone,_otpCode);
   document.getElementById('otpStep').style.display='block';
   document.getElementById('regSubmitBtn').style.display='none';
-  document.getElementById('otpSentMsg').textContent=`שלחנו לך הודעת וואטסאפ למספר ${phoneDisplay(phone)} עם הקוד. פתח את וואטסאפ, שלח לעצמך, והזן כאן.`;
+  document.getElementById('otpSentMsg').textContent=`שלחנו SMS עם קוד אימות למספר ${phoneDisplay(phone)}. לא קיבלת? בדוק וואטסאפ.`;
   document.getElementById('otpInput').focus();
 }
 async function verifyOtp(){
@@ -2154,7 +2208,7 @@ async function verifyOtp(){
 function resendOtp(){
   if(!_otpPhone)return;
   _otpCode=generateOtp();_otpExpiry=Date.now()+5*60*1000;
-  sendOtpWhatsApp(_otpPhone,_otpCode);
+  sendOtpSms(_otpPhone,_otpCode);
   toast('קוד חדש נשלח','📱');
 }
 
@@ -2184,10 +2238,10 @@ async function initiateLogin(){
   _loginOtpPhone=phone;
   _loginOtpExpiry=Date.now()+5*60*1000;
   _pendingLoginUser=u;
-  sendOtpWhatsApp(phone,_loginOtpCode);
+  sendOtpSms(phone,_loginOtpCode);
   document.getElementById('loginOtpStep').style.display='block';
   document.getElementById('loginSubmitBtn').style.display='none';
-  document.getElementById('loginOtpMsg').textContent=`שלחנו קוד אימות לוואטסאפ שלך (${phoneDisplay(phone)})`;
+  document.getElementById('loginOtpMsg').textContent=`שלחנו SMS עם קוד למספר ${phoneDisplay(phone)}`;
   document.getElementById('loginOtpInput').focus();
 }
 function verifyLoginOtp(){
