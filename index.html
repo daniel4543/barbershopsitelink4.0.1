@@ -882,6 +882,28 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
             <button class="btn btn-green btn-sm" onclick="addBarberPhone()">+</button>
           </div>
         </div>
+        <!-- Telegram Bot -->
+        <div class="card glass">
+          <div class="row" style="font-size:14px;font-weight:700;color:var(--c1);">✈️ בוט טלגרם לאימות</div>
+          <div style="padding:0 14px 8px;font-size:12px;color:var(--c3);">
+            1. צור בוט עם @BotFather בטלגרם<br/>
+            2. העתק את הטוקן לכאן<br/>
+            3. כל משתמש שרוצה להתחבר חייב לשלוח /start לבוט פעם אחת
+          </div>
+          <div style="padding:0 14px 14px;display:flex;gap:7px;">
+            <input type="text" id="botTokenInp" class="inp" placeholder="123456:ABCdef..." dir="ltr" style="flex:1;font-size:12px;"/>
+            <button class="btn btn-green btn-sm" onclick="saveBotToken()">שמור</button>
+          </div>
+          <div id="botTokenStatus" style="padding:0 14px 4px;font-size:12px;color:var(--c3);"></div>
+          <div style="padding:0 14px 14px;">
+            <div style="font-size:11px;color:var(--c4);margin-bottom:6px;">קישור ידני: טלפון ← Chat ID של טלגרם</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <input type="text" id="linkPhone" class="inp" placeholder="+972541234567" dir="ltr" style="flex:1;min-width:120px;font-size:12px;"/>
+              <input type="text" id="linkChatId" class="inp" placeholder="Chat ID" dir="ltr" style="flex:1;min-width:100px;font-size:12px;"/>
+              <button class="btn btn-outline btn-sm" onclick="linkTelegramChat(document.getElementById('linkPhone').value.trim(),document.getElementById('linkChatId').value.trim()).then(()=>toast('קושר ✅','✈️'))">קשר</button>
+            </div>
+          </div>
+        </div>
         <!-- Curator password -->
         <div class="card glass">
           <div class="row" style="font-size:14px;font-weight:700;color:var(--c1);" data-i18n="curator_pw">🔑 סיסמת קוּרָטוֹר</div>
@@ -951,13 +973,13 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
   &nbsp;·&nbsp;
   <span data-i18n="footer_site">רוצה אתר? פנה אלינו</span>
   &nbsp;·&nbsp;
-  <span style="opacity:.55;">v0.6.4</span>
+  <span style="opacity:.55;">v0.6.5</span>
 </div>
 <div class="watermark">HAIMOV BARBERSHOP · PROTECTED</div>
 
 <script>
 /* ================================================================
-   HAIMOV BARBERSHOP v0.6.4
+   HAIMOV BARBERSHOP v0.6.5
    Built with: HTML + CSS + JS  |  Cloud: JSONBin.io + localStorage
    Roles: Admin / Curator / Client
    © 2026 Haimov Barbershop — Protected work
@@ -1089,7 +1111,7 @@ function swADock(idx,panelId){
   if(panelId==='aCalSlots')renderAC();
   if(panelId==='aReviews')renderARv();
   if(panelId==='aUsers')renderUsers();
-  if(panelId==='aAdminSett'){renderAGal();renderASvc();renderBarberPhones();}
+  if(panelId==='aAdminSett'){renderAGal();renderASvc();renderBarberPhones();renderBotToken();}
 }
 function settingsBack(){if(currentUser)goTo('sBooking');else goTo('sLogin');}
 
@@ -1161,6 +1183,8 @@ let state={
   fridayCap:'15:00',
   maxTime:'20:00',
   barberPhones:[],
+  botToken:'',
+  botChatIds:{}, // phone→telegramChatId
 };
 function wt(p,ms){return Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),ms))]);}
 function lsLoad(){try{const s=localStorage.getItem(LSK);return s?JSON.parse(s):null;}catch{return null;}}
@@ -1232,7 +1256,7 @@ function norm(r){
     bookings:Array.isArray(r.bookings)?r.bookings:[],
     counter:+r.counter||0,
     reviews:Array.isArray(r.reviews)?r.reviews:[],
-    settings:r.settings||{name:'💈 Haimov Barbershop',logo:'',address:'',hours:''},
+    settings:{name:'💈 Haimov Barbershop',logo:'',address:'',hours:'',...(r.settings||{})},
     gallery:Array.isArray(r.gallery)?r.gallery:[],
     services:Array.isArray(r.services)?r.services:state.services,
     users:r.users||{},
@@ -1241,14 +1265,21 @@ function norm(r){
     fridayCap:r.fridayCap||'15:00',
     maxTime:r.maxTime||'20:00',
     barberPhones:Array.isArray(r.barberPhones)?r.barberPhones:[],
+    botToken:r.botToken||'',
+    botChatIds:r.botChatIds||{},
   };
   // merge local-only data (base64 never goes to cloud)
   const loc=lsLoad();
   if(loc){
     // gallery — local only (base64 too large for cloud)
     if(loc.gallery?.length)s.gallery=loc.gallery;
-    // logo — local only
+    // logo and settings — prefer local if more complete
     if(loc.settings?.logo)s.settings.logo=loc.settings.logo;
+    if(loc.settings?.name&&loc.settings.name!=='💈 Haimov Barbershop')s.settings.name=loc.settings.name;
+    if(loc.settings?.address)s.settings.address=loc.settings.address;
+    if(loc.settings?.hours)s.settings.hours=loc.settings.hours;
+    if(loc.fridayCap)s.fridayCap=loc.fridayCap;
+    if(loc.maxTime)s.maxTime=loc.maxTime;
     // avatars — local only
     if(loc.users)Object.keys(loc.users).forEach(k=>{
       if(s.users[k]&&loc.users[k]?.avatar)s.users[k].avatar=loc.users[k].avatar;
@@ -1565,7 +1596,16 @@ async function saveSettings(){
   state.settings.hours=document.getElementById('shopHours').value.trim();
   state.fridayCap=document.getElementById('bFriCap').value||'15:00';
   state.maxTime=document.getElementById('bMaxTime').value||'20:00';
-  await save();applySettings();toast(t('save_settings'),'✅');
+  lsSave();
+  // Force cloud save with retry — settings MUST reach cloud
+  let saved=false;
+  for(let i=0;i<3;i++){
+    try{await cloudSave();saved=true;break;}
+    catch{await new Promise(r=>setTimeout(r,1000*(i+1)));}
+  }
+  if(!saved){toast('⚠️ לא ניתן לשמור בענן — שמור מקומי בלבד','⚠️',5000);}
+  else{applySettings();toast(t('save_settings'),'✅');}
+  applySettings();
 }
 
 // ══ GALLERY ══
@@ -1918,22 +1958,28 @@ function renderASlots(){
   w.innerHTML=slots.map(s=>`<div class="chip">${s}<button onclick="rmSlot('${d}','${s}')">×</button></div>`).join('');
 }
 
-// Reload cloud state, merge local changes, then save
-// Prevents overwriting data from other devices
+// Reload cloud dates/bookings, merge with current state, then save
+// Only merges the concurrent-write-sensitive fields (dates, bookings, counter)
+// Keeps current state's settings, services, users — those are saved separately
 async function safeSave(mutator){
   try{
     const fresh=await cloudLoad();
-    const merged=norm(fresh);
-    // Preserve local-only media
-    merged.gallery=state.gallery;
-    merged.settings.logo=state.settings.logo;
-    // Apply the mutation to the merged state
+    // Only take dates and bookings from cloud (concurrent-sensitive)
+    // Keep everything else from current state to avoid stomping settings
+    const merged={
+      ...state,
+      dates:(fresh.dates&&!Array.isArray(fresh.dates))?fresh.dates:state.dates,
+      bookings:Array.isArray(fresh.bookings)?fresh.bookings:state.bookings,
+      counter:Math.max(state.counter,+fresh.counter||0),
+    };
+    // Apply the mutation
     mutator(merged);
     // Update global state
     state=merged;
     await save();
   }catch{
-    // Cloud unreachable — save local state as-is
+    // Cloud unreachable — apply mutation to current state and save locally
+    mutator(state);
     await save();
   }
 }
@@ -2243,6 +2289,75 @@ async function sendOtpSms(phone,code,waButtonId){
 }
 function sendOtpWhatsApp(phone,code){sendOtpSms(phone,code,null);}
 
+
+// ══ TELEGRAM OTP ══
+function renderBotToken(){
+  const inp=document.getElementById('botTokenInp');
+  const st=document.getElementById('botTokenStatus');
+  if(inp)inp.value=state.botToken||'';
+  const linked=Object.keys(state.botChatIds||{}).length;
+  if(st)st.textContent=state.botToken?`✅ בוט פעיל | ${linked} משתמשים מקושרים`:'לא מוגדר';
+}
+async function saveBotToken(){
+  const tok=document.getElementById('botTokenInp').value.trim();
+  if(!tok){toast('הזן טוקן','⚠️');return;}
+  state.botToken=tok;
+  await save();
+  const el=document.getElementById('botTokenStatus');
+  if(el)el.textContent='✅ טוקן נשמר';
+  toast('טוקן נשמר ✅','✅');
+}
+
+async function sendTelegramOtp(phone,code){
+  const tok=state.botToken;
+  if(!tok){
+    // No bot token — fallback to WhatsApp
+    return false;
+  }
+  const chatId=state.botChatIds?.[phone];
+  if(!chatId){
+    // User hasn't started bot yet
+    return false;
+  }
+  try{
+    const msg=`💈 Haimov Barbershop
+קוד האימות שלך: *${code}*
+(תקף ל-5 דקות)`;
+    const r=await wt(fetch(
+      `https://api.telegram.org/bot${tok}/sendMessage`,
+      {method:'POST',headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({chat_id:chatId,text:msg,parse_mode:'Markdown'})}
+    ),8000);
+    const d=await r.json();
+    return d.ok===true;
+  }catch{return false;}
+}
+
+// Called by Telegram bot webhook when user sends /start
+// Bot should call this URL: https://ftgy.neocities.org/yonagan#tgstart={chat_id}&phone={phone}
+// OR: admin manually links phone→chatId in admin panel
+async function linkTelegramChat(phone,chatId){
+  if(!state.botChatIds)state.botChatIds={};
+  state.botChatIds[phone]=chatId;
+  await save();
+}
+
+// Override sendOtpSms to try Telegram first, then WA fallback
+async function sendOtpSms(phone,code,waButtonId){
+  const tgSent=await sendTelegramOtp(phone,code);
+  if(tgSent){
+    toast('קוד נשלח לטלגרם שלך ✅','✈️');
+    return;
+  }
+  // Show WA button (no SMS - textbelt free key exhausted)
+  if(waButtonId){
+    const btn=document.getElementById(waButtonId);
+    if(btn){btn.href=buildWaUrl(phone,code);btn.style.display='inline-flex';}
+  }
+  if(!tgSent){
+    toast('שלח /start לבוט טלגרם, ואז קבל קוד בוואטסאפ','📱',5000);
+  }
+}
 
 // REGISTER flow
 async function initiateRegister(){
