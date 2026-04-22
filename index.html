@@ -889,6 +889,19 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
             </div>
           </div>
         </div>
+        <!-- ImgBB API Key -->
+        <div class="card glass">
+          <div class="row" style="font-size:14px;font-weight:700;color:var(--c1);">🖼️ ImgBB — שמירת תמונות</div>
+          <div style="padding:0 14px 8px;font-size:12px;color:var(--c3);">
+            תמונות נשמרות אצלך בענן וזמינות מכל מכשיר.<br/>
+            <a href="https://api.imgbb.com/" target="_blank" style="color:var(--blue);font-weight:600;">קבל מפתח חינמי ← api.imgbb.com</a>
+          </div>
+          <div style="padding:0 14px 14px;display:flex;gap:7px;">
+            <input type="text" id="imgbbKeyInp" class="inp" placeholder="מפתח API..." dir="ltr" style="flex:1;font-size:13px;"/>
+            <button class="btn btn-green btn-sm" onclick="saveImgBBKey()">שמור</button>
+          </div>
+          <div id="imgbbStatus" style="padding:0 14px 10px;font-size:12px;color:var(--c3);"></div>
+        </div>
         <!-- Curator password -->
         <div class="card glass">
           <div class="row" style="font-size:14px;font-weight:700;color:var(--c1);" data-i18n="curator_pw">🔑 סיסמת קוּרָטוֹר</div>
@@ -964,7 +977,7 @@ select.inp,select.inp:focus{appearance:none;-webkit-appearance:none;}
 
 <script>
 /* ================================================================
-   HAIMOV BARBERSHOP v0.7.1
+   HAIMOV BARBERSHOP v0.6.6
    Built with: HTML + CSS + JS  |  Cloud: JSONBin.io + localStorage
    Roles: Admin / Curator / Client
    © 2026 Haimov Barbershop — Protected work
@@ -1097,7 +1110,7 @@ function swADock(idx,panelId){
   if(panelId==='aCalSlots')renderAC();
   if(panelId==='aReviews')renderARv();
   if(panelId==='aUsers')renderUsers();
-  if(panelId==='aAdminSett'){renderAGal();renderASvc();renderBarberPhones();renderBotToken();}
+  if(panelId==='aAdminSett'){renderAGal();renderASvc();renderBarberPhones();renderBotToken();renderImgBBKey();}
 }
 function settingsBack(){if(currentUser)goTo('sBooking');else goTo('sLogin');}
 
@@ -1156,7 +1169,7 @@ let useLocal=false;
 let state={
   dates:{},bookings:[],counter:0,reviews:[],
   settings:{name:'💈 Haimov Barbershop',logo:'',address:'רחוב הרצל 12, תל אביב',hours:'א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00'},
-  gallery:[],
+  gallery:(state.gallery||[]).map(g=>({...g,src:g.src?.startsWith('http')?g.src:''})).filter(g=>g.src||g.caption),
   services:[
     {id:1,name:'תספורת גבר',desc:'כולל שטיפה',price:'₪60',icon:'✂️'},
     {id:2,name:'גילוח זקן',desc:'עם תער מסורתי',price:'₪40',icon:'🪒'},
@@ -1170,7 +1183,8 @@ let state={
   maxTime:'20:00',
   barberPhones:[],
   botToken:'',
-  botChatIds:{}, // phone→telegramChatId
+  botChatIds:{},
+  imgbbKey:'', // api.imgbb.com free API key
 };
 function wt(p,ms){return Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),ms))]);}
 function lsLoad(){
@@ -1214,8 +1228,8 @@ async function cloudLoad(){
 }
 async function cloudSave(){
   // strip base64 from cloud
-  const cs={...state,gallery:[],settings:{...state.settings,logo:''},
-    users:Object.fromEntries(Object.entries(state.users).map(([k,v])=>[k,{...v,avatar:''}]))};
+  const cs={...state,gallery:[],settings:{...state.settings,logo:state.settings?.logo?.startsWith('http')?state.settings.logo:''},
+    users:Object.fromEntries(Object.entries(state.users||{}).map(([k,v])=>[k,{...v,avatar:v.avatar?.startsWith('http')?v.avatar:''}]))};
   const r=await wt(fetch(BIN_URL,{method:'PUT',headers:HDR,body:JSON.stringify(cs)}),8000);
   if(!r.ok)throw new Error('PUT '+r.status);
 }
@@ -1272,6 +1286,7 @@ function norm(r){
     barberPhones:Array.isArray(r.barberPhones)?r.barberPhones:[],
     botToken:r.botToken||'',
     botChatIds:r.botChatIds||{},
+    imgbbKey:r.imgbbKey||'',
   };
   // merge local-only data (base64 never goes to cloud)
   const loc=lsLoad();
@@ -1513,14 +1528,21 @@ function toggleAdmin(on){if(on){enterAdmin(currentUser?.email||'');}else{documen
 function toggleCurator(on){if(on){enterCurator(currentUser||{name:'Curator',phone:''});}else{document.getElementById('curatorToggle').checked=false;logoutAdmin();}}
 
 // ══ AVATAR ══
-function uploadAvatar(e){
+async function uploadAvatar(e){
   const f=e.target.files[0];if(!f)return;
-  if(f.size>1.5*1024*1024){toast('עד 1.5MB','⚠️');return;}
-  const r=new FileReader();r.onload=ev=>{
-    if(!currentUser)return;
+  if(!currentUser)return;
+  toast('מעלה...','⏳',10000);
+  const src=await uploadImage(f,1.5);
+  if(src){
     const ud=Object.values(state.users).find(x=>x.phone===currentUser.phone||x.uid===currentUser.uid);
-    if(ud){ud.avatar=ev.target.result;lsSave();renderUserInfo();toast('אווטר עודכן','👤');}
-  };r.readAsDataURL(f);e.target.value='';
+    if(ud){
+      ud.avatar=src;
+      if(src.startsWith('http')){await save();} // URL syncs to cloud
+      else{lsSave();} // base64 stays local
+      renderUserInfo();toast('אווטר עודכן ✅','👤');
+    }
+  }
+  e.target.value='';
 }
 
 // ══ SETTINGS / LOGO ══
@@ -1550,11 +1572,22 @@ function applySettings(){
     else dockLogo.textContent='💈';
   }
 }
-function uploadLogo(e){
+async function uploadLogo(e){
   const f=e.target.files[0];if(!f)return;
-  if(f.size>2*1024*1024){toast('עד 2MB','⚠️');return;}
-  const r=new FileReader();r.onload=ev=>{state.settings.logo=ev.target.result;logoSave();applySettings();toast('לוגו עודכן — לחץ שמור','ℹ️');};
-  r.readAsDataURL(f);e.target.value='';
+  toast('מעלה לוגו...','⏳',10000);
+  const src=await uploadImage(f,2);
+  if(src){
+    state.settings.logo=src;
+    if(src.startsWith('http')){
+      // URL — save to cloud so logo appears on all devices
+      await save();
+    }else{
+      logoSave(); // base64 — local only
+    }
+    applySettings();
+    toast('לוגו עודכן ✅','✅');
+  }
+  e.target.value='';
 }
 async function saveSettings(){
   state.settings.name=document.getElementById('shopName').value.trim()||'💈 Haimov Barbershop';
@@ -1590,10 +1623,22 @@ function renderAGal(){
   w.innerHTML=imgs.length?imgs.map((g,i)=>`<div class="gal-item glass"><img src="${g.src}" alt=""/><button class="gal-del" onclick="delGalImg(${i})">×</button></div>`).join(''):
     `<div style="grid-column:span 3;text-align:center;padding:16px;color:var(--c4);font-size:13px;">אין תמונות</div>`;
 }
-function addGalImg(e){
-  const f=e.target.files[0];if(!f)return;if(f.size>2*1024*1024){toast('עד 2MB','⚠️');return;}
-  const r=new FileReader();r.onload=async ev=>{if(!state.gallery)state.gallery=[];state.gallery.push({src:ev.target.result,caption:''});galSave();lsSave();renderAGal();renderSplashPhoto();renderGalPublic('publicGallery');toast(t('add_photo'),'🖼️');};
-  r.readAsDataURL(f);e.target.value='';
+async function addGalImg(e){
+  const f=e.target.files[0];if(!f)return;
+  const btn=e.target.previousElementSibling;
+  if(btn){btn.disabled=true;btn.textContent='מעלה...';}
+  const src=await uploadImage(f,2);
+  if(src){
+    if(!state.gallery)state.gallery=[];
+    state.gallery.push({src,caption:''});
+    // If URL (not base64) → save to cloud so other devices see it
+    if(src.startsWith('http')){await save();}
+    else{galSave();lsSave();}
+    renderAGal();renderSplashPhoto();renderGalPublic('publicGallery');
+    toast(t('add_photo'),'🖼️');
+  }
+  if(btn){btn.disabled=false;btn.textContent=t('add_photo');}
+  e.target.value='';
 }
 function delGalImg(i){showModal('🗑️','מחק?','','מחק',()=>{state.gallery.splice(i,1);galSave();lsSave();renderAGal();renderSplashPhoto();renderGalPublic('publicGallery');toast('נמחק','ℹ️');});}
 
@@ -2184,6 +2229,22 @@ function slideDockIndicator(dockId,idx){
   ind.style.height=br.height+'px';
 }
 // ══ BARBER PHONES + WHATSAPP ══
+async function saveImgBBKey(){
+  const key=document.getElementById('imgbbKeyInp')?.value.trim();
+  if(!key){toast('הזן מפתח','⚠️');return;}
+  state.imgbbKey=key;
+  await save();
+  renderImgBBKey();
+  toast('מפתח ImgBB נשמר ✅','🖼️');
+}
+function renderImgBBKey(){
+  const inp=document.getElementById('imgbbKeyInp');
+  const st=document.getElementById('imgbbStatus');
+  if(inp)inp.value=state.imgbbKey||'';
+  if(st)st.textContent=state.imgbbKey?
+    '✅ פעיל — תמונות מסתנכרנות לכל המכשירים':
+    '⚠️ לא מוגדר — תמונות נשמרות מקומית בלבד';
+}
 function renderBarberPhones(){
   const el=document.getElementById('barberPhonesList');if(!el)return;
   const phones=state.barberPhones||[];
@@ -2407,6 +2468,50 @@ function sendBarberWhatsApp(booking){
 
 
 
+
+
+// ══ IMGBB IMAGE UPLOAD ══
+// Get free API key at: https://api.imgbb.com/
+async function uploadToImgBB(file){
+  const key=state.imgbbKey;
+  if(!key){
+    // No API key — fall back to base64 local storage
+    return null;
+  }
+  const form=new FormData();
+  form.append('image',file);
+  try{
+    const r=await wt(fetch(`https://api.imgbb.com/1/upload?key=${key}`,{
+      method:'POST',body:form
+    }),30000);
+    const d=await r.json();
+    if(d.success)return d.data.url; // permanent URL
+    throw new Error(d.error?.message||'upload failed');
+  }catch(e){
+    console.warn('ImgBB upload failed:',e.message);
+    return null;
+  }
+}
+
+// Convert file to base64 (fallback if no ImgBB key)
+function fileToBase64(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=ev=>res(ev.target.result);
+    r.onerror=rej;
+    r.readAsDataURL(file);
+  });
+}
+
+// Upload image: try ImgBB first, fall back to base64
+async function uploadImage(file,maxMB=2){
+  if(file.size>maxMB*1024*1024){toast(`עד ${maxMB}MB','⚠️');return null;}
+  const url=await uploadToImgBB(file);
+  if(url)return url; // ImgBB URL — syncs to all devices ✅
+  // Fallback: base64 — stored locally only
+  toast('מפתח ImgBB חסר — שמירה מקומית בלבד','⚠️',4000);
+  return await fileToBase64(file);
+}
 
 // ══ GALLERY + LOGO LOCAL STORAGE (separate keys — avoid quota issues) ══
 const GAL_KEY='bb_gallery';
