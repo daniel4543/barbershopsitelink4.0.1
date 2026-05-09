@@ -78,6 +78,7 @@ scroll-behavior: smooth;
 
 body {
 font-family: var(–font);
+-webkit-font-smoothing: antialiased;
 background: var(–bg);
 color: var(–c1);
 min-height: 100vh;
@@ -279,9 +280,9 @@ box-shadow: 0 2px 12px rgba(0,0,0,0.25);
 letter-spacing: 0.3px;
 }
 [data-theme=light] .btn-gold {
-background: #2d2010;
-color: #f0ece6;
-box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+background: linear-gradient(135deg, #c9a96e, #e8c97a);
+color: #1a1209;
+box-shadow: 0 4px 16px rgba(201,169,110,0.35);
 }
 .btn-outline {
 background: transparent;
@@ -567,7 +568,7 @@ background: var(–bg3);
 position: relative; cursor: pointer;
 border: 1px solid var(–border2);
 }
-[data-theme=light] .splash-photo { background: #e4dfd7; }
+[data-theme=light] .splash-photo { background: #e8e2d9; border-color: rgba(0,0,0,0.1); }
 #galSlides { display: flex; height: 100%; }
 #galSlides > div { flex: 0 0 100%; width: 100%; height: 100%; overflow: hidden; }
 #galSlides img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -677,7 +678,8 @@ cursor: pointer; border: 1px solid var(–border2);
 background: transparent; color: var(–c3);
 transition: all 0.2s;
 }
-.lang-tab.active { background: var(–accent); color: #1a1209; border-color: var(–accent); }
+.lang-tab.active { background: var(–accent); color: #1a1209; border-color: transparent; font-weight: 800; }
+[data-theme=light] .lang-tab { background: #fff; border-color: rgba(0,0,0,0.1); }
 
 /* ── SECTION LABEL ── */
 .sec-label {
@@ -767,7 +769,14 @@ background: linear-gradient(145deg, #2d2010, #4a3420, #2d2010);
 [data-theme=light] .card-gold  { background: linear-gradient(135deg,#fff 0%,rgba(201,169,110,0.06) 100%); border-color: rgba(201,169,110,0.2); }
 [data-theme=light] .myApptCard .hero-main { /* already dark, keep it */ }
 
+[data-theme=light] .card { background: #fff; box-shadow: 0 2px 16px rgba(0,0,0,0.07); border-color: rgba(0,0,0,0.06); }
+[data-theme=light] .card-gold { background: linear-gradient(135deg, #fff 0%, #fdf8f0 100%); border-color: rgba(201,169,110,0.25); box-shadow: 0 2px 16px rgba(201,169,110,0.1); }
+[data-theme=light] .hero-main { background: linear-gradient(145deg, #1a1209, #2d2010, #1a1209) !important; }
+[data-theme=light] .hero-title { color: var(–accent) !important; }
+[data-theme=light] .hero-sub   { color: rgba(201,169,110,0.65) !important; }
+[data-theme=light] .hero-main .hero-sub span { color: rgba(201,169,110,0.65) !important; }
 </style>
+
 </head>
 <body>
 <div class="wrap">
@@ -795,8 +804,8 @@ background: linear-gradient(145deg, #2d2010, #4a3420, #2d2010);
   <div class="hero hero-main" style="margin-bottom:10px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
       <div>
-        <div class="hero-title" id="heroTitle">💈 Haimov Barbershop</div>
-        <div class="hero-sub" id="heroSub">ספרות איכות | תל אביב</div>
+        <div class="hero-title" id="heroTitle" style="color:var(--accent);">💈 Haimov Barbershop</div>
+        <div class="hero-sub" id="heroSub" style="color:rgba(201,169,110,0.6);">ספרות איכות | תל אביב</div>
       </div>
       <div style="width:56px;height:56px;border-radius:14px;overflow:hidden;background:rgba(201,169,110,0.1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
         <span id="heroLogoEm" style="font-size:28px;">💈</span>
@@ -814,7 +823,7 @@ background: linear-gradient(145deg, #2d2010, #4a3420, #2d2010);
   <div class="splash-photo" onclick="galNext()">
     <div id="galSlides" style="display:flex;width:100%;height:100%;transition:transform .45s cubic-bezier(.4,0,.2,1);"></div>
     <div id="galDots" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:2;"></div>
-    <div id="galEmpty" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--c4);font-size:13px;">אין תמונות</div>
+    <div id="galEmpty" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--c4);font-size:13px;gap:6px;"><span style="font-size:28px;opacity:0.4;">🖼️</span><span>אין תמונות בגלריה</span></div>
   </div>
 
   <!-- Tabs -->
