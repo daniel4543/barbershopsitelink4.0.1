@@ -157,6 +157,9 @@ font-weight: 900;
 color: var(–accent);
 letter-spacing: -0.3px;
 }
+[data-theme=light] .hero-title { color: var(–accent2); }
+[data-theme=light] .hero-sub { color: rgba(232,201,122,0.7) !important; }
+[data-theme=light] .hero-main * { color: inherit; }
 .hero-sub {
 font-size: 13px;
 color: rgba(201,169,110,0.6);
@@ -276,9 +279,9 @@ box-shadow: 0 2px 12px rgba(0,0,0,0.25);
 letter-spacing: 0.3px;
 }
 [data-theme=light] .btn-gold {
-background: #1a1714;
+background: #2d2010;
 color: #f0ece6;
-box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+box-shadow: 0 2px 12px rgba(0,0,0,0.2);
 }
 .btn-outline {
 background: transparent;
@@ -560,10 +563,11 @@ width: 100%; aspect-ratio: 16/9;
 border-radius: var(–radius);
 overflow: hidden;
 margin-bottom: 10px;
-background: var(–bg2);
+background: var(–bg3);
 position: relative; cursor: pointer;
 border: 1px solid var(–border2);
 }
+[data-theme=light] .splash-photo { background: #e4dfd7; }
 #galSlides { display: flex; height: 100%; }
 #galSlides > div { flex: 0 0 100%; width: 100%; height: 100%; overflow: hidden; }
 #galSlides img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -808,7 +812,7 @@ background: linear-gradient(145deg, #2d2010, #4a3420, #2d2010);
   <!-- Slideshow -->
 
   <div class="splash-photo" onclick="galNext()">
-    <div id="galSlides" style="transition:transform .45s cubic-bezier(.4,0,.2,1);"></div>
+    <div id="galSlides" style="display:flex;width:100%;height:100%;transition:transform .45s cubic-bezier(.4,0,.2,1);"></div>
     <div id="galDots" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:2;"></div>
     <div id="galEmpty" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--c4);font-size:13px;">אין תמונות</div>
   </div>
@@ -2085,7 +2089,7 @@ function renderGalSlideshow() {
   if (!imgs.length) { slides.innerHTML=''; if(dots)dots.innerHTML=''; if(empty)empty.style.display='flex'; return; }
   if (empty) empty.style.display='none';
   galCur = 0;
-  slides.innerHTML = imgs.map(g => '<div><img src="'+g.src+'" alt="'+(g.caption||'')+'"/></div>').join('');
+  slides.innerHTML = imgs.map(g => '<div style="flex:0 0 100%;width:100%;height:100%;overflow:hidden;"><img src="'+g.src+'" alt="'+(g.caption||'')+'" style="width:100%;height:100%;object-fit:cover;"/></div>').join('');
   if (dots) dots.innerHTML = imgs.map((_,i) => '<div class="gal-dot'+(i===0?' active':'')+'" data-i="'+i+'"></div>').join('');
   if (dots) dots.querySelectorAll('.gal-dot').forEach(d => d.addEventListener('click', e => { e.stopPropagation(); galGoTo(+d.dataset.i); }));
   galUpdate();
