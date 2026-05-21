@@ -7,378 +7,917 @@
   <meta name="Generator" content="Cocoa HTML Writer">
   <meta name="CocoaVersion" content="2685.6">
   <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #374a59; background-color: #191d27; background-color: rgba(25, 29, 39, 0.95)}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #a34138; background-color: #191d27; background-color: rgba(25, 29, 39, 0.95)}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #5b83a5; background-color: #191d27; background-color: rgba(25, 29, 39, 0.95)}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #6bc0c2; background-color: #191d27; background-color: rgba(25, 29, 39, 0.95)}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #e0e0e0; background-color: #191d27; background-color: rgba(25, 29, 39, 0.95)}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #e0e0e0; background-color: #191d27; background-color: rgba(25, 29, 39, 0.95); min-height: 14.0px}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #5b9d5d; background-color: #191d27; background-color: rgba(25, 29, 39, 0.95)}
-    span.s1 {font-variant-ligatures: no-common-ligatures; color: #e0e0e0}
-    span.s2 {font-variant-ligatures: no-common-ligatures}
-    span.s3 {font-variant-ligatures: no-common-ligatures; color: #374a59}
-    span.s4 {font-variant-ligatures: no-common-ligatures; color: #5b83a5}
-    span.s5 {font-variant-ligatures: no-common-ligatures; color: #6bc0c2}
-    span.s6 {font-variant-ligatures: no-common-ligatures; color: #a34138}
-    span.s7 {font-variant-ligatures: no-common-ligatures; color: #5b9d5d}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">&lt;!DOCTYPE </span><span class="s1">html&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s3">&lt;</span><span class="s4">html</span><span class="s3"> </span><span class="s5">lang</span><span class="s3">=</span><span class="s2">"ru"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"scroll-smooth"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s3">&lt;</span><span class="s2">head</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s3"> </span><span class="s2">charset</span><span class="s3">=</span><span class="s6">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s3"> </span><span class="s5">name</span><span class="s3">=</span><span class="s2">"viewport"</span><span class="s3"> </span><span class="s5">content</span><span class="s3">=</span><span class="s2">"width=device-width, initial-scale=1.0"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">title</span><span class="s3">&gt;</span><span class="s2">Open Claw — Курс по установке и настройке</span><span class="s3">&lt;/</span><span class="s4">title</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s3"> </span><span class="s5">src</span><span class="s3">=</span><span class="s2">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s3"> </span><span class="s5">rel</span><span class="s3">=</span><span class="s2">"preconnect"</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"https://fonts.googleapis.com"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s3"> </span><span class="s5">rel</span><span class="s3">=</span><span class="s2">"preconnect"</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"https://fonts.gstatic.com"</span><span class="s3"> </span><span class="s5">crossorigin</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&amp;display=swap"</span><span class="s3"><span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s5">rel</span><span class="s3">=</span><span class="s2">"stylesheet"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">style</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span>body { font-family: </span><span class="s6">'Inter'</span><span class="s2">, sans-serif; }</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span>.gradient-text {</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span>background: </span><span class="s5">linear-gradient</span><span class="s2">(</span><span class="s7">90deg</span><span class="s2">, </span><span class="s7">#3b82f6</span><span class="s2">, </span><span class="s7">#2dd4bf</span><span class="s2">);</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span>-webkit-background-clip: text;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span>-webkit-text-fill-color: transparent;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span>}</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;/</span><span class="s4">style</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s3">&lt;/</span><span class="s2">head</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s3">&lt;</span><span class="s4">body</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"bg-slate-900 text-slate-200"</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s2">&lt;!-- Navigation --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">nav</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"fixed w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex justify-between h-16 items-center"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex items-center gap-2"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">text-white"</span><span class="s3">&gt;</span><span class="s1">OC</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-xl font-bold tracking-tight"</span><span class="s3">&gt;</span><span class="s1">Open</span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500"</span><span class="s3">&gt;</span><span class="s1">Claw</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"hidden md:flex items-center space-x-8 text-sm font-medium"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#problems"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"hover:text-blue-400 transition"</span><span class="s3">&gt;</span><span class="s1">Проблемы</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#program"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"hover:text-blue-400 transition"</span><span class="s3">&gt;</span><span class="s1">Программа</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#prices"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"hover:text-blue-400 transition"</span><span class="s3">&gt;</span><span class="s1">Цены</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#faq"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"hover:text-blue-400 transition"</span><span class="s3">&gt;</span><span class="s1">FAQ</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#prices"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-full text-sm<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">font-semibold transition shadow-lg shadow-blue-500/20"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span>Начать обучение</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;/</span><span class="s4">nav</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s2">&lt;!-- Hero Section --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px]<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">rounded-full"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-teal-600/20 blur-[120px]<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">rounded-full"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"max-w-7xl mx-auto px-4 text-center"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">h1</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span>Запустите свой </span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"gradient-text"</span><span class="s3">&gt;</span><span class="s2">Open Claw</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span><span class="s2"> </span><span class="s3">&lt;</span><span class="s4">br</span><span class="s3">&gt;</span><span class="s2">без ошибок и стресса</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">h1</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-lg lg:text-xl text-slate-400 max-w-2xl mx-auto mb-10"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span>Пошаговый практический курс по установке, калибровке и программированию роботизированного захвата. От</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>первой детали до первого захвата за 7 дней.</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex flex-col sm:flex-row justify-center gap-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#prices"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">text-lg transition shadow-xl shadow-blue-600/30"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span>Хочу установить Open Claw</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#program"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">text-lg transition border border-slate-700"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span>Смотреть программу</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s2">&lt;!-- Image Placeholder --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"mt-16 relative max-w-5xl mx-auto"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"rounded-2xl overflow-hidden border border-slate-700 shadow-2xl shadow-blue-500/10"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">img</span><span class="s3"><span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s5">src</span><span class="s3">=</span><span class="s2">"https://images.unsplash.com/photo-1581091229971-78a451467a4f?auto=format&amp;fit=crop&amp;q=80&amp;w=1200"</span><span class="s3"> </span><span class="s5">alt</span><span class="s3">=</span><span class="s2">"Robotics"</span><span class="s3"><span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s5">class</span><span class="s3">=</span><span class="s2">"w-full h-auto"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;/</span><span class="s2">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s2">&lt;!-- Problems Section --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s3"> </span><span class="s5">id</span><span class="s3">=</span><span class="s2">"problems"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"py-20 bg-slate-800/50"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"max-w-7xl mx-auto px-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-center mb-16"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-3xl lg:text-4xl font-bold mb-4"</span><span class="s3">&gt;</span><span class="s1">Почему установка </span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500"</span><span class="s3">&gt;</span><span class="s1">Open</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>Claw</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span><span class="s2"> — это сложно?</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-400"</span><span class="s3">&gt;</span><span class="s2">Знакомые ситуации, которые отделяют вас от работающего робота</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"grid md:grid-cols-3 gap-8"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"p-8 bg-slate-900 border border-slate-700 rounded-2xl hover:border-blue-500/50 transition"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"w-12 h-12 bg-red-500/20 text-red-500 rounded-lg flex items-center justify-center mb-6<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">text-2xl"</span><span class="s3">&gt;</span><span class="s1">⚠️ </span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-bold mb-3"</span><span class="s3">&gt;</span><span class="s2">Ошибки в коде</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-400 leading-relaxed"</span><span class="s3">&gt;</span><span class="s2">Бесконечные ошибки компиляции, конфликты библиотек и</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>зависимости, которые невозможно настроить самостоятельно.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"p-8 bg-slate-900 border border-slate-700 rounded-2xl hover:border-blue-500/50 transition"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"w-12 h-12 bg-yellow-500/20 text-yellow-500 rounded-lg flex items-center justify-center</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2"> mb-6 text-2xl"</span><span class="s3">&gt;</span><span class="s1">🔌</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-bold mb-3"</span><span class="s3">&gt;</span><span class="s2">Проблемы с железом</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-400 leading-relaxed"</span><span class="s3">&gt;</span><span class="s2">Неправильное подключение сервоприводов или перегрев</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>моторов из-за некорректной калибровки.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"p-8 bg-slate-900 border border-slate-700 rounded-2xl hover:border-blue-500/50 transition"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"w-12 h-12 bg-blue-500/20 text-blue-500 rounded-lg flex items-center justify-center<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">mb-6 text-2xl"</span><span class="s3">&gt;</span><span class="s1">⏳</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-bold mb-3"</span><span class="s3">&gt;</span><span class="s2">Потеря времени</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-400 leading-relaxed"</span><span class="s3">&gt;</span><span class="s2">Часы чтения форумов на английском и просмотр</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>разрозненных видео, которые не дают полной картины.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;/</span><span class="s2">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s2">&lt;!-- Solution / Course Section --&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s2">section</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"py-20"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-center gap-16"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"lg:w-1/2"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">img</span><span class="s3"><span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s5">src</span><span class="s3">=</span><span class="s2">"https://images.unsplash.com/photo-1531297437599-6d7558652a17?auto=format&amp;fit=crop&amp;q=80&amp;w=600"</span><span class="s3"> </span><span class="s5">alt</span><span class="s3">=</span><span class="s2">"Robot parts"</span><span class="s3"><span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s5">class</span><span class="s3">=</span><span class="s2">"rounded-3xl shadow-2xl rotate-3 hover:rotate-0 transition duration-500"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"lg:w-1/2"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-3xl lg:text-4xl font-bold mb-6"</span><span class="s3">&gt;</span><span class="s1">Кратчайший путь к </span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"><span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500"</span><span class="s3">&gt;</span><span class="s1">результату</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-lg text-slate-400 mb-8"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span>Мы создали систему, которая ведет вас за руку. Вместо того чтобы гадать, вы следуете четкому</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>алгоритму: проверенные инструкции, готовые конфиги и поддержка экспертов.</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">ul</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"space-y-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex items-start gap-3"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"mt-1 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">text-white"</span><span class="s3">&gt;</span><span class="s1">✓</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-300"</span><span class="s3">&gt;</span><span class="s2">Экономия до 40 часов поиска информации</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex items-start gap-3"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"mt-1 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">text-white"</span><span class="s3">&gt;</span><span class="s1">✓</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-300"</span><span class="s3">&gt;</span><span class="s2">Гарантия работоспособности железа</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex items-start gap-3"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"mt-1 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">text-white"</span><span class="s3">&gt;</span><span class="s1">✓</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-300"</span><span class="s3">&gt;</span><span class="s2">Доступ к закрытому комьюнити инженеров</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">ul</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;/</span><span class="s2">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s2">&lt;!-- Program Section --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s3"> </span><span class="s5">id</span><span class="s3">=</span><span class="s2">"program"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"py-20 bg-slate-800/50"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"max-w-4xl mx-auto px-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-center mb-16"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-3xl lg:text-4xl font-bold mb-4"</span><span class="s3">&gt;</span><span class="s1">Программа курса</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-400"</span><span class="s3">&gt;</span><span class="s2">7 модулей — от распаковки до полной автоматизации</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"space-y-6"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s7">&lt;!-- Module 1 --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"group p-6 bg-slate-900 border border-slate-700 rounded-2xl transition<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">hover:border-blue-500"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex justify-between items-center cursor-pointer"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500 font-bold text-xl"</span><span class="s3">&gt;</span><span class="s1">01</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-semibold"</span><span class="s3">&gt;</span><span class="s2">Подготовка и Железо</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-500 text-sm italic"</span><span class="s3">&gt;</span><span class="s2">День 1-2</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"mt-4 text-slate-400 pl-12"</span><span class="s3">&gt;</span><span class="s2">Подбор компонентов, проверка совместимости, сборка</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>механической части захвата.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s7">&lt;!-- Module 2 --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"group p-6 bg-slate-900 border border-slate-700 rounded-2xl transition<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">hover:border-blue-500"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex justify-between items-center cursor-pointer"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500 font-bold text-xl"</span><span class="s3">&gt;</span><span class="s1">02</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-semibold"</span><span class="s3">&gt;</span><span class="s2">Электрика и Схемотехника</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-500 text-sm italic"</span><span class="s3">&gt;</span><span class="s2">День 3</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"mt-4 text-slate-400 pl-12"</span><span class="s3">&gt;</span><span class="s2">Правильное подключение питания, разводка проводов, защита от</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>коротких замыканий.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s7">&lt;!-- Module 3 --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"group p-6 bg-slate-900 border border-slate-700 rounded-2xl transition<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">hover:border-blue-500"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex justify-between items-center cursor-pointer"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500 font-bold text-xl"</span><span class="s3">&gt;</span><span class="s1">03</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-semibold"</span><span class="s3">&gt;</span><span class="s2">Установка ПО и Окружения</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-500 text-sm italic"</span><span class="s3">&gt;</span><span class="s2">День 4</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"mt-4 text-slate-400 pl-12"</span><span class="s3">&gt;</span><span class="s2">Настройка ОС, установка драйверов, прошивка контроллеров и</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>настройка IDE.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s7">&lt;!-- Module 4 --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"group p-6 bg-slate-900 border border-slate-700 rounded-2xl transition<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">hover:border-blue-500"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex justify-between items-center cursor-pointer"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500 font-bold text-xl"</span><span class="s3">&gt;</span><span class="s1">04</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-semibold"</span><span class="s3">&gt;</span><span class="s2">Первый Запуск и Калибровка</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-500 text-sm italic"</span><span class="s3">&gt;</span><span class="s2">День 5</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"mt-4 text-slate-400 pl-12"</span><span class="s3">&gt;</span><span class="s2">Настройка углов поворота, калибровка датчиков давления и</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>проверка плавности хода.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s7">&lt;!-- Module 5 --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"group p-6 bg-slate-900 border border-slate-700 rounded-2xl transition<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">hover:border-blue-500"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex justify-between items-center cursor-pointer"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500 font-bold text-xl"</span><span class="s3">&gt;</span><span class="s1">05</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-semibold"</span><span class="s3">&gt;</span><span class="s2">Базовое Программирование</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-500 text-sm italic"</span><span class="s3">&gt;</span><span class="s2">День 6</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"mt-4 text-slate-400 pl-12"</span><span class="s3">&gt;</span><span class="s2">Написание первых скриптов для захвата объектов разной</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>формы.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s7">&lt;!-- Module 6 --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"group p-6 bg-slate-900 border border-slate-700 rounded-2xl transition<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">hover:border-blue-500"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex justify-between items-center cursor-pointer"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500 font-bold text-xl"</span><span class="s3">&gt;</span><span class="s1">06</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                              </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-semibold"</span><span class="s3">&gt;</span><span class="s2">Стресс-тесты и Оптимизация</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-500 text-sm italic"</span><span class="s3">&gt;</span><span class="s2">День 7</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"mt-4 text-slate-400 pl-12"</span><span class="s3">&gt;</span><span class="s2">Повышение точности, оптимизация энергопотребления и финальная</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">   </span>проверка.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;/</span><span class="s2">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s2">&lt;!-- Pricing Section --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s3"> </span><span class="s5">id</span><span class="s3">=</span><span class="s2">"prices"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"py-20"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"max-w-7xl mx-auto px-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-center mb-16"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-3xl lg:text-4xl font-bold mb-4"</span><span class="s3">&gt;</span><span class="s2">Выберите свой тариф</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-400"</span><span class="s3">&gt;</span><span class="s2">Инвестируйте в свои навыки и свое время</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"grid md:grid-cols-3 gap-8"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s7">&lt;!-- Basic --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"p-8 bg-slate-900 border border-slate-700 rounded-3xl flex flex-col"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-bold mb-2"</span><span class="s3">&gt;</span><span class="s2">Базовый</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-4xl font-extrabold mb-6"</span><span class="s3">&gt;</span><span class="s1">4 900 ₽</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">ul</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"space-y-4 mb-10 flex-grow text-slate-400"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ Доступ ко всем видео-урокам</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ PDF-чек-листы по сборке</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ Готовые конфиги ПО</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3 text-slate-600"</span><span class="s3">&gt;</span><span class="s2">✕ Чат с куратором</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">ul</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"block text-center py-3 rounded-xl border border-blue-500 text-blue-500<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">font-bold hover:bg-blue-500 hover:text-white transition"</span><span class="s3">&gt;</span><span class="s1">Выбрать Базовый</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s7">&lt;!-- Pro --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"p-8 bg-blue-600 rounded-3xl flex flex-col relative scale-105 shadow-2xl<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">shadow-blue-600/20"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"absolute top-0 right-0 bg-white text-blue-600 text-xs font-bold px-3 py-1<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">rounded-bl-lg rounded-tr-lg uppercase tracking-wider"</span><span class="s3">&gt;</span><span class="s1">Популярный</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-xl font-bold mb-2 text-white"</span><span class="s3">&gt;</span><span class="s1">Профи</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-4xl font-extrabold mb-6 text-white"</span><span class="s3">&gt;</span><span class="s1">8 900 ₽</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">ul</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"space-y-4 mb-10 flex-grow text-blue-100"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ Все из тарифа «Базовый»</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ Закрытый чат с поддержкой</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ Доступ к базе знаний</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ Скидки на комплектующие</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">ul</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"block text-center py-3 rounded-xl bg-white text-blue-600 font-bold<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">hover:bg-slate-100 transition shadow-lg"</span><span class="s3">&gt;</span><span class="s1">Выбрать Профи</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s7">&lt;!-- VIP --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"p-8 bg-slate-900 border border-slate-700 rounded-3xl flex flex-col"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-xl font-bold mb-2"</span><span class="s3">&gt;</span><span class="s2">VIP</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-4xl font-extrabold mb-6"</span><span class="s3">&gt;</span><span class="s2">24 900 ₽</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">ul</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"space-y-4 mb-10 flex-grow text-slate-400"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ Все из тарифа «Профи»</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ Личный ментор по проекту</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ 3 созвона по Zoom для отладки</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"flex items-center gap-3"</span><span class="s3">&gt;</span><span class="s2">✓ Гарантия запуска «под ключ»</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">ul</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s3"> </span><span class="s5">href</span><span class="s3">=</span><span class="s2">"#"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"block text-center py-3 rounded-xl border border-blue-500 text-blue-500<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">font-bold hover:bg-blue-500 hover:text-white transition"</span><span class="s3">&gt;</span><span class="s1">Выбрать VIP</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;/</span><span class="s2">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s2">&lt;!-- FAQ Section --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s3"> </span><span class="s5">id</span><span class="s3">=</span><span class="s2">"faq"</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"py-20 bg-slate-800/50"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"max-w-3xl mx-auto px-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-center mb-16"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-3xl lg:text-4xl font-bold mb-4"</span><span class="s3">&gt;</span><span class="s1">Частые вопросы</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"space-y-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">details</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"group p-6 bg-slate-900 border border-slate-700 rounded-2xl cursor-pointer"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">summary</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"font-semibold list-none flex justify-between items-center"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span>Нужен ли опыт в программировании?</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500 group-open:rotate-180 transition"</span><span class="s3">&gt;</span><span class="s1">↓</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">summary</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"mt-4 text-slate-400 leading-relaxed"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span>Не обязательно. Мы начинаем с самых основ. Если вы умеете устанавливать программы на</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>компьютер, остальному мы научим в процессе.</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">details</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">details</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"group p-6 bg-slate-900 border border-slate-700 rounded-2xl cursor-pointer"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">summary</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"font-semibold list-none flex justify-between items-center"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span>Какие детали нужно купить?</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500 group-open:rotate-180 transition"</span><span class="s3">&gt;</span><span class="s1">↓</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">summary</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"mt-4 text-slate-400 leading-relaxed"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span>В первом модуле курса есть полный список проверенных компонентов со ссылками на маркетплейсы.</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>Вы не купите лишнего.</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">details</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">details</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"group p-6 bg-slate-900 border border-slate-700 rounded-2xl cursor-pointer"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">summary</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"font-semibold list-none flex justify-between items-center"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span>Что если у меня ничего не заработает?</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                          </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500 group-open:rotate-180 transition"</span><span class="s3">&gt;</span><span class="s1">↓</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">summary</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"mt-4 text-slate-400 leading-relaxed"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                          </span>На тарифах «Профи» и «VIP» наша команда поддержки сопровождает вас до тех пор, пока ваш Open</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">  </span>Claw не совершит первый захват.</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                      </span></span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;/</span><span class="s4">details</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;/</span><span class="s2">section</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s2">&lt;!-- Footer --&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;</span><span class="s4">footer</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"py-12 border-t border-slate-800 text-center"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"max-w-7xl mx-auto px-4"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"flex items-center justify-center gap-2 mb-6"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-bold text-white<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s2">text-xs"</span><span class="s3">&gt;</span><span class="s1">OC</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                  </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-lg font-bold tracking-tight"</span><span class="s3">&gt;</span><span class="s1">Open</span><span class="s3">&lt;</span><span class="s4">span</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s2">"text-blue-500"</span><span class="s3">&gt;</span><span class="s1">Claw</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s3"> </span><span class="s5">class</span><span class="s3">=</span><span class="s6">"text-slate-500 text-sm"</span><span class="s3">&gt;</span><span class="s2">&amp;copy; 2026 Open Claw Academy. Все права защищены.</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s3">&lt;/</span><span class="s4">footer</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s3">&lt;/</span><span class="s2">body</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s1"><span class="Apple-converted-space">  </span></span><span class="s3">&lt;/</span><span class="s2">html</span><span class="s3">&gt;</span></p>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="he" dir="rtl"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;💈 Haimov Barbershop - הזמן תור&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Google Fonts: Heebo --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Heebo:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* CSS СТИЛИ (Тема Dark, Переменные) <span class="Apple-converted-space">      </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>/* Предустановленные переменные (сбрасываются из state) */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--primary-bg-color: #0f0e0d; /* Dark background */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--secondary-text-color: #c9a96e; /* Gold Accent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--text-color: #f0f0f0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--card-bg-color: #1c1b1a;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--disabled-color: #444;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--border-color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--success-color: #4CAF50;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--error-color: #f44336;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--accent-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Принудительное применение тёмной темы */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Heebo', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-top: 60px; /* Space for fixed header */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>direction: rtl;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow-x: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Общие стили */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>* {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 1200px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* HEADER &amp; NAVIGATION (Dock) <span class="Apple-converted-space">            </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>header {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>right: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 1000;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 60px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: space-between;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.logo-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>user-select: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.logo-container img {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.main-actions {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-button {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 8px 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: background-color 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-button:hover:not(.active) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #282726;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-button.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* GENERIC COMPONENTS<span class="Apple-converted-space">                          </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>section {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 40px 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>h2 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Buttons */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px 25px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: background-color 0.2s, transform 0.1s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-decoration: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>user-select: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-primary {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 10px rgba(201, 169, 110, 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-primary:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #b89d6b;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-1px);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-secondary {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Forms */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.form-group {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type="text"], input[type="password"], input[type="tel"], select {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #121110;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: border-color 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input:focus, select:focus {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Card Layout */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.card-grid {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 25px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-right: 3px solid var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* SPECIFIC SECTION STYLES (Booking, Gal, etc.) */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Booking Slots/Calendar */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#calendar-view {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.calendar-header {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: space-between;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 800px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.day-slots {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 1000px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slot-btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 8px 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.15s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>min-width: 80px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slot-btn:hover:not(.disabled) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slot-btn.disabled {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0.5;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: not-allowed;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slot-btn.selected {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 10px rgba(201, 169, 110, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Gallery */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#gallery-slider {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #121110;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 900px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#gallery-slider img {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>object-fit: cover;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.5s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.gallery-caption {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Modals */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: rgba(0, 0, 0, 0.8);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 2000;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 500px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 90%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: slideDown 0.3s ease-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes slideDown {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>from { opacity: 0; transform: translateY(-20px); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { opacity: 1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal .close-btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Admin Styling (Specialized) */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.admin-grid {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: 3fr 1fr;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.admin-panel {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.user-list-item {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.user-list-item:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #222120;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.user-list-item.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #2a2825;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-right: 3px solid var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- HEADER &amp; NAVIGATION DOCK --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="logo-container" data-action-click="sSplash"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;img id="logo-img" src="placeholder-logo.png" alt="Haimov Logo"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 id="shop-name"&gt;💈 Haimov Barbershop&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;nav class="main-actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="nav-button" data-target="sSplash" data-nav-id="main-splash"&gt;💈 Главная&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="nav-button" data-target="sBooking" data-nav-id="main-book"&gt;✂️ Запись&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="nav-button" data-target="sGallery" data-nav-id="main-gallery"&gt;🖼️ Галерея&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="nav-button" data-target="sReviews" data-nav-id="main-reviews"&gt;⭐ Отзывы&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 1. SPLASH SCREEN (sSplash) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="sSplash" class="screen-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container" style="text-align: center; padding: 60px 20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style="font-size: 2.5em;"&gt;ברוכים הבאים ל-Haimov Barbershop&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p style="font-size: 1.2em; color: #aaa;"&gt;Лучшие мастера города ждёт вас. Выберите вашу услугу и запишитесь на идеальный образ.&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="margin-top: 40px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-primary" data-target="sBooking" data-action-click="openBookingView"&gt;הזמן תור ←&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="card-grid" style="margin-top: 80px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card" style="text-align: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 style="color: var(--secondary-text-color);"&gt;👨‍💼 Про услуги&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p&gt;Наши услуги включают: Тספורת גבר, גילוח זקן, וпакеты премиум-класса.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="btn btn-secondary" data-target="#services-list"&gt;צפה בשירותים&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card" style="text-align: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 style="color: var(--secondary-text-color);"&gt;📅 Часы работы&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p&gt;Мы ждем вас каждый день. Рабочие часы: &lt;span id="shop-hours-display"&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p style="margin-top: 10px;"&gt;📍 Адрес: &lt;span id="shop-address-display"&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 2. AUTH SCREENS (Login/Register) <span class="Apple-converted-space">    </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sLogin" class="screen-section" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container" style="max-width: 400px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style="text-align: center;"&gt;🔑 כניסה לחשבון לקוח&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form id="login-form" data-submit-action="login"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="login-phone"&gt;מספר טלפון (המספר המלא)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="tel" id="login-phone" required placeholder="+972-54-XXXXXXX"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="login-pass"&gt;סיסמה&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="password" id="login-pass" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button type="submit" class="btn btn-primary" style="width: 100%;"&gt;כניסה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="text-align: center; margin-top: 20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-secondary" data-action-click="navigateToRegister"&gt;אין לי חשבון?&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sRegister" class="screen-section" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container" style="max-width: 400px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style="text-align: center;"&gt;📝 הרשמה למשתמש חדש&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form id="register-form" data-submit-action="register"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-name"&gt;שם מלא&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="reg-name" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-phone"&gt;מספר טלפון&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="tel" id="reg-phone" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-pass"&gt;סיסמה&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="password" id="reg-pass" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-confirm-pass"&gt;אישור סיסמה&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="password" id="reg-confirm-pass" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group checkbox-group" style="display: flex; align-items: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="checkbox" id="reg-conditions" required style="width: auto; margin-left: 10px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-conditions" style="display: inline;"&gt;אני מסכים לתנאי השימוש&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button type="submit" class="btn btn-primary" style="width: 100%;"&gt;הרשמה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="text-align: center; margin-top: 20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-secondary" data-action-click="goToLogin"&gt;התחבר?&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 3. BOOKING MANAGEMENT (sBooking)<span class="Apple-converted-space">    </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sBooking" class="screen-section" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 id="booking-title"&gt;🗓️ הזמן תור - ספר Haimov&lt;/h2&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 4 Tab Navigation (Dock) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="booking-dock" style="display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid var(--border-color);"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-dock-target="book" data-dock-nav-id="book-tab" data-active-tab="true"&gt;💈 התור&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-dock-target="gallery" data-dock-nav-id="gallery-tab"&gt;🖼️ גלריה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-dock-target="reviews" data-dock-nav-id="review-tab"&gt;⭐ חוות דעת&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-dock-target="settings" data-dock-nav-id="settings-tab"&gt;👤 הפרופיל&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Booking Content Tabs --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="book-tab" class="tab-content-area" style="display: block;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;שלב 1: בחר שירות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" id="services-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Services rendered here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 style="margin-top: 40px;"&gt;שלב 2: בחר תאריך וזמן&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="calendar-view"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="calendar-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="btn btn-secondary" data-action-click="changeMonth(-1)"&gt;← חודש קודם&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 id="current-month-year"&gt;ינואר 2025&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="btn btn-secondary" data-action-click="changeMonth(1)"&gt;חודש הבא →&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; max-width: 800px; text-align: center; font-weight: bold;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span&gt;א&lt;/span&gt;&lt;span&gt;ב&lt;/span&gt;&lt;span&gt;ג&lt;/span&gt;&lt;span&gt;ד&lt;/span&gt;&lt;span&gt;ה&lt;/span&gt;&lt;span&gt;ו&lt;/span&gt;&lt;span&gt;ש&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="day-slots" id="selected-day-slots"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Slots rendered here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 style="margin-top: 40px;"&gt;שלב 3: סיים תור&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" style="max-width: 600px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4&gt;שירות נבחר: &lt;span id="selected-service-name"&gt;לא נבחר&lt;/span&gt;&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;המחיר: &lt;span id="selected-service-price"&gt;0&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div style="margin-top: 20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p&gt;התאריך: &lt;span id="selected-date"&gt;--&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p&gt;השעה: &lt;span id="selected-slot"&gt;--&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="btn btn-primary" data-action-click="confirmBooking"&gt;אשר תור&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Tab 2: Gallery (Duplicate content/view) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="gallery-tab" class="tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;🖼️ גלריית עבודות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p style="text-align: center;"&gt;הצג לנו כיצד נראה המקום וארגון העבודה שלנו.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="gallery-slider"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;img id="current-gallery-image" src="placeholder-gal.jpg" alt="Gallery Slideshow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="gallery-caption" id="gallery-caption"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-secondary" data-action-click="openAddGalleryModal"&gt;הוספת תמונה (Admin)&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Tab 3: Reviews (Reviews) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="review-tab" class="tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;⭐ חוות דעת ודירוג&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;שתפו אותנו בחוויותיכם! הדירוג שלכם עוזר לנו לצמוח.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Example review card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div style="display: flex; justify-content: space-between; align-items: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span style="color: gold; font-size: 1.5em;"&gt;⭐️⭐️⭐️⭐️⭐️&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;img src="placeholder-avatar.jpg" alt="Reviewer Avatar" style="width: 50px; height: 50px; border-radius: 50%;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4 style="margin-top: 10px;"&gt;"השירות היה מקצועי ומדהים!"&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p style="font-size: 0.9em;"&gt;מאת: נועה כהן (12/10/2025)&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-secondary" data-action-click="showReviewModal"&gt;הוספת ביקורת (Premium)&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Tab 4: Profile/Settings (Client) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="settings-tab" class="tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;👤 פרופיל לקוח&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" style="max-width: 600px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="card" style="text-align: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;img id="user-avatar-preview" src="placeholder-avatar.jpg" alt="User Avatar" style="width: 100px; height: 100px; border-radius: 50%;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4&gt;שם: &lt;span id="user-name-display"&gt;---&lt;/span&gt;&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;📞 טלפון: &lt;span id="user-phone-display"&gt;---&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;✨ תרומה: הזמנת תור קרובה:&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;strong id="next-appointment-display"&gt;---&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 5. ADMIN CENTER (sAdmin)<span class="Apple-converted-space">          </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sAdmin" class="screen-section" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style="text-align: right;"&gt;⚙️ מרכז הניהול (Admin)&lt;/h2&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Admin Dock/Tabs --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="admin-dock" style="display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid var(--border-color);"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="book" data-adk-nav-id="admin-bookings" data-active-tab="true"&gt;📋 הזמנות&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="cal" data-adk-nav-id="admin-calendar"&gt;📅 יצירת תורים&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="reviews" data-adk-nav-id="admin-reviews"&gt;⭐ מודרציה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="users" data-adk-nav-id="admin-users"&gt;👥 משתמשים&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="settings" data-adk-nav-id="admin-settings"&gt;⚙️ הגדרות&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Admin Panels --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-bookings" class="admin-panel tab-content-area"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;📋 רשימת הזמנות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" id="admin-booking-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Booking cards rendered here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4&gt;שם הלקוח: יואב כהן&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;📅 תאריך: 15/01/2025, 🕘 10:00&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;🛠️ שירות: תספורת גבר | 💇 תספורת משלם&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="btn btn-secondary" data-ad-cancel-booking="123"&gt;ביטול&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-calendar" class="admin-panel tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;📅 הוספת או ניהול שירותים&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;בממשק זה ניתן ליצור בלוקים של תורים למספר מספר לקוחות ובמשך תקופה.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Form for slot generation here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-reviews" class="admin-panel tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;⭐ אישור וניהול ביקורות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" id="admin-review-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Review moderation queue --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-users" class="admin-panel tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;👥 ניהול משתמשים&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="admin-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="user-list-container" style="height: 400px; overflow-y: auto;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- User list items rendered here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="user-details-container" class="admin-panel" style="height: 400px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4&gt;פרטי המשתמש שנבחר&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p id="user-detail-info"&gt;בחר משתמש ברשימה כדי לצפות בפרטים.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-settings" class="admin-panel tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;⚙️ הגדרות כלליות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;form id="admin-settings-form"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label for="admin-shop-name"&gt;שם המכון&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="text" id="admin-shop-name"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label for="admin-logo-upload"&gt;העלאת לוגו חדש&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="file" id="admin-logo-upload" accept="image/*"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Other settings inputs... --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="submit" class="btn btn-primary"&gt;שמירת הגדרות&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- MODALS (Common Pop-ups) <span class="Apple-converted-space">                  </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Generic Modal Container --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="general-modal" class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="close-btn" data-action-click="closeModal"&gt;&amp;times;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 id="modal-title"&gt;הודעה&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="modal-message"&gt;תוכן ההודעה.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-primary" id="modal-action-btn" style="margin-top: 20px;"&gt;אישור&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ImgBB Upload Modal (Used for Logo/Gallery/Avatar) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="imgbb-modal" class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="close-btn" data-action-click="closeModal"&gt;&amp;times;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;🖼️ העלאת תמונה דרך ImgBB&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;אנא העלה את התמונה ל-ImgBB כדי לקבל קישור ציבורי:&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="file" id="imgbb-upload-file" accept="image/*" style="margin-bottom: 15px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-primary" data-action-click="uploadImageViaImgBB"&gt;העלה תמונה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="imgbb-status" style="margin-top: 15px; color: var(--secondary-text-color);"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- END OF BODY CONTENT --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// ==========================================================</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// START OF JAVASCRIPT LOGIC (THE ENTIRE CORE)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// ==========================================================</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Global State &amp; Constants (Блок 3) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let state = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>dates: {}, <span class="Apple-converted-space">          </span>// { "2025-01-15": ["09:00","10:00"] }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bookings: [],<span class="Apple-converted-space">        </span>// массив объектов бронирований</p>
+<p class="p1"><span class="Apple-converted-space">            </span>counter: 0,<span class="Apple-converted-space">          </span>// счётчик ID бронирований</p>
+<p class="p1"><span class="Apple-converted-space">            </span>reviews: [], <span class="Apple-converted-space">        </span>// массив отзывов</p>
+<p class="p1"><span class="Apple-converted-space">            </span>settings: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: '💈 Haimov Barbershop',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>logo: '',<span class="Apple-converted-space">          </span>// URL (ImgBB)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>address: 'רחוב הרצל 12, תל אביב',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>hours: "א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>accentColor: '#c9a96e',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>bgColor: '#1c1b1a',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>imgbbKey: '',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ntfyTopic: ''</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gallery: [], <span class="Apple-converted-space">        </span>// [{ src: URL_or_base64, caption: '' }]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>services: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{id:1, name:'תספורת גבר', desc:'כולל שטיפה', price:'₪60', icon:'✂️'},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{id:2, name:'גילוח זקן', desc:'עם תער מסורתי', price:'₪40', icon:'🪒'},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{id:3, name:'תספורת + זקן', desc:'חבילה מלאה', price:'₪90', icon:'💈'},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{id:4, name:'תספורת ילד', desc:'עד גיל 12', price:'₪40', icon:'👦'},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>users: {}, <span class="Apple-converted-space">          </span>// { uid: { uid, name, phone, passHash, role, canReview, avatar, registeredAt } }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>curatorPassHash: '',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sessionToken: '',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>fridayCap: '15:00', <span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>maxTime: '20:00', <span class="Apple-converted-space">   </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>barberPhones: ['+972544570982'], // Пример</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Локальные флаги</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isDeveloperMode: localStorage.getItem('bb_admin_ul') === 'true'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Global DOM elements references (for performance)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const DOM = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>body: document.body,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>header: document.querySelector('header'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>logoImg: document.getElementById('logo-img'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>shopName: document.getElementById('shop-name'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// ... more DOM elements</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Utility Functions (Hashing, Dates, etc.) ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Simple SHA-256 hash generator */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function hashPassword(password) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const encoder = new TextEncoder();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const data = encoder.encode(password);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Using Web Crypto API for secure hashing (assuming modern browser environment)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const hashBuffer = await crypto.subtle.digest('SHA-256', data);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const hashArray = Array.from(new Uint8Array(hashBuffer));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const hashHex = hashArray.map(b =&gt; b.toString(16).padStart(2, '0')).join('');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return hashHex;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Formats phone number: +972-054-XXX-XXXX */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function phoneDisplay(phone) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!phone || phone.length &lt; 10) return phone;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return `+972-05${phone.substring(2, 5)}-${phone.substring(5, 8)}-${phone.substring(8, 12)}`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Persistence Layer (Блок 5) ---</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 1. Local Storage Saving (lsSave)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function lsSave() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('bb_v081', JSON.stringify({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dates: state.dates,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>bookings: state.bookings.map(b =&gt; ({ date: b.date, bookedBy: b.bookedBy, serviceId: b.serviceId, time: b.time })),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>settings: state.settings,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gallery: state.gallery.filter(g =&gt; !g.base64), // Only basic state</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// ... other state properties that don't change often</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('bb_gal_v2', JSON.stringify(state.gallery.filter(g =&gt; !g.base64)));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('bb_logo_v2', JSON.stringify(state.settings.logo));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 2. Cloud Saving (cloudSave) - Stripting base64</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function cloudSave() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dataToSave = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dates: state.dates,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>bookings: state.bookings,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>settings: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>name: state.settings.name,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>address: state.settings.address,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>hours: state.settings.hours,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Only save HTTP URLs</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>logo: state.settings.logo &amp;&amp; state.settings.logo.startsWith('http://') ? state.settings.logo : '',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>accentColor: state.settings.accentColor,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>bgColor: state.settings.bgColor,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gallery: state.gallery.filter(g =&gt; g.src &amp;&amp; g.src.startsWith('http')),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>users: state.users // Assume user data is safe or only http avatars</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const response = await fetch(`https://jsonbin.io/b/69c391f6c3097a1dd559d814?key=${process.env.JSONBIN_KEY}`);<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const data = await response.json();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (data.status === 'success') {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.log('✅ Successfully saved to JSONBin.');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Update state with successful cloud changes</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>state.settings.logo = data.settings.logo;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.error('❌ Error saving to JSONBin:', data.message);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error('⚠️ Cloud save failed (offline or key issue). Falling back to local cache.', error);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 3. The Unified Save Function</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function save() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.log('--- Starting Save Cycle ---');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>await lsSave();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>await cloudSave();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.log('--- Save Cycle Complete ---');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 4. Cloud Loading (Handles potential failures)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function cloudLoad() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const url = `https://jsonbin.io/b/69c391f6c3097a1dd559d814?key=${process.env.JSONBIN_KEY}`;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const response = await fetch(url);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const data = await response.json();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (data &amp;&amp; data.data) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.log('☁️ Data successfully loaded from cloud.');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Merge core data, but keep local overrides (base64) if necessary</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Object.assign(state, data.data);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>return data.data;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (e) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.warn('☁️ Could not connect to cloud. Using local storage.', e);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return null;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 5. Initialization Loader (Load, Norm)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function loadState() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 1. Try loading from Cloud first</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let cloudData = await cloudLoad();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let loadedSettings = null;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (cloudData) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Merge core data from cloud</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Object.keys(state).forEach(key =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (typeof state[key] === 'object' &amp;&amp; !Array.isArray(state[key])) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>if (cloudData[key]) {</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>// Deep merge for settings, users, etc.</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>Object.assign(state[key], cloudData[key]);</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Save cloud data locally immediately</p>
+<p class="p1"><span class="Apple-converted-space">                </span>lsSave();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>loadedSettings = cloudData;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 2. Fallback to Local Storage</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const localData = localStorage.getItem('bb_v081');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (localData) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Object.assign(state, JSON.parse(localData));</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.log('💾 Loaded data from local storage.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Final step: Ensure the UI reflects the loaded state</p>
+<p class="p1"><span class="Apple-converted-space">            </span>applyTheme();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderShopDetails();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.log('*** STATE INITIALIZED ***');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Core Logic Functions (Booking/Time Management) ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Calculates available slots for a given date and service */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getAvailableSlots(dateString, serviceDurationMinutes) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Implement complex time slot logic (considering daily limits, max time, etc.)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// For now, return mock data</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const slots = [];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (let i = 0; i &lt; 5; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>slots.push({ time: `${(9 + i) % 5}:00`, available: true });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return slots;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Finds the next available slot for a user/service */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function findNextAvailableSlot(serviceId, date, initialTime) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Complex logic check against state.bookings and state.dates</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return { time: `${Math.floor(Math.random() * 5) + 9}:00`, available: true };</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- UI Rendering Functions ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Updates the visual theme based on state.settings */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function applyTheme() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.documentElement.style.setProperty('--primary-bg-color', state.bgColor || '#0f0e0d');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.documentElement.style.setProperty('--secondary-text-color', state.settings.accentColor || '#c9a96e');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// ... apply other variables</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Renders shop details (Name, Address, Hours) to the splash page */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderShopDetails() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('shop-name').textContent = state.settings.name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('shop-hours-display').textContent = state.settings.hours;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('shop-address-display').textContent = state.settings.address;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update logo</p>
+<p class="p1"><span class="Apple-converted-space">            </span>DOM.logoImg.src = state.settings.logo || 'placeholder-logo.png';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>applyTheme();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- EVENT HANDLERS (Using data-* attributes) ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 1. Global Navigation Handler (sSplash, sBooking, etc.)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.querySelectorAll('[data-target], [data-action-click], [data-adk-target]').forEach(button =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>button.addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const target = e.currentTarget.dataset.target;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const action = e.currentTarget.dataset.actionClick;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (action) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Execute specific action (e.g., openBookingView)</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>window[action]();<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else if (target) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Switch between main screens (e.g., sLogin, sAdmin)</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>showScreen(target);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function showScreen(id) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Utility function to hide/show main sections</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.querySelectorAll('.screen-section, .admin-panel').forEach(sec =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>sec.style.display = (sec.id === id || sec.id === 'sAdmin') ? 'block' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (id === 'sAdmin') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('sAdmin').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Initialize admin view components</p>
+<p class="p1"><span class="Apple-converted-space">                </span>initAdminPanel(state.users);<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 2. Event Listener for Booking Process (Needs complex delegation)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('sBooking').addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (e.target.hasAttribute('data-dock-target') || e.target.dataset.dockTarget === 'book') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Handle tab switching logic</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 3. Event Listener for Form Submission</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('login-form').addEventListener('submit', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>e.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Simulate login/API call</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (document.getElementById('login-phone').value === '+9720544570982') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Добро пожаловать! Вы вошли в систему.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Set session token and redirect to main view</p>
+<p class="p1"><span class="Apple-converted-space">                </span>state.sessionToken = 'mock_token';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('sSplash').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Неверные данные.');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 4. Initializer on Load</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.onload = async () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>await loadState();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Initial UI setup</p>
+<p class="p1"><span class="Apple-converted-space">            </span>showScreen('sSplash');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
