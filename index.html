@@ -1,1424 +1,923 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#0f0e0d">
-<title>💈 Haimov Barbershop</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0f0e0d;
-    --bg2:#1a1816;
-    --bg3:#252220;
-    --card:#1c1a18;
-    --line:#2a2724;
-    --txt:#f4ede2;
-    --mut:#a39888;
-    --acc:#c9a96e;
-    --acc2:#b8965a;
-    --ok:#4ade80;
-    --warn:#fbbf24;
-    --err:#f87171;
-    --safe-top:env(safe-area-inset-top);
-    --safe-bot:env(safe-area-inset-bottom);
-  }
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);font-family:'Heebo',sans-serif;overscroll-behavior:none}
-  body{min-height:100vh;font-size:15px;line-height:1.5}
-  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-  input,select,textarea{font-family:inherit;font-size:15px}
-  .scr{display:none;min-height:100vh;padding-top:var(--safe-top)}
-  .scr.on{display:block}
-  .wrap{max-width:520px;margin:0 auto;padding:16px}
-
-  /* ---------- splash / hero ---------- */
-  .hero{position:relative;padding:32px 20px 24px;text-align:center;background:linear-gradient(180deg,#1a1816 0,#0f0e0d 100%);border-bottom:1px solid var(--line)}
-  .hero h1{font-size:30px;font-weight:800;margin:0 0 6px;color:var(--acc);letter-spacing:.5px}
-  .hero p{margin:4px 0;color:var(--mut);font-size:14px}
-  .hero .logo{width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--acc);margin:0 auto 12px;display:block;background:var(--bg2)}
-  .hero .logo-fallback{width:90px;height:90px;border-radius:50%;background:var(--bg2);border:3px solid var(--acc);display:flex;align-items:center;justify-content:center;font-size:42px;margin:0 auto 12px}
-
-  .slideshow{position:relative;width:100%;aspect-ratio:16/9;background:var(--bg2);overflow:hidden;border-bottom:1px solid var(--line)}
-  .slideshow .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s;background-size:cover;background-position:center}
-  .slideshow .slide.on{opacity:1}
-  .slideshow .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mut);gap:8px}
-  .slideshow .ph .ic{font-size:48px;opacity:.5}
-
-  .cta-wrap{padding:24px 20px 40px;text-align:center}
-  .btn{display:inline-block;padding:16px 28px;border-radius:14px;background:var(--acc);color:#1a1816;font-weight:700;font-size:17px;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 20px rgba(201,169,110,.25)}
-  .btn:active{transform:scale(.97)}
-  .btn.full{display:block;width:100%}
-  .btn.ghost{background:transparent;color:var(--acc);border:1.5px solid var(--acc);box-shadow:none}
-  .btn.sm{padding:8px 14px;font-size:13px;border-radius:10px}
-  .btn.danger{background:var(--err);color:#fff;box-shadow:none}
-  .btn.ok{background:var(--ok);color:#0f0e0d;box-shadow:none}
-
-  /* ---------- forms ---------- */
-  .field{margin-bottom:14px}
-  .field label{display:block;font-size:13px;color:var(--mut);margin-bottom:6px;font-weight:500}
-  .field input,.field select,.field textarea{width:100%;padding:12px 14px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;color:var(--txt);outline:none;transition:border-color .15s}
-  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc)}
-  .phone-row{display:flex;gap:8px;align-items:stretch}
-  .phone-row .pfx{padding:12px 14px;background:var(--bg3);border:1px solid var(--line);border-radius:10px;color:var(--mut);font-weight:600;display:flex;align-items:center;white-space:nowrap;font-size:14px}
-  .phone-row input{flex:1;direction:ltr;text-align:left}
-  .chk{display:flex;align-items:center;gap:10px;padding:10px 0;color:var(--mut);font-size:14px;cursor:pointer}
-  .chk input{width:18px;height:18px;accent-color:var(--acc)}
-
-  /* ---------- card / list ---------- */
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
-  .card h3{margin:0 0 8px;font-size:16px;color:var(--acc)}
-  .card .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .muted{color:var(--mut);font-size:13px}
-  .tag{display:inline-block;padding:3px 9px;border-radius:6px;background:var(--bg3);color:var(--mut);font-size:12px;font-weight:600}
-  .tag.ok{background:rgba(74,222,128,.15);color:var(--ok)}
-  .tag.warn{background:rgba(251,191,36,.15);color:var(--warn)}
-  .tag.err{background:rgba(248,113,113,.15);color:var(--err)}
-
-  /* ---------- topbar ---------- */
-  .topbar{position:sticky;top:0;background:rgba(15,14,13,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;align-items:center;gap:10px;z-index:50}
-  .topbar .av{width:36px;height:36px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--acc);overflow:hidden;cursor:pointer;border:1.5px solid var(--line)}
-  .topbar .av img{width:100%;height:100%;object-fit:cover}
-  .topbar .title{flex:1;font-weight:700;color:var(--acc);font-size:16px}
-  .topbar .back{padding:6px 10px;border-radius:8px;color:var(--mut);font-size:14px}
-
-  /* ---------- dock (bottom nav) ---------- */
-  .dock{position:fixed;bottom:0;left:0;right:0;background:rgba(15,14,13,.98);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(8px + var(--safe-bot));z-index:40}
-  .dock button{flex:1;padding:8px 4px;border-radius:10px;color:var(--mut);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:4px;transition:color .15s,background .15s}
-  .dock button .ic{font-size:22px}
-  .dock button.on{color:var(--acc);background:rgba(201,169,110,.1)}
-  .pad-dock{padding-bottom:calc(80px + var(--safe-bot))}
-
-  /* ---------- panels (tabs) ---------- */
-  .pn{display:none}
-  .pn.on{display:block}
-
-  /* ---------- services / calendar / slots ---------- */
-  .svc{display:flex;align-items:center;gap:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,background .15s}
-  .svc:active{background:var(--bg3)}
-  .svc.sel{border-color:var(--acc);background:rgba(201,169,110,.05)}
-  .svc .ico{font-size:32px;width:48px;text-align:center}
-  .svc .info{flex:1}
-  .svc .nm{font-weight:700;margin-bottom:2px}
-  .svc .ds{font-size:12px;color:var(--mut)}
-  .svc .pr{font-weight:700;color:var(--acc)}
-
-  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 4px}
-  .cal-head button{padding:8px 12px;border-radius:8px;color:var(--acc);font-size:18px;background:var(--bg2)}
-  .cal-head .m{font-weight:700;font-size:16px}
-  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-  .cal-grid .dn{text-align:center;font-size:11px;color:var(--mut);padding:6px 0;font-weight:600}
-  .cal-grid .dd{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--bg2);font-size:14px;cursor:pointer;position:relative}
-  .cal-grid .dd.dim{color:var(--mut);opacity:.3;cursor:default}
-  .cal-grid .dd.has{background:var(--bg3);color:var(--acc);font-weight:700}
-  .cal-grid .dd.sel{background:var(--acc);color:#1a1816;font-weight:700}
-  .cal-grid .dd.today{outline:1.5px solid var(--acc)}
-  .cal-grid .dd .dt{position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--acc)}
-
-  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
-  .slot{padding:12px 8px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;text-align:center;font-weight:600;cursor:pointer;transition:background .15s,border-color .15s}
-  .slot:active{background:var(--bg3)}
-  .slot.taken{opacity:.4;cursor:not-allowed;text-decoration:line-through}
-  .slot.mine{background:var(--acc);color:#1a1816;border-color:var(--acc)}
-
-  /* ---------- gallery ---------- */
-  .gal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .gal-item{position:relative;aspect-ratio:1;background:var(--bg2);border-radius:10px;overflow:hidden;border:1px solid var(--line)}
-  .gal-item img{width:100%;height:100%;object-fit:cover;display:block}
-  .gal-item .del{position:absolute;top:6px;left:6px;width:28px;height:28px;border-radius:50%;background:rgba(248,113,113,.9);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer}
-  .gal-empty{padding:40px 20px;text-align:center;color:var(--mut)}
-  .gal-empty .ic{font-size:48px;opacity:.4;margin-bottom:10px}
-
-  /* ---------- modal ---------- */
-  .mdl{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
-  .mdl.on{display:flex}
-  .mdl-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;max-width:420px;width:100%;max-height:85vh;overflow:auto}
-  .mdl-box h3{margin:0 0 12px;color:var(--acc)}
-
-  /* ---------- toast ---------- */
-  .toast{position:fixed;top:calc(20px + var(--safe-top));left:50%;transform:translateX(-50%) translateY(-100px);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:var(--txt);font-weight:600;z-index:200;transition:transform .3s;box-shadow:0 8px 30px rgba(0,0,0,.4);max-width:90vw}
-  .toast.on{transform:translateX(-50%) translateY(0)}
-  .toast.ok{border-color:var(--ok)}
-  .toast.err{border-color:var(--err)}
-
-  /* ---------- queue (sAdmin2) ---------- */
-  .queue-scroll{display:flex;gap:10px;overflow-x:auto;padding:10px 16px;scroll-snap-type:x mandatory}
-  .queue-card{flex:0 0 280px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;scroll-snap-align:start}
-  .queue-card h4{margin:0 0 6px;color:var(--acc);font-size:16px}
-
-  /* ---------- misc ---------- */
-  .divider{height:1px;background:var(--line);margin:18px 0}
-  .center{text-align:center}
-  .row-flex{display:flex;gap:10px;align-items:center}
-  .grow{flex:1}
-  details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
-  details summary{cursor:pointer;font-weight:600;color:var(--acc)}
-  details[open] summary{margin-bottom:10px}
-  .hl{padding:12px;background:rgba(201,169,110,.08);border:1px solid var(--acc);border-radius:10px;margin-bottom:10px;color:var(--txt);font-size:13px}
-  .star{cursor:pointer;font-size:24px;color:var(--bg3)}
-  .star.on{color:var(--warn)}
-  .lang-btns{display:flex;gap:6px;flex-wrap:wrap}
-  .lang-btns button{padding:6px 12px;border-radius:8px;background:var(--bg2);color:var(--mut);font-size:13px;border:1px solid var(--line)}
-  .lang-btns button.on{background:var(--acc);color:#1a1816;border-color:var(--acc)}
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
 </head>
 <body>
-
-<!-- ============ SPLASH ============ -->
-<div id="sSplash" class="scr on">
-  <div class="hero">
-    <div id="splashLogo" class="logo-fallback">💈</div>
-    <h1 id="splashName">Haimov Barbershop</h1>
-    <p id="splashAddr" class="muted">רחוב הרצל 12, תל אביב</p>
-    <p id="splashHours" class="muted">א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00</p>
-  </div>
-  <div class="slideshow" id="splashSlideshow">
-    <div class="ph"><div class="ic">🖼️</div><div>גלריה</div></div>
-  </div>
-  <div class="cta-wrap">
-    <button class="btn" id="btnSplashBook">הזמן תור ←</button>
-  </div>
-</div>
-
-<!-- ============ LOGIN ============ -->
-<div id="sLogin" class="scr">
-  <div class="topbar">
-    <button class="back" data-back>←</button>
-    <div class="title" data-i18n="login">כניסה</div>
-  </div>
-  <div class="wrap">
-    <div class="field">
-      <label data-i18n="phone">טלפון</label>
-      <div class="phone-row">
-        <div class="pfx">+972-05</div>
-        <input id="loginPhone" type="tel" inputmode="numeric" maxlength="9" placeholder="XXXXXXXXX">
-      </div>
-    </div>
-    <div class="field">
-      <label data-i18n="password">סיסמה</label>
-      <input id="loginPass" type="password" placeholder="••••••">
-    </div>
-    <button class="btn full" id="btnDoLogin" data-i18n="enter">היכנס</button>
-    <div class="divider"></div>
-    <button class="btn ghost full" id="btnGoRegister" data-i18n="noAcc">אין לי חשבון</button>
-    <button class="btn ghost full" id="btnForgot" style="margin-top:8px" data-i18n="forgot">שכחתי את הקוד</button>
-  </div>
-</div>
-
-<!-- ============ REGISTER ============ -->
-<div id="sRegister" class="scr">
-  <div class="topbar">
-    <button class="back" data-back>←</button>
-    <div class="title" data-i18n="register">הרשמה</div>
-  </div>
-  <div class="wrap">
-    <div class="field">
-      <label data-i18n="name">שם</label>
-      <input id="regName" type="text" placeholder="שם פרטי">
-    </div>
-    <div class="field">
-      <label data-i18n="phone">טלפון</label>
-      <div class="phone-row">
-        <div class="pfx">+972-05</div>
-        <input id="regPhone" type="tel" inputmode="numeric" maxlength="9" placeholder="XXXXXXXXX">
-      </div>
-    </div>
-    <div class="field">
-      <label data-i18n="password">סיסמה</label>
-      <input id="regPass" type="password" placeholder="לפחות 6 תווים">
-    </div>
-    <label class="chk"><input type="checkbox" id="regTerms"><span data-i18n="terms">אני מסכים לתנאי השימוש</span></label>
-    <label class="chk"><input type="checkbox" id="regBot"><span data-i18n="notBot">אני לא רובוט</span></label>
-    <button class="btn full" id="btnDoRegister" style="margin-top:10px" data-i18n="register">הרשמה</button>
-  </div>
-</div>
-
-<!-- ============ BOOKING (client cabinet) ============ -->
-<div id="sBooking" class="scr">
-  <div class="topbar">
-    <div class="av" id="userAv">U</div>
-    <div class="title" id="userTitle">לקוח</div>
-    <button class="back" id="btnSettings">⚙️</button>
-  </div>
-  <div class="wrap pad-dock">
-
-    <!-- main panel: my upcoming bookings -->
-    <div class="pn on" id="bp-main">
-      <h3 style="color:var(--acc);margin:0 0 12px" data-i18n="myBookings">התורים שלי</h3>
-      <div id="myBookingsList"></div>
-    </div>
-
-    <!-- book panel -->
-    <div class="pn" id="bp-book">
-      <div id="bookStep1">
-        <h3 style="color:var(--acc);margin:0 0 12px" data-i18n="chooseService">בחר שירות</h3>
-        <div id="svcList"></div>
-      </div>
-      <div id="bookStep2" style="display:none">
-        <button class="btn ghost sm" id="btnBackToSvc" style="margin-bottom:12px">← <span data-i18n="back">חזרה</span></button>
-        <h3 style="color:var(--acc);margin:0 0 12px" data-i18n="chooseDate">בחר תאריך</h3>
-        <div class="cal-head">
-          <button id="calPrev">‹</button>
-          <div class="m" id="calMonth"></div>
-          <button id="calNext">›</button>
-        </div>
-        <div class="cal-grid" id="calGrid"></div>
-        <div id="slotsBox"></div>
-      </div>
-    </div>
-
-    <!-- gallery panel -->
-    <div class="pn" id="bp-gal">
-      <h3 style="color:var(--acc);margin:0 0 12px" data-i18n="gallery">גלריה</h3>
-      <div id="galGrid"></div>
-    </div>
-
-    <!-- reviews panel -->
-    <div class="pn" id="bp-rv">
-      <h3 style="color:var(--acc);margin:0 0 12px" data-i18n="reviews">חוות דעת</h3>
-      <div id="rvWriteBox"></div>
-      <div id="rvList"></div>
-    </div>
-
-  </div>
-
-  <div class="dock">
-    <button data-tab="bp-main" id="dk0"><span class="ic">💈</span><span data-i18n="home">בית</span></button>
-    <button data-tab="bp-book" id="dk1"><span class="ic">✂️</span><span data-i18n="book">הזמן</span></button>
-    <button data-tab="bp-gal" id="dk2"><span class="ic">🖼️</span><span data-i18n="gallery">גלריה</span></button>
-    <button data-tab="bp-rv" id="dk3"><span class="ic">⭐</span><span data-i18n="reviews">חוו״ד</span></button>
-  </div>
-</div>
-
-<!-- ============ SETTINGS ============ -->
-<div id="sSettings" class="scr">
-  <div class="topbar">
-    <button class="back" data-back>←</button>
-    <div class="title" data-i18n="settings">הגדרות</div>
-  </div>
-  <div class="wrap">
-    <div class="card center">
-      <div class="av" id="settAv" style="width:80px;height:80px;font-size:32px;margin:0 auto 10px"></div>
-      <input type="file" id="settAvFile" accept="image/*" style="display:none">
-      <button class="btn sm ghost" id="btnUploadAv" data-i18n="uploadAvatar">העלה תמונה</button>
-      <div class="muted" style="margin-top:8px" id="settUserName"></div>
-      <div class="muted" id="settUserPhone"></div>
-    </div>
-
-    <details>
-      <summary data-i18n="changePass">שנה סיסמה</summary>
-      <div class="field" style="margin-top:10px">
-        <input id="newPass" type="password" placeholder="סיסמה חדשה">
-      </div>
-      <button class="btn sm full" id="btnChangePass" data-i18n="save">שמור</button>
-    </details>
-
-    <details>
-      <summary data-i18n="language">שפה</summary>
-      <div class="lang-btns" style="margin-top:10px">
-        <button data-lang="he">עברית</button>
-        <button data-lang="ru">Русский</button>
-        <button data-lang="en">English</button>
-        <button data-lang="ar">العربية</button>
-      </div>
-    </details>
-
-    <details>
-      <summary>Developer Mode</summary>
-      <div class="field" style="margin-top:10px">
-        <input id="devPass" type="password" placeholder="קוד מנהל">
-      </div>
-      <button class="btn sm full" id="btnDevUnlock">פתח</button>
-      <button class="btn sm danger full" id="btnAdminPanel" style="margin-top:8px;display:none">לוח בקרה</button>
-    </details>
-
-    <div class="divider"></div>
-    <button class="btn danger full" id="btnLogout" data-i18n="logout">התנתק</button>
-  </div>
-</div>
-
-<!-- ============ ADMIN ============ -->
-<div id="sAdmin" class="scr">
-  <div class="topbar">
-    <button class="back" data-back>←</button>
-    <div class="title">לוח בקרה</div>
-    <button class="back" id="btnQueueView">📺</button>
-  </div>
-  <div class="wrap pad-dock">
-    <div class="pn on" id="aBook">
-      <h3 style="color:var(--acc);margin:0 0 12px">בקשות / תורים</h3>
-      <div id="adminBookingsList"></div>
-    </div>
-
-    <div class="pn" id="aCalSlots">
-      <h3 style="color:var(--acc);margin:0 0 12px">לוח שנה + יצירת סלוטים</h3>
-      <div class="cal-head">
-        <button id="admCalPrev">‹</button>
-        <div class="m" id="admCalMonth"></div>
-        <button id="admCalNext">›</button>
-      </div>
-      <div class="cal-grid" id="admCalGrid"></div>
-      <div id="admSlotsBox" style="margin-top:14px"></div>
-      <div class="divider"></div>
-      <details>
-        <summary>יצירה גורפת של סלוטים</summary>
-        <div class="field" style="margin-top:10px">
-          <label>מתאריך</label>
-          <input id="bulkFrom" type="date">
-        </div>
-        <div class="field">
-          <label>עד תאריך</label>
-          <input id="bulkTo" type="date">
-        </div>
-        <div class="field">
-          <label>שעת התחלה</label>
-          <input id="bulkStart" type="time" value="09:00">
-        </div>
-        <div class="field">
-          <label>מרווח (דקות)</label>
-          <input id="bulkBuf" type="number" value="30" min="10">
-        </div>
-        <button class="btn full" id="btnBulkGen">צור</button>
-      </details>
-    </div>
-
-    <div class="pn" id="aReviews">
-      <h3 style="color:var(--acc);margin:0 0 12px">מודרציה של חוות דעת</h3>
-      <div id="adminReviewsList"></div>
-    </div>
-
-    <div class="pn" id="aUsers">
-      <h3 style="color:var(--acc);margin:0 0 12px">משתמשים</h3>
-      <div id="usersList"></div>
-    </div>
-
-    <div class="pn" id="aAdminSett">
-      <h3 style="color:var(--acc);margin:0 0 12px">הגדרות עסק</h3>
-      <div class="field">
-        <label>שם העסק</label>
-        <input id="setName" type="text">
-      </div>
-      <div class="field">
-        <label>כתובת</label>
-        <input id="setAddr" type="text">
-      </div>
-      <div class="field">
-        <label>שעות פעילות</label>
-        <input id="setHours" type="text">
-      </div>
-      <div class="field">
-        <label>לוגו</label>
-        <input type="file" id="setLogoFile" accept="image/*">
-      </div>
-      <div class="field">
-        <label>צבע אקצנט</label>
-        <input id="setAcc" type="color" value="#c9a96e">
-      </div>
-      <div class="field">
-        <label>צבע רקע</label>
-        <input id="setBg" type="color" value="#0f0e0d">
-      </div>
-      <button class="btn sm" id="btnResetColors" style="margin-bottom:10px">איפוס צבעים</button>
-      <div class="divider"></div>
-      <details>
-        <summary>ImgBB API Key (תמונות)</summary>
-        <div class="hl">להעלאת תמונות יש להירשם בחינם ב-imgbb.com ולקבל מפתח API. בלי המפתח אי אפשר להעלות תמונות.</div>
-        <div class="field"><input id="setImgbb" type="text" placeholder="ImgBB API key"></div>
-      </details>
-      <details>
-        <summary>ntfy.sh Topic (התראות)</summary>
-        <div class="hl">צור טופיק ייחודי ב-ntfy.sh והזן כאן. תקבל התראות על תורים חדשים.</div>
-        <div class="field"><input id="setNtfy" type="text" placeholder="haimov-barbershop-xyz"></div>
-      </details>
-      <details>
-        <summary>טלפונים של ברברים (WhatsApp fallback)</summary>
-        <div class="field"><input id="setBarbers" type="text" placeholder="+97205XXXXXXXX,+97205YYYYYYYY"></div>
-      </details>
-      <div class="field">
-        <label>שעת סיום ביום שישי</label>
-        <input id="setFri" type="time" value="15:00">
-      </div>
-      <div class="field">
-        <label>שעת סיום ברגיל</label>
-        <input id="setMax" type="time" value="20:00">
-      </div>
-      <button class="btn full" id="btnSaveSett">שמור הגדרות</button>
-      <div class="divider"></div>
-      <details>
-        <summary>סיסמת עובד</summary>
-        <div class="field" style="margin-top:10px"><input id="curPass" type="password" placeholder="סיסמה חדשה לעובדים"></div>
-        <button class="btn sm full" id="btnSaveCur">שמור</button>
-      </details>
-    </div>
-  </div>
-
-  <div class="dock" id="adminDock">
-    <button data-atab="aBook" id="adk0"><span class="ic">📋</span><span>תורים</span></button>
-    <button data-atab="aCalSlots" id="adk1"><span class="ic">📅</span><span>לוח</span></button>
-    <button data-atab="aReviews" id="adk2"><span class="ic">⭐</span><span>חוו״ד</span></button>
-    <button data-atab="aUsers" id="adk3"><span class="ic">👥</span><span>משתמשים</span></button>
-    <button data-atab="aAdminSett" id="adk4"><span class="ic">⚙️</span><span>הגדרות</span></button>
-  </div>
-</div>
-
-<!-- ============ ADMIN 2 (queue) ============ -->
-<div id="sAdmin2" class="scr">
-  <div class="topbar">
-    <button class="back" data-back>←</button>
-    <div class="title">תור היום</div>
-  </div>
-  <div class="queue-scroll" id="queueScroll"></div>
-</div>
-
-<!-- ============ MODAL ============ -->
-<div class="mdl" id="mdl">
-  <div class="mdl-box">
-    <h3 id="mdlTitle"></h3>
-    <div id="mdlBody"></div>
-    <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end">
-      <button class="btn sm ghost" id="mdlNo" data-i18n="cancel">ביטול</button>
-      <button class="btn sm" id="mdlYes" data-i18n="ok">אישור</button>
-    </div>
-  </div>
-</div>
-
-<!-- ============ TOAST ============ -->
-<div class="toast" id="toast"></div>
-
-<script>
-/* ============================================================
-   HAIMOV BARBERSHOP — vanilla JS, single file
-   ============================================================ */
-
-const LSK='bb_v081', GAL_KEY='bb_gal_v2', LOGO_KEY='bb_logo_v2';
-const USR_KEY='bb_u', SESS_KEY='bb_sess', LANG_KEY='bb_lang', ADMIN_UL='bb_admin_ul';
-const ADMIN_HASH='8732578c0ee9f91e577bf8b5215d294c574147769312b3a43d5f10d9f5fe1d45';
-const BIN_ID='69c391f6c3097a1dd559d814';
-const API_KEY='$2a$10$v1/7vM1rC5XtblIbZvXcCuiIdILBf7pbbjI/v5PgnjpvDdmDjPtiW';
-const PHONE_FALLBACK='+972054-457-0982';
-
-/* ---------- state ---------- */
-let state = {
-  dates:{}, bookings:[], counter:0, reviews:[],
-  settings:{name:'💈 Haimov Barbershop',logo:'',address:'רחוב הרצל 12, תל אביב',hours:'א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00'},
-  gallery:[],
-  services:[
-    {id:1,name:'תספורת גבר',desc:'כולל שטיפה',price:'₪60',icon:'✂️'},
-    {id:2,name:'גילוח זקן',desc:'עם תער מסורתי',price:'₪40',icon:'🪒'},
-    {id:3,name:'תספורת + זקן',desc:'חבילה מלאה',price:'₪90',icon:'💈'},
-    {id:4,name:'תספורת ילד',desc:'עד גיל 12',price:'₪40',icon:'👦'},
-  ],
-  users:{}, curatorPassHash:'', sessionToken:'',
-  fridayCap:'15:00', maxTime:'20:00',
-  barberPhones:[], imgbbKey:'', ntfyTopic:'',
-  accentColor:'', bgColor:'',
-};
-let currentUser=null; // {uid,name,phone,role,avatar,...}
-let currentLang=localStorage.getItem(LANG_KEY)||'he';
-let calDate=new Date(); calDate.setDate(1);
-let admCalDate=new Date(); admCalDate.setDate(1);
-let selectedDate=null, selectedService=null, selectedAdmDate=null;
-
-/* ---------- i18n ---------- */
-const I18N={
-  he:{login:'כניסה',register:'הרשמה',phone:'טלפון',password:'סיסמה',name:'שם',enter:'היכנס',noAcc:'אין לי חשבון',forgot:'שכחתי את הקוד',terms:'אני מסכים לתנאי השימוש',notBot:'אני לא רובוט',settings:'הגדרות',changePass:'שנה סיסמה',save:'שמור',language:'שפה',logout:'התנתק',myBookings:'התורים שלי',chooseService:'בחר שירות',chooseDate:'בחר תאריך',back:'חזרה',gallery:'גלריה',reviews:'חוות דעת',home:'בית',book:'הזמן',cancel:'ביטול',ok:'אישור',uploadAvatar:'העלה תמונה'},
-  ru:{login:'Вход',register:'Регистрация',phone:'Телефон',password:'Пароль',name:'Имя',enter:'Войти',noAcc:'Нет аккаунта',forgot:'Забыл пароль',terms:'Я согласен с условиями',notBot:'Я не робот',settings:'Настройки',changePass:'Сменить пароль',save:'Сохранить',language:'Язык',logout:'Выйти',myBookings:'Мои записи',chooseService:'Выберите услугу',chooseDate:'Выберите дату',back:'Назад',gallery:'Галерея',reviews:'Отзывы',home:'Главная',book:'Записаться',cancel:'Отмена',ok:'OK',uploadAvatar:'Загрузить фото'},
-  en:{login:'Login',register:'Register',phone:'Phone',password:'Password',name:'Name',enter:'Enter',noAcc:'No account',forgot:'Forgot code',terms:'I agree to terms',notBot:'I am not a robot',settings:'Settings',changePass:'Change password',save:'Save',language:'Language',logout:'Logout',myBookings:'My bookings',chooseService:'Choose service',chooseDate:'Choose date',back:'Back',gallery:'Gallery',reviews:'Reviews',home:'Home',book:'Book',cancel:'Cancel',ok:'OK',uploadAvatar:'Upload photo'},
-  ar:{login:'دخول',register:'تسجيل',phone:'هاتف',password:'كلمة المرور',name:'الاسم',enter:'دخول',noAcc:'ليس لدي حساب',forgot:'نسيت الرمز',terms:'أوافق على الشروط',notBot:'أنا لست روبوت',settings:'إعدادات',changePass:'تغيير كلمة المرور',save:'حفظ',language:'اللغة',logout:'خروج',myBookings:'حجوزاتي',chooseService:'اختر الخدمة',chooseDate:'اختر التاريخ',back:'رجوع',gallery:'معرض',reviews:'تقييمات',home:'الرئيسية',book:'احجز',cancel:'إلغاء',ok:'موافق',uploadAvatar:'رفع صورة'},
-};
-function t(k){return (I18N[currentLang]&&I18N[currentLang][k])||I18N.he[k]||k;}
-function applyLang(){
-  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent=t(el.dataset.i18n); });
-  document.documentElement.dir=(currentLang==='en'||currentLang==='ru')?'ltr':'rtl';
-  document.documentElement.lang=currentLang;
-}
-
-/* ---------- utils ---------- */
-function $(id){return document.getElementById(id);}
-function toast(msg,kind){
-  const el=$('toast'); el.textContent=msg; el.className='toast on '+(kind||'');
-  setTimeout(()=>{ el.className='toast '+(kind||''); },2400);
-}
-async function sha256(s){
-  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-function uid(){ return 'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
-function phoneDisplay(p){
-  // +97205XXXXXXXX → +972-05X-XXX-XXXX
-  if(!p) return '';
-  const d=p.replace(/\D/g,'');
-  if(d.length<11) return p;
-  return '+972-0'+d.slice(3,5)+'-'+d.slice(5,8)+'-'+d.slice(8);
-}
-function getPhone(inputId){
-  const v=$(inputId).value.replace(/\D/g,'').slice(0,9);
-  return '+97205'+v;
-}
-function fmtDate(s){
-  const [y,m,d]=s.split('-'); return d+'/'+m+'/'+y;
-}
-function todayStr(){
-  const d=new Date(); const m=String(d.getMonth()+1).padStart(2,'0'); const day=String(d.getDate()).padStart(2,'0');
-  return d.getFullYear()+'-'+m+'-'+day;
-}
-function isPast(dateStr,time){
-  const [y,m,d]=dateStr.split('-').map(Number);
-  const [hh,mm]=(time||'00:00').split(':').map(Number);
-  const dt=new Date(y,m-1,d,hh,mm);
-  return dt.getTime()<Date.now();
-}
-
-/* ---------- storage ---------- */
-function lsSave(){
-  try{
-    const clone=JSON.parse(JSON.stringify(state));
-    delete clone.gallery;
-    if(clone.settings) clone.settings.logo='';
-    localStorage.setItem(LSK,JSON.stringify(clone));
-    localStorage.setItem(GAL_KEY,JSON.stringify(state.gallery||[]));
-    localStorage.setItem(LOGO_KEY,state.settings.logo||'');
-  }catch(e){ console.warn('lsSave fail',e); }
-}
-function lsLoad(){
-  try{
-    const raw=localStorage.getItem(LSK);
-    if(raw){ const s=JSON.parse(raw); Object.assign(state,s); }
-    const gal=localStorage.getItem(GAL_KEY);
-    if(gal) state.gallery=JSON.parse(gal);
-    const logo=localStorage.getItem(LOGO_KEY);
-    if(logo) state.settings.logo=logo;
-  }catch(e){ console.warn('lsLoad fail',e); }
-}
-function stripBase64(s){
-  // for cloud: keep only http URLs in images
-  const c=JSON.parse(JSON.stringify(s));
-  if(c.gallery) c.gallery=c.gallery.filter(g=>g && typeof g.src==='string' && g.src.startsWith('http'));
-  if(c.settings && c.settings.logo && !c.settings.logo.startsWith('http')) c.settings.logo='';
-  if(c.users){
-    Object.keys(c.users).forEach(k=>{
-      const u=c.users[k];
-      if(u && u.avatar && !u.avatar.startsWith('http')) u.avatar='';
-    });
-  }
-  return c;
-}
-async function cloudSave(){
-  const payload=stripBase64(state);
-  for(let i=0;i<3;i++){
-    try{
-      const r=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID,{
-        method:'PUT',
-        headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
-        body:JSON.stringify(payload)
-      });
-      if(r.ok) return true;
-    }catch(e){ /* retry */ }
-    await new Promise(r=>setTimeout(r,(i+1)*1000));
-  }
-  return false;
-}
-async function cloudLoad(){
-  try{
-    const r=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{
-      headers:{'X-Master-Key':API_KEY}
-    });
-    if(!r.ok) return null;
-    const j=await r.json();
-    return j.record||null;
-  }catch(e){ return null; }
-}
-function norm(r){
-  // merge cloud record into local state; cloud wins for everything except local-only base64
-  if(!r) return;
-  const localGal=Array.isArray(state.gallery)?state.gallery:[];
-  const localLogo=state.settings && state.settings.logo;
-  const localAvatars={};
-  if(state.users){ Object.keys(state.users).forEach(k=>{ if(state.users[k] && state.users[k].avatar) localAvatars[k]=state.users[k].avatar; }); }
-
-  Object.assign(state,r);
-  // gallery: keep cloud http items; append local base64 that have no cloud match
-  const cloudGal=(r.gallery||[]).filter(g=>g && g.src);
-  state.gallery=cloudGal.slice();
-  localGal.forEach(g=>{
-    if(g && g.src && !g.src.startsWith('http')){
-      // keep local base64 if cloud doesn't have any matching item
-      state.gallery.push(g);
-    }
-  });
-  // logo: cloud wins if http, else local base64
-  if(r.settings && r.settings.logo && r.settings.logo.startsWith('http')){
-    state.settings.logo=r.settings.logo;
-  } else if(localLogo){
-    state.settings.logo=localLogo;
-  }
-  // avatars
-  if(state.users){
-    Object.keys(state.users).forEach(k=>{
-      const u=state.users[k];
-      if(!u) return;
-      if(u.avatar && u.avatar.startsWith('http')) return;
-      if(localAvatars[k]) u.avatar=localAvatars[k];
-    });
-  }
-}
-async function save(){
-  lsSave();
-  await cloudSave();
-}
-async function load(){
-  lsLoad();
-  const r=await cloudLoad();
-  if(r){ norm(r); lsSave(); }
-}
-async function safeSave(mutator){
-  // race-protection: reload latest, then merge ONLY dates+bookings, then mutate, then save
-  const r=await cloudLoad();
-  if(r){
-    if(r.dates) state.dates=r.dates;
-    if(r.bookings) state.bookings=r.bookings;
-    if(typeof r.counter==='number' && r.counter>state.counter) state.counter=r.counter;
-  }
-  mutator(state);
-  await save();
-}
-
-/* ---------- navigation (GLOBAL SCOPE) ---------- */
-function goTo(id){
-  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
-  const el=document.getElementById(id);
-  if(el) el.classList.add('on');
-  window.scrollTo(0,0);
-  if(id==='sSplash') renderSplash();
-  if(id==='sBooking') renderBooking();
-  if(id==='sSettings') renderSettings();
-  if(id==='sAdmin') renderAdmin();
-  if(id==='sAdmin2') renderQueue();
-}
-window.goTo=goTo;
-
-/* ---------- splash ---------- */
-let slideTimer=null;
-function renderSplash(){
-  $('splashName').textContent=state.settings.name||'Haimov Barbershop';
-  $('splashAddr').textContent=state.settings.address||'';
-  $('splashHours').textContent=state.settings.hours||'';
-  const logoBox=$('splashLogo');
-  if(state.settings.logo){
-    logoBox.outerHTML='<img id="splashLogo" class="logo" src="'+state.settings.logo+'" alt="logo">';
-  } else {
-    if(logoBox.tagName==='IMG'){ const d=document.createElement('div'); d.id='splashLogo'; d.className='logo-fallback'; d.textContent='💈'; logoBox.replaceWith(d); }
-  }
-  // slideshow
-  const ss=$('splashSlideshow');
-  ss.innerHTML='';
-  const gal=(state.gallery||[]).filter(g=>g && g.src);
-  if(!gal.length){
-    ss.innerHTML='<div class="ph"><div class="ic">🖼️</div><div>גלריה ריקה</div></div>';
-    if(slideTimer){ clearInterval(slideTimer); slideTimer=null; }
-    return;
-  }
-  gal.forEach((g,i)=>{
-    const d=document.createElement('div');
-    d.className='slide'+(i===0?' on':'');
-    d.style.backgroundImage='url("'+g.src+'")';
-    ss.appendChild(d);
-  });
-  if(slideTimer) clearInterval(slideTimer);
-  let idx=0;
-  if(gal.length>1){
-    slideTimer=setInterval(()=>{
-      const slides=ss.querySelectorAll('.slide');
-      slides[idx].classList.remove('on');
-      idx=(idx+1)%slides.length;
-      slides[idx].classList.add('on');
-    },4000);
-  }
-}
-
-/* ---------- splash button ---------- */
-$('btnSplashBook').addEventListener('click',()=>{
-  if(currentUser) goTo('sBooking'); else goTo('sLogin');
-});
-
-/* ---------- back buttons ---------- */
-document.querySelectorAll('[data-back]').forEach(b=>{
-  b.addEventListener('click',()=>{
-    if(b.closest('#sSettings')) return goTo('sBooking');
-    if(b.closest('#sAdmin')) return goTo('sSettings');
-    if(b.closest('#sAdmin2')) return goTo('sAdmin');
-    goTo('sSplash');
-  });
-});
-
-/* ---------- login ---------- */
-$('btnGoRegister').addEventListener('click',()=>goTo('sRegister'));
-$('btnForgot').addEventListener('click',()=>{
-  showModal('שכחתי את הקוד','פנה לעובד בטלפון '+PHONE_FALLBACK+' לאיפוס סיסמה.',null);
-});
-$('btnDoLogin').addEventListener('click',async()=>{
-  const phone=getPhone('loginPhone');
-  const pass=$('loginPass').value;
-  if(phone.length<13){ toast('מספר טלפון לא תקין','err'); return; }
-  if(!pass){ toast('הזן סיסמה','err'); return; }
-  await load();
-  const passHash=await sha256(pass);
-  // check curator pass
-  if(state.curatorPassHash && passHash===state.curatorPassHash){
-    currentUser={uid:'trainee_'+phone,name:'עובד',phone:phone,role:'trainee',avatar:''};
-    localStorage.setItem(USR_KEY,JSON.stringify(currentUser));
-    toast('ברוך הבא, עובד','ok');
-    goTo('sBooking'); return;
-  }
-  // user lookup
-  const u=Object.values(state.users||{}).find(x=>x && x.phone===phone);
-  if(!u){ toast('משתמש לא קיים','err'); return; }
-  if(u.passHash!==passHash){ toast('סיסמה שגויה','err'); return; }
-  currentUser=u;
-  // role override if dev unlocked
-  if(localStorage.getItem(ADMIN_UL)==='1') currentUser.role='dev';
-  localStorage.setItem(USR_KEY,JSON.stringify(currentUser));
-  toast('ברוך הבא, '+u.name,'ok');
-  goTo('sBooking');
-});
-
-/* ---------- register ---------- */
-$('btnDoRegister').addEventListener('click',async()=>{
-  const name=$('regName').value.trim();
-  const phone=getPhone('regPhone');
-  const pass=$('regPass').value;
-  if(!name){ toast('הזן שם','err'); return; }
-  if(phone.length<13){ toast('מספר טלפון לא תקין','err'); return; }
-  if(pass.length<6){ toast('סיסמה לפחות 6 תווים','err'); return; }
-  if(!$('regTerms').checked){ toast('יש לאשר את התנאים','err'); return; }
-  if(!$('regBot').checked){ toast('אנא אשר שאתה לא רובוט','err'); return; }
-  await load();
-  if(Object.values(state.users||{}).find(u=>u && u.phone===phone)){ toast('משתמש כבר רשום','err'); return; }
-  const passHash=await sha256(pass);
-  const id=uid();
-  const newU={uid:id,name,phone,passHash,role:'client',canReview:false,avatar:'',registeredAt:Date.now()};
-  await safeSave(s=>{
-    if(!s.users) s.users={};
-    s.users[id]=newU;
-  });
-  currentUser=newU;
-  localStorage.setItem(USR_KEY,JSON.stringify(currentUser));
-  toast('נרשמת בהצלחה!','ok');
-  goTo('sBooking');
-});
-
-/* ---------- booking screen ---------- */
-function renderBooking(){
-  if(!currentUser){ goTo('sLogin'); return; }
-  // avatar
-  const av=$('userAv');
-  if(currentUser.avatar){ av.innerHTML='<img src="'+currentUser.avatar+'" alt="">'; }
-  else { av.textContent=(currentUser.name||'U').slice(0,1).toUpperCase(); }
-  $('userTitle').textContent=currentUser.name+' · '+(currentUser.role==='dev'?'Developer':currentUser.role==='trainee'?'עובד':'לקוח');
-  // default tab
-  setTab('bp-main');
-  renderMyBookings();
-  renderServices();
-  renderGallery();
-  renderReviews();
-}
-function setTab(t){
-  document.querySelectorAll('#sBooking .pn').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.dock button').forEach(b=>b.classList.remove('on'));
-  const p=$(t); if(p) p.classList.add('on');
-  const btn=document.querySelector('.dock button[data-tab="'+t+'"]'); if(btn) btn.classList.add('on');
-}
-document.querySelectorAll('.dock button[data-tab]').forEach(b=>{
-  b.addEventListener('click',()=>setTab(b.dataset.tab));
-});
-$('btnSettings').addEventListener('click',()=>goTo('sSettings'));
-
-/* my bookings */
-function renderMyBookings(){
-  const box=$('myBookingsList');
-  const my=(state.bookings||[]).filter(b=>b && (b.uid===currentUser.uid || b.phone===currentUser.phone) && !isPast(b.date,b.time));
-  if(!my.length){ box.innerHTML='<div class="muted center" style="padding:30px">אין לך תורים קרובים</div>'; return; }
-  box.innerHTML=my.map(b=>{
-    const svc=(state.services||[]).find(s=>s.id===b.serviceId);
-    return '<div class="card"><div class="row"><div><div style="font-weight:700">'+fmtDate(b.date)+' · '+b.time+'</div><div class="muted">'+(svc?svc.icon+' '+svc.name:'-')+'</div></div><button class="btn sm danger" data-cancel="'+b.id+'">בטל</button></div></div>';
-  }).join('');
-  box.querySelectorAll('[data-cancel]').forEach(btn=>{
-    btn.addEventListener('click',async()=>{
-      const id=Number(btn.dataset.cancel);
-      await safeSave(s=>{
-        const b=s.bookings.find(x=>x.id===id);
-        if(b){
-          // free slot
-          if(s.dates[b.date]){
-            s.dates[b.date]=s.dates[b.date].filter(t=>t!==b.time);
-            // but we want to keep slot available => add it back actually
-            if(!s.dates[b.date].includes(b.time)) s.dates[b.date].push(b.time);
-          }
-          s.bookings=s.bookings.filter(x=>x.id!==id);
-        }
-      });
-      toast('התור בוטל','ok');
-      renderMyBookings();
-    });
-  });
-}
-
-/* services */
-function renderServices(){
-  const box=$('svcList');
-  box.innerHTML=(state.services||[]).map(s=>(
-    '<div class="svc" data-svc="'+s.id+'"><div class="ico">'+s.icon+'</div><div class="info"><div class="nm">'+s.name+'</div><div class="ds">'+s.desc+'</div></div><div class="pr">'+s.price+'</div></div>'
-  )).join('');
-  box.querySelectorAll('[data-svc]').forEach(el=>{
-    el.addEventListener('click',()=>{
-      selectedService=Number(el.dataset.svc);
-      $('bookStep1').style.display='none';
-      $('bookStep2').style.display='block';
-      renderCal();
-    });
-  });
-}
-$('btnBackToSvc').addEventListener('click',()=>{
-  $('bookStep1').style.display='block';
-  $('bookStep2').style.display='none';
-  selectedDate=null;
-});
-
-/* calendar client */
-function renderCal(){
-  const y=calDate.getFullYear(), m=calDate.getMonth();
-  const monthName=calDate.toLocaleDateString('he-IL',{month:'long',year:'numeric'});
-  $('calMonth').textContent=monthName;
-  const first=new Date(y,m,1).getDay(); // 0=sun
-  const days=new Date(y,m+1,0).getDate();
-  const today=todayStr();
-  const dn=['א','ב','ג','ד','ה','ו','ש'];
-  let html=dn.map(d=>'<div class="dn">'+d+'</div>').join('');
-  for(let i=0;i<first;i++) html+='<div class="dd dim"></div>';
-  for(let d=1;d<=days;d++){
-    const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-    const slots=state.dates[ds]||[];
-    const cls=['dd'];
-    if(slots.length) cls.push('has');
-    if(ds===today) cls.push('today');
-    if(ds===selectedDate) cls.push('sel');
-    if(ds<today) cls.push('dim');
-    html+='<div class="'+cls.join(' ')+'" data-day="'+ds+'">'+d+(slots.length?'<div class="dt"></div>':'')+'</div>';
-  }
-  $('calGrid').innerHTML=html;
-  $('calGrid').querySelectorAll('[data-day]').forEach(el=>{
-    el.addEventListener('click',()=>{
-      const ds=el.dataset.day;
-      if(ds<today) return;
-      selectedDate=ds;
-      renderCal(); renderSlots();
-    });
-  });
-  if(selectedDate) renderSlots(); else $('slotsBox').innerHTML='';
-}
-$('calPrev').addEventListener('click',()=>{ calDate.setMonth(calDate.getMonth()-1); renderCal(); });
-$('calNext').addEventListener('click',()=>{ calDate.setMonth(calDate.getMonth()+1); renderCal(); });
-
-function renderSlots(){
-  if(!selectedDate){ $('slotsBox').innerHTML=''; return; }
-  const slots=(state.dates[selectedDate]||[]).slice().sort();
-  if(!slots.length){ $('slotsBox').innerHTML='<div class="muted center" style="padding:20px">אין סלוטים פנויים בתאריך זה</div>'; return; }
-  const myB=(state.bookings||[]).filter(b=>b.date===selectedDate);
-  const taken={}; myB.forEach(b=>{ taken[b.time]=b; });
-  let html='<h3 style="color:var(--acc);margin:16px 0 10px">סלוטים זמינים</h3><div class="slots">';
-  slots.forEach(t=>{
-    const b=taken[t];
-    const cls=['slot'];
-    if(b){
-      cls.push('taken');
-      if(b.uid===currentUser.uid) cls.push('mine');
-    }
-    if(isPast(selectedDate,t)) cls.push('taken');
-    html+='<div class="'+cls.join(' ')+'" data-time="'+t+'">'+t+'</div>';
-  });
-  html+='</div>';
-  $('slotsBox').innerHTML=html;
-  $('slotsBox').querySelectorAll('[data-time]').forEach(el=>{
-    el.addEventListener('click',async()=>{
-      if(el.classList.contains('taken')) return;
-      const time=el.dataset.time;
-      showModal('אישור הזמנה','להזמין תור ל-'+fmtDate(selectedDate)+' בשעה '+time+'?',async()=>{
-        await safeSave(s=>{
-          if(!s.bookings) s.bookings=[];
-          s.counter=(s.counter||0)+1;
-          const svc=(s.services||[]).find(x=>x.id===selectedService);
-          s.bookings.push({
-            id:s.counter, uid:currentUser.uid, name:currentUser.name, phone:currentUser.phone,
-            date:selectedDate, time, serviceId:selectedService,
-            serviceName:svc?svc.name:'', status:'pending', createdAt:Date.now()
-          });
-        });
-        // notify
-        notifyNew(selectedDate,time);
-        toast('התור נרשם!','ok');
-        setTab('bp-main'); renderMyBookings();
-      });
-    });
-  });
-}
-
-/* notifications */
-function notifyNew(date,time){
-  if(state.ntfyTopic){
-    try{
-      fetch('https://ntfy.sh/'+state.ntfyTopic,{
-        method:'POST',
-        headers:{'Title':'תור חדש','Tags':'scissors','Priority':'high'},
-        body:'תור חדש מ-'+currentUser.name+' ל-'+date+' '+time
-      });
-    }catch(e){}
-  }
-}
-
-/* gallery */
-function renderGallery(){
-  const box=$('galGrid');
-  const isAdmin=currentUser && (currentUser.role==='dev');
-  const gal=state.gallery||[];
-  if(!gal.length && !isAdmin){
-    box.innerHTML='<div class="gal-empty"><div class="ic">🖼️</div><div>אין תמונות בגלריה עדיין</div></div>';
-    return;
-  }
-  let html='<div class="gal-grid">';
-  gal.forEach((g,i)=>{
-    if(!g||!g.src) return;
-    html+='<div class="gal-item"><img src="'+g.src+'" alt="">';
-    if(isAdmin) html+='<div class="del" data-del-gal="'+i+'">×</div>';
-    html+='</div>';
-  });
-  html+='</div>';
-  if(isAdmin){
-    html+='<div style="margin-top:14px"><input type="file" id="galFile" accept="image/*" style="display:none"><button class="btn full" id="btnAddGal">+ הוסף תמונה</button></div>';
-  }
-  box.innerHTML=html;
-  if(isAdmin){
-    box.querySelectorAll('[data-del-gal]').forEach(el=>{
-      el.addEventListener('click',async()=>{
-        const i=Number(el.dataset.delGal);
-        state.gallery.splice(i,1);
-        await save(); renderGallery();
-      });
-    });
-    $('btnAddGal').addEventListener('click',()=>$('galFile').click());
-    $('galFile').addEventListener('change',addGalImg);
-  }
-}
-async function uploadToImgbb(file){
-  if(!state.imgbbKey){
-    showModal('דרוש ImgBB API Key','להעלאת תמונות נדרש מפתח ImgBB. עבור להגדרות → ImgBB API Key.',null);
-    return null;
-  }
-  const fd=new FormData(); fd.append('image',file);
-  try{
-    const r=await fetch('https://api.imgbb.com/1/upload?key='+state.imgbbKey,{method:'POST',body:fd});
-    const j=await r.json();
-    if(j&&j.data&&j.data.url) return j.data.url;
-  }catch(e){}
-  toast('שגיאה בהעלאה','err');
-  return null;
-}
-async function addGalImg(e){
-  const f=e.target.files[0]; if(!f) return;
-  toast('מעלה...','ok');
-  const url=await uploadToImgbb(f); if(!url) return;
-  state.gallery=state.gallery||[];
-  state.gallery.push({src:url,caption:''});
-  await save(); renderGallery(); renderSplash();
-  toast('הועלה!','ok');
-}
-
-/* reviews */
-function renderReviews(){
-  const list=(state.reviews||[]).filter(r=>r&&r.approved);
-  let html='';
-  if(currentUser.canReview || currentUser.role==='client'){
-    html+='<div class="card"><h3>כתוב חוות דעת</h3><div id="rvStars" style="margin-bottom:10px"></div><textarea id="rvTxt" rows="3" style="width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:10px"></textarea><button class="btn sm" id="btnRvSend" style="margin-top:8px">שלח</button></div>';
-  }
-  $('rvWriteBox').innerHTML=html;
-  if(html){
-    let rate=5;
-    const sb=$('rvStars');
-    function paint(){ sb.innerHTML=''; for(let i=1;i<=5;i++){ const s=document.createElement('span'); s.className='star'+(i<=rate?' on':''); s.textContent='★'; s.addEventListener('click',()=>{rate=i;paint();}); sb.appendChild(s);} }
-    paint();
-    $('btnRvSend').addEventListener('click',async()=>{
-      const txt=$('rvTxt').value.trim();
-      if(!txt){ toast('כתוב משהו','err'); return; }
-      await safeSave(s=>{
-        if(!s.reviews) s.reviews=[];
-        s.reviews.push({id:Date.now(),uid:currentUser.uid,name:currentUser.name,rating:rate,text:txt,approved:false,createdAt:Date.now()});
-      });
-      toast('נשלח לאישור','ok'); renderReviews();
-    });
-  }
-  if(!list.length){
-    $('rvList').innerHTML='<div class="muted center" style="padding:20px">אין חוות דעת עדיין</div>';
-  } else {
-    $('rvList').innerHTML=list.map(r=>'<div class="card"><div class="row"><strong>'+r.name+'</strong><span>'+'★'.repeat(r.rating)+'</span></div><div style="margin-top:6px">'+r.text+'</div></div>').join('');
-  }
-}
-
-/* ---------- settings ---------- */
-function renderSettings(){
-  if(!currentUser){ goTo('sLogin'); return; }
-  const av=$('settAv');
-  if(currentUser.avatar) av.innerHTML='<img src="'+currentUser.avatar+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="">';
-  else av.textContent=(currentUser.name||'U').slice(0,1).toUpperCase();
-  $('settUserName').textContent=currentUser.name;
-  $('settUserPhone').textContent=phoneDisplay(currentUser.phone);
-  // dev mode button
-  if(localStorage.getItem(ADMIN_UL)==='1' || currentUser.role==='dev' || currentUser.role==='trainee'){
-    $('btnAdminPanel').style.display='block';
-  } else {
-    $('btnAdminPanel').style.display='none';
-  }
-  // mark current lang
-  document.querySelectorAll('.lang-btns button').forEach(b=>{
-    b.classList.toggle('on',b.dataset.lang===currentLang);
-  });
-}
-$('btnUploadAv').addEventListener('click',()=>$('settAvFile').click());
-$('settAvFile').addEventListener('change',async e=>{
-  const f=e.target.files[0]; if(!f) return;
-  toast('מעלה...','ok');
-  const url=await uploadToImgbb(f); if(!url) return;
-  currentUser.avatar=url;
-  await safeSave(s=>{
-    if(s.users && s.users[currentUser.uid]){ s.users[currentUser.uid].avatar=url; }
-  });
-  localStorage.setItem(USR_KEY,JSON.stringify(currentUser));
-  renderSettings(); toast('הועלה!','ok');
-});
-$('btnChangePass').addEventListener('click',async()=>{
-  const p=$('newPass').value;
-  if(p.length<6){ toast('סיסמה לפחות 6 תווים','err'); return; }
-  const h=await sha256(p);
-  currentUser.passHash=h;
-  await safeSave(s=>{
-    if(s.users && s.users[currentUser.uid]) s.users[currentUser.uid].passHash=h;
-  });
-  localStorage.setItem(USR_KEY,JSON.stringify(currentUser));
-  $('newPass').value=''; toast('הסיסמה עודכנה','ok');
-});
-document.querySelectorAll('.lang-btns button').forEach(b=>{
-  b.addEventListener('click',()=>{
-    currentLang=b.dataset.lang;
-    localStorage.setItem(LANG_KEY,currentLang);
-    applyLang();
-    renderSettings();
-  });
-});
-$('btnDevUnlock').addEventListener('click',async()=>{
-  const p=$('devPass').value;
-  const h=await sha256(p);
-  if(h===ADMIN_HASH){
-    localStorage.setItem(ADMIN_UL,'1');
-    currentUser.role='dev';
-    localStorage.setItem(USR_KEY,JSON.stringify(currentUser));
-    toast('Developer Mode פעיל','ok');
-    renderSettings();
-  } else {
-    toast('קוד שגוי','err');
-  }
-  $('devPass').value='';
-});
-$('btnAdminPanel').addEventListener('click',()=>goTo('sAdmin'));
-$('btnLogout').addEventListener('click',()=>{
-  if(slideTimer){ clearInterval(slideTimer); slideTimer=null; }
-  localStorage.removeItem(USR_KEY);
-  localStorage.removeItem(SESS_KEY);
-  currentUser=null;
-  goTo('sSplash');
-});
-
-/* ---------- admin ---------- */
-function renderAdmin(){
-  if(!currentUser){ goTo('sLogin'); return; }
-  const isDev=currentUser.role==='dev';
-  // hide tabs for trainee
-  $('adk3').style.display=isDev?'':'none';
-  $('adk4').style.display=isDev?'':'none';
-  setAdmTab('aBook');
-  renderAdminBookings();
-  renderAdmCal();
-  renderAdminReviews();
-  if(isDev){ renderUsersList(); fillAdminSettings(); }
-}
-function setAdmTab(t){
-  document.querySelectorAll('#sAdmin .pn').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('#adminDock button').forEach(b=>b.classList.remove('on'));
-  const p=$(t); if(p) p.classList.add('on');
-  const btn=document.querySelector('#adminDock button[data-atab="'+t+'"]'); if(btn) btn.classList.add('on');
-}
-document.querySelectorAll('#adminDock button[data-atab]').forEach(b=>{
-  b.addEventListener('click',()=>setAdmTab(b.dataset.atab));
-});
-$('btnQueueView').addEventListener('click',()=>goTo('sAdmin2'));
-
-function renderAdminBookings(){
-  const box=$('adminBookingsList');
-  const all=(state.bookings||[]).slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
-  if(!all.length){ box.innerHTML='<div class="muted center" style="padding:30px">אין תורים</div>'; return; }
-  box.innerHTML=all.map(b=>{
-    const stTag=b.status==='arrived'?'<span class="tag ok">הגיע</span>':b.status==='cancelled'?'<span class="tag err">בוטל</span>':'<span class="tag warn">ממתין</span>';
-    return '<div class="card"><div class="row"><div><div style="font-weight:700">'+fmtDate(b.date)+' · '+b.time+'</div><div class="muted">'+b.name+' · '+phoneDisplay(b.phone)+'</div><div class="muted">'+(b.serviceName||'')+'</div></div><div>'+stTag+'</div></div><div class="row" style="margin-top:10px"><button class="btn sm ok" data-arr="'+b.id+'">הגיע</button><button class="btn sm danger" data-can="'+b.id+'">בטל</button><a class="btn sm ghost" href="tel:'+b.phone+'">📞</a></div></div>';
-  }).join('');
-  box.querySelectorAll('[data-arr]').forEach(el=>{
-    el.addEventListener('click',async()=>{
-      const id=Number(el.dataset.arr);
-      await safeSave(s=>{ const b=s.bookings.find(x=>x.id===id); if(b){ b.status='arrived'; const u=Object.values(s.users||{}).find(x=>x&&x.uid===b.uid); if(u) u.canReview=true; } });
-      renderAdminBookings();
-    });
-  });
-  box.querySelectorAll('[data-can]').forEach(el=>{
-    el.addEventListener('click',async()=>{
-      const id=Number(el.dataset.can);
-      await safeSave(s=>{ s.bookings=s.bookings.filter(x=>x.id!==id); });
-      renderAdminBookings();
-    });
-  });
-}
-
-function renderAdmCal(){
-  const y=admCalDate.getFullYear(), m=admCalDate.getMonth();
-  $('admCalMonth').textContent=admCalDate.toLocaleDateString('he-IL',{month:'long',year:'numeric'});
-  const first=new Date(y,m,1).getDay();
-  const days=new Date(y,m+1,0).getDate();
-  const today=todayStr();
-  const dn=['א','ב','ג','ד','ה','ו','ש'];
-  let html=dn.map(d=>'<div class="dn">'+d+'</div>').join('');
-  for(let i=0;i<first;i++) html+='<div class="dd dim"></div>';
-  for(let d=1;d<=days;d++){
-    const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-    const slots=state.dates[ds]||[];
-    const cls=['dd'];
-    if(slots.length) cls.push('has');
-    if(ds===today) cls.push('today');
-    if(ds===selectedAdmDate) cls.push('sel');
-    html+='<div class="'+cls.join(' ')+'" data-aday="'+ds+'">'+d+(slots.length?'<div class="dt"></div>':'')+'</div>';
-  }
-  $('admCalGrid').innerHTML=html;
-  $('admCalGrid').querySelectorAll('[data-aday]').forEach(el=>{
-    el.addEventListener('click',()=>{
-      selectedAdmDate=el.dataset.aday;
-      renderAdmCal(); renderAdmSlots();
-    });
-  });
-  if(selectedAdmDate) renderAdmSlots(); else $('admSlotsBox').innerHTML='';
-}
-$('admCalPrev').addEventListener('click',()=>{ admCalDate.setMonth(admCalDate.getMonth()-1); renderAdmCal(); });
-$('admCalNext').addEventListener('click',()=>{ admCalDate.setMonth(admCalDate.getMonth()+1); renderAdmCal(); });
-
-function renderAdmSlots(){
-  if(!selectedAdmDate){ $('admSlotsBox').innerHTML=''; return; }
-  const slots=(state.dates[selectedAdmDate]||[]).slice().sort();
-  let html='<h3 style="color:var(--acc)">'+fmtDate(selectedAdmDate)+'</h3>';
-  html+='<div class="row-flex" style="margin-bottom:10px"><input id="newSlotTime" type="time" style="flex:1;padding:10px;background:var(--bg2);border:1px solid var(--line);border-radius:8px;color:var(--txt)"><button class="btn sm" id="btnAddSlot">+ הוסף</button></div>';
-  if(!slots.length){ html+='<div class="muted">אין סלוטים</div>'; }
-  else{
-    html+='<div class="slots">';
-    slots.forEach(t=>{
-      html+='<div class="slot" style="position:relative">'+t+'<span style="position:absolute;top:2px;left:4px;color:var(--err);cursor:pointer" data-rmslot="'+t+'">×</span></div>';
-    });
-    html+='</div>';
-  }
-  $('admSlotsBox').innerHTML=html;
-  $('btnAddSlot').addEventListener('click',async()=>{
-    const t=$('newSlotTime').value; if(!t) return;
-    await safeSave(s=>{
-      if(!s.dates[selectedAdmDate]) s.dates[selectedAdmDate]=[];
-      if(!s.dates[selectedAdmDate].includes(t)) s.dates[selectedAdmDate].push(t);
-    });
-    renderAdmCal();
-  });
-  $('admSlotsBox').querySelectorAll('[data-rmslot]').forEach(el=>{
-    el.addEventListener('click',async e=>{
-      e.stopPropagation();
-      const t=el.dataset.rmslot;
-      await safeSave(s=>{ if(s.dates[selectedAdmDate]) s.dates[selectedAdmDate]=s.dates[selectedAdmDate].filter(x=>x!==t); });
-      renderAdmCal();
-    });
-  });
-}
-$('btnBulkGen').addEventListener('click',async()=>{
-  const from=$('bulkFrom').value, to=$('bulkTo').value;
-  const start=$('bulkStart').value||'09:00';
-  const buf=Number($('bulkBuf').value)||30;
-  if(!from||!to){ toast('בחר תאריכים','err'); return; }
-  const d1=new Date(from), d2=new Date(to);
-  if(d2<d1){ toast('תאריכים לא תקינים','err'); return; }
-  await safeSave(s=>{
-    for(let d=new Date(d1); d<=d2; d.setDate(d.getDate()+1)){
-      const ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-      const isFri=d.getDay()===5;
-      const cap=isFri?(s.fridayCap||'15:00'):(s.maxTime||'20:00');
-      const [sh,sm]=start.split(':').map(Number);
-      const [eh,em]=cap.split(':').map(Number);
-      let cur=sh*60+sm, end=eh*60+em;
-      if(!s.dates[ds]) s.dates[ds]=[];
-      while(cur+buf<=end){
-        const hh=String(Math.floor(cur/60)).padStart(2,'0');
-        const mm=String(cur%60).padStart(2,'0');
-        const tm=hh+':'+mm;
-        if(!s.dates[ds].includes(tm)) s.dates[ds].push(tm);
-        cur+=buf;
-      }
-    }
-  });
-  toast('נוצרו סלוטים','ok'); renderAdmCal();
-});
-
-function renderAdminReviews(){
-  const list=state.reviews||[];
-  const box=$('adminReviewsList');
-  if(!list.length){ box.innerHTML='<div class="muted center" style="padding:20px">אין חוות דעת</div>'; return; }
-  box.innerHTML=list.map(r=>'<div class="card"><div class="row"><strong>'+r.name+' '+'★'.repeat(r.rating)+'</strong>'+(r.approved?'<span class="tag ok">מאושר</span>':'<span class="tag warn">ממתין</span>')+'</div><div style="margin:8px 0">'+r.text+'</div><div class="row-flex"><button class="btn sm ok" data-apr="'+r.id+'">אשר</button><button class="btn sm danger" data-delr="'+r.id+'">מחק</button></div></div>').join('');
-  box.querySelectorAll('[data-apr]').forEach(el=>{
-    el.addEventListener('click',async()=>{
-      const id=Number(el.dataset.apr);
-      await safeSave(s=>{ const r=s.reviews.find(x=>x.id===id); if(r) r.approved=true; });
-      renderAdminReviews();
-    });
-  });
-  box.querySelectorAll('[data-delr]').forEach(el=>{
-    el.addEventListener('click',async()=>{
-      const id=Number(el.dataset.delr);
-      await safeSave(s=>{ s.reviews=s.reviews.filter(x=>x.id!==id); });
-      renderAdminReviews();
-    });
-  });
-}
-
-function renderUsersList(){
-  const us=Object.values(state.users||{}).filter(Boolean);
-  if(!us.length){ $('usersList').innerHTML='<div class="muted">אין משתמשים</div>'; return; }
-  us.sort((a,b)=>(b.registeredAt||0)-(a.registeredAt||0));
-  $('usersList').innerHTML=us.map(u=>{
-    const me=currentUser && u.uid===currentUser.uid;
-    const reg=u.registeredAt?new Date(u.registeredAt).toLocaleDateString('he-IL'):'';
-    return '<div class="card"'+(me?' style="border-color:var(--acc)"':'')+'><div class="row"><div><div style="font-weight:700">'+u.name+(me?' (אני)':'')+'</div><div class="muted">'+phoneDisplay(u.phone)+'</div><div class="muted">תפקיד: '+(u.role||'client')+' · נרשם: '+reg+'</div></div></div></div>';
-  }).join('');
-}
-
-function fillAdminSettings(){
-  $('setName').value=state.settings.name||'';
-  $('setAddr').value=state.settings.address||'';
-  $('setHours').value=state.settings.hours||'';
-  $('setAcc').value=state.accentColor||'#c9a96e';
-  $('setBg').value=state.bgColor||'#0f0e0d';
-  $('setImgbb').value=state.imgbbKey||'';
-  $('setNtfy').value=state.ntfyTopic||'';
-  $('setBarbers').value=(state.barberPhones||[]).join(',');
-  $('setFri').value=state.fridayCap||'15:00';
-  $('setMax').value=state.maxTime||'20:00';
-}
-$('btnSaveSett').addEventListener('click',async()=>{
-  state.settings.name=$('setName').value;
-  state.settings.address=$('setAddr').value;
-  state.settings.hours=$('setHours').value;
-  state.accentColor=$('setAcc').value;
-  state.bgColor=$('setBg').value;
-  state.imgbbKey=$('setImgbb').value.trim();
-  state.ntfyTopic=$('setNtfy').value.trim();
-  state.barberPhones=$('setBarbers').value.split(',').map(s=>s.trim()).filter(Boolean);
-  state.fridayCap=$('setFri').value;
-  state.maxTime=$('setMax').value;
-  applyColors();
-  await save();
-  toast('נשמר','ok');
-});
-$('btnResetColors').addEventListener('click',async()=>{
-  state.accentColor=''; state.bgColor='';
-  $('setAcc').value='#c9a96e'; $('setBg').value='#0f0e0d';
-  applyColors(); await save();
-});
-$('setLogoFile').addEventListener('change',async e=>{
-  const f=e.target.files[0]; if(!f) return;
-  toast('מעלה...','ok');
-  const url=await uploadToImgbb(f); if(!url) return;
-  state.settings.logo=url;
-  await save(); renderSplash(); toast('הועלה!','ok');
-});
-$('btnSaveCur').addEventListener('click',async()=>{
-  const p=$('curPass').value;
-  if(p.length<4){ toast('לפחות 4 תווים','err'); return; }
-  state.curatorPassHash=await sha256(p);
-  await save(); $('curPass').value=''; toast('נשמר','ok');
-});
-
-function applyColors(){
-  const root=document.documentElement;
-  if(state.accentColor) root.style.setProperty('--acc',state.accentColor);
-  if(state.bgColor) root.style.setProperty('--bg',state.bgColor);
-}
-
-/* ---------- queue (sAdmin2) ---------- */
-function renderQueue(){
-  const today=todayStr();
-  const bs=(state.bookings||[]).filter(b=>b && b.date===today).sort((a,b)=>a.time.localeCompare(b.time));
-  const box=$('queueScroll');
-  if(!bs.length){ box.innerHTML='<div class="muted" style="padding:40px">אין תורים להיום</div>'; return; }
-  box.innerHTML=bs.map(b=>{
-    const stTag=b.status==='arrived'?'<span class="tag ok">הגיע</span>':'<span class="tag warn">ממתין</span>';
-    return '<div class="queue-card"><h4>'+b.time+'</h4><div style="font-weight:700;margin-bottom:4px">'+b.name+'</div><div class="muted">'+phoneDisplay(b.phone)+'</div><div class="muted" style="margin:6px 0">'+(b.serviceName||'')+'</div>'+stTag+'</div>';
-  }).join('');
-}
-
-/* ---------- modal ---------- */
-let mdlCb=null;
-function showModal(title,body,onYes){
-  $('mdlTitle').textContent=title;
-  $('mdlBody').innerHTML='<div>'+body+'</div>';
-  mdlCb=onYes;
-  $('mdl').classList.add('on');
-  $('mdlYes').style.display=onYes?'':'none';
-  $('mdlNo').textContent=onYes?'ביטול':'סגור';
-}
-$('mdlYes').addEventListener('click',()=>{
-  if(mdlCb) mdlCb();
-  $('mdl').classList.remove('on'); mdlCb=null;
-});
-$('mdlNo').addEventListener('click',()=>{ $('mdl').classList.remove('on'); mdlCb=null; });
-
-/* ---------- boot ---------- */
-async function boot(){
-  applyLang();
-  await load();
-  applyColors();
-  // restore session
-  const uraw=localStorage.getItem(USR_KEY);
-  if(uraw){
-    try{
-      currentUser=JSON.parse(uraw);
-      // refresh user from state if exists
-      if(state.users && state.users[currentUser.uid]){
-        const u=state.users[currentUser.uid];
-        currentUser=Object.assign({},u);
-        if(localStorage.getItem(ADMIN_UL)==='1') currentUser.role='dev';
-        localStorage.setItem(USR_KEY,JSON.stringify(currentUser));
-      }
-    }catch(e){}
-  }
-  renderSplash();
-  // periodic refresh
-  setInterval(async()=>{
-    if(document.hidden) return;
-    const r=await cloudLoad();
-    if(r){ norm(r); lsSave();
-      // re-render visible
-      if($('sBooking').classList.contains('on')) renderMyBookings();
-      if($('sAdmin').classList.contains('on')) renderAdminBookings();
-      if($('sAdmin2').classList.contains('on')) renderQueue();
-    }
-  },30000);
-}
-boot();
-</script>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="he" dir="rtl"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;💈 Haimov Barbershop - הזמן תור&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Google Fonts: Heebo --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Heebo:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* CSS СТИЛИ (Тема Dark, Переменные) <span class="Apple-converted-space">      </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>/* Предустановленные переменные (сбрасываются из state) */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--primary-bg-color: #0f0e0d; /* Dark background */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--secondary-text-color: #c9a96e; /* Gold Accent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--text-color: #f0f0f0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--card-bg-color: #1c1b1a;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--disabled-color: #444;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--border-color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--success-color: #4CAF50;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--error-color: #f44336;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--accent-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Принудительное применение тёмной темы */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Heebo', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-top: 60px; /* Space for fixed header */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>direction: rtl;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow-x: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Общие стили */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>* {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 1200px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* HEADER &amp; NAVIGATION (Dock) <span class="Apple-converted-space">            </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>header {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>right: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 1000;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 60px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: space-between;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.logo-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>user-select: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.logo-container img {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.main-actions {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-button {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 8px 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: background-color 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-button:hover:not(.active) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #282726;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-button.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* GENERIC COMPONENTS<span class="Apple-converted-space">                          </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>section {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 40px 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>h2 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Buttons */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px 25px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: background-color 0.2s, transform 0.1s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-decoration: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>user-select: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-primary {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 10px rgba(201, 169, 110, 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-primary:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #b89d6b;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-1px);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-secondary {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Forms */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.form-group {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type="text"], input[type="password"], input[type="tel"], select {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #121110;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: border-color 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input:focus, select:focus {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Card Layout */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.card-grid {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 25px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-right: 3px solid var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* SPECIFIC SECTION STYLES (Booking, Gal, etc.) */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* ====================================== */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Booking Slots/Calendar */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#calendar-view {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.calendar-header {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: space-between;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 800px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.day-slots {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 1000px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slot-btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 8px 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.15s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>min-width: 80px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slot-btn:hover:not(.disabled) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slot-btn.disabled {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0.5;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: not-allowed;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slot-btn.selected {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--primary-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 10px rgba(201, 169, 110, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Gallery */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#gallery-slider {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #121110;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 900px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#gallery-slider img {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>object-fit: cover;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.5s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.gallery-caption {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Modals */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: rgba(0, 0, 0, 0.8);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 2000;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 500px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 90%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: slideDown 0.3s ease-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes slideDown {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>from { opacity: 0; transform: translateY(-20px); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { opacity: 1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal .close-btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Admin Styling (Specialized) */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.admin-grid {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: 3fr 1fr;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.admin-panel {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--card-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.user-list-item {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 1px solid var(--border-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.user-list-item:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #222120;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.user-list-item.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #2a2825;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-right: 3px solid var(--secondary-text-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- HEADER &amp; NAVIGATION DOCK --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="logo-container" data-action-click="sSplash"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;img id="logo-img" src="placeholder-logo.png" alt="Haimov Logo"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 id="shop-name"&gt;💈 Haimov Barbershop&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;nav class="main-actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="nav-button" data-target="sSplash" data-nav-id="main-splash"&gt;💈 Главная&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="nav-button" data-target="sBooking" data-nav-id="main-book"&gt;✂️ Запись&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="nav-button" data-target="sGallery" data-nav-id="main-gallery"&gt;🖼️ Галерея&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="nav-button" data-target="sReviews" data-nav-id="main-reviews"&gt;⭐ Отзывы&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 1. SPLASH SCREEN (sSplash) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="sSplash" class="screen-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container" style="text-align: center; padding: 60px 20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style="font-size: 2.5em;"&gt;ברוכים הבאים ל-Haimov Barbershop&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p style="font-size: 1.2em; color: #aaa;"&gt;Лучшие мастера города ждёт вас. Выберите вашу услугу и запишитесь на идеальный образ.&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="margin-top: 40px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-primary" data-target="sBooking" data-action-click="openBookingView"&gt;הזמן תור ←&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="card-grid" style="margin-top: 80px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card" style="text-align: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 style="color: var(--secondary-text-color);"&gt;👨‍💼 Про услуги&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p&gt;Наши услуги включают: Тספורת גבר, גילוח זקן, וпакеты премиум-класса.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="btn btn-secondary" data-target="#services-list"&gt;צפה בשירותים&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card" style="text-align: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 style="color: var(--secondary-text-color);"&gt;📅 Часы работы&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p&gt;Мы ждем вас каждый день. Рабочие часы: &lt;span id="shop-hours-display"&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p style="margin-top: 10px;"&gt;📍 Адрес: &lt;span id="shop-address-display"&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 2. AUTH SCREENS (Login/Register) <span class="Apple-converted-space">    </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sLogin" class="screen-section" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container" style="max-width: 400px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style="text-align: center;"&gt;🔑 כניסה לחשבון לקוח&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form id="login-form" data-submit-action="login"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="login-phone"&gt;מספר טלפון (המספר המלא)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="tel" id="login-phone" required placeholder="+972-54-XXXXXXX"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="login-pass"&gt;סיסמה&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="password" id="login-pass" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button type="submit" class="btn btn-primary" style="width: 100%;"&gt;כניסה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="text-align: center; margin-top: 20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-secondary" data-action-click="navigateToRegister"&gt;אין לי חשבון?&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sRegister" class="screen-section" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container" style="max-width: 400px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style="text-align: center;"&gt;📝 הרשמה למשתמש חדש&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form id="register-form" data-submit-action="register"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-name"&gt;שם מלא&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="reg-name" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-phone"&gt;מספר טלפון&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="tel" id="reg-phone" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-pass"&gt;סיסמה&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="password" id="reg-pass" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-confirm-pass"&gt;אישור סיסמה&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="password" id="reg-confirm-pass" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group checkbox-group" style="display: flex; align-items: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="checkbox" id="reg-conditions" required style="width: auto; margin-left: 10px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="reg-conditions" style="display: inline;"&gt;אני מסכים לתנאי השימוש&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button type="submit" class="btn btn-primary" style="width: 100%;"&gt;הרשמה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="text-align: center; margin-top: 20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-secondary" data-action-click="goToLogin"&gt;התחבר?&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 3. BOOKING MANAGEMENT (sBooking)<span class="Apple-converted-space">    </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sBooking" class="screen-section" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 id="booking-title"&gt;🗓️ הזמן תור - ספר Haimov&lt;/h2&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 4 Tab Navigation (Dock) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="booking-dock" style="display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid var(--border-color);"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-dock-target="book" data-dock-nav-id="book-tab" data-active-tab="true"&gt;💈 התור&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-dock-target="gallery" data-dock-nav-id="gallery-tab"&gt;🖼️ גלריה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-dock-target="reviews" data-dock-nav-id="review-tab"&gt;⭐ חוות דעת&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-dock-target="settings" data-dock-nav-id="settings-tab"&gt;👤 הפרופיל&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Booking Content Tabs --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="book-tab" class="tab-content-area" style="display: block;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;שלב 1: בחר שירות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" id="services-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Services rendered here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 style="margin-top: 40px;"&gt;שלב 2: בחר תאריך וזמן&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="calendar-view"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="calendar-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="btn btn-secondary" data-action-click="changeMonth(-1)"&gt;← חודש קודם&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 id="current-month-year"&gt;ינואר 2025&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="btn btn-secondary" data-action-click="changeMonth(1)"&gt;חודש הבא →&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; max-width: 800px; text-align: center; font-weight: bold;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span&gt;א&lt;/span&gt;&lt;span&gt;ב&lt;/span&gt;&lt;span&gt;ג&lt;/span&gt;&lt;span&gt;ד&lt;/span&gt;&lt;span&gt;ה&lt;/span&gt;&lt;span&gt;ו&lt;/span&gt;&lt;span&gt;ש&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="day-slots" id="selected-day-slots"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Slots rendered here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 style="margin-top: 40px;"&gt;שלב 3: סיים תור&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" style="max-width: 600px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4&gt;שירות נבחר: &lt;span id="selected-service-name"&gt;לא נבחר&lt;/span&gt;&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;המחיר: &lt;span id="selected-service-price"&gt;0&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div style="margin-top: 20px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p&gt;התאריך: &lt;span id="selected-date"&gt;--&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p&gt;השעה: &lt;span id="selected-slot"&gt;--&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="btn btn-primary" data-action-click="confirmBooking"&gt;אשר תור&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Tab 2: Gallery (Duplicate content/view) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="gallery-tab" class="tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;🖼️ גלריית עבודות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p style="text-align: center;"&gt;הצג לנו כיצד נראה המקום וארגון העבודה שלנו.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="gallery-slider"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;img id="current-gallery-image" src="placeholder-gal.jpg" alt="Gallery Slideshow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="gallery-caption" id="gallery-caption"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-secondary" data-action-click="openAddGalleryModal"&gt;הוספת תמונה (Admin)&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Tab 3: Reviews (Reviews) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="review-tab" class="tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;⭐ חוות דעת ודירוג&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;שתפו אותנו בחוויותיכם! הדירוג שלכם עוזר לנו לצמוח.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Example review card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div style="display: flex; justify-content: space-between; align-items: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span style="color: gold; font-size: 1.5em;"&gt;⭐️⭐️⭐️⭐️⭐️&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;img src="placeholder-avatar.jpg" alt="Reviewer Avatar" style="width: 50px; height: 50px; border-radius: 50%;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4 style="margin-top: 10px;"&gt;"השירות היה מקצועי ומדהים!"&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p style="font-size: 0.9em;"&gt;מאת: נועה כהן (12/10/2025)&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-secondary" data-action-click="showReviewModal"&gt;הוספת ביקורת (Premium)&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Tab 4: Profile/Settings (Client) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="settings-tab" class="tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;👤 פרופיל לקוח&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" style="max-width: 600px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="card" style="text-align: center;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;img id="user-avatar-preview" src="placeholder-avatar.jpg" alt="User Avatar" style="width: 100px; height: 100px; border-radius: 50%;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4&gt;שם: &lt;span id="user-name-display"&gt;---&lt;/span&gt;&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;📞 טלפון: &lt;span id="user-phone-display"&gt;---&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;✨ תרומה: הזמנת תור קרובה:&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;strong id="next-appointment-display"&gt;---&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 5. ADMIN CENTER (sAdmin)<span class="Apple-converted-space">          </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="sAdmin" class="screen-section" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style="text-align: right;"&gt;⚙️ מרכז הניהול (Admin)&lt;/h2&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Admin Dock/Tabs --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="admin-dock" style="display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid var(--border-color);"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="book" data-adk-nav-id="admin-bookings" data-active-tab="true"&gt;📋 הזמנות&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="cal" data-adk-nav-id="admin-calendar"&gt;📅 יצירת תורים&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="reviews" data-adk-nav-id="admin-reviews"&gt;⭐ מודרציה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="users" data-adk-nav-id="admin-users"&gt;👥 משתמשים&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="nav-button" data-adk-target="settings" data-adk-nav-id="admin-settings"&gt;⚙️ הגדרות&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Admin Panels --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-bookings" class="admin-panel tab-content-area"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;📋 רשימת הזמנות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" id="admin-booking-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Booking cards rendered here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4&gt;שם הלקוח: יואב כהן&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;📅 תאריך: 15/01/2025, 🕘 10:00&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;🛠️ שירות: תספורת גבר | 💇 תספורת משלם&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="btn btn-secondary" data-ad-cancel-booking="123"&gt;ביטול&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-calendar" class="admin-panel tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;📅 הוספת או ניהול שירותים&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;בממשק זה ניתן ליצור בלוקים של תורים למספר מספר לקוחות ובמשך תקופה.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Form for slot generation here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-reviews" class="admin-panel tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;⭐ אישור וניהול ביקורות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid" id="admin-review-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Review moderation queue --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-users" class="admin-panel tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;👥 ניהול משתמשים&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="admin-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="user-list-container" style="height: 400px; overflow-y: auto;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- User list items rendered here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="user-details-container" class="admin-panel" style="height: 400px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4&gt;פרטי המשתמש שנבחר&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p id="user-detail-info"&gt;בחר משתמש ברשימה כדי לצפות בפרטים.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-settings" class="admin-panel tab-content-area" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3&gt;⚙️ הגדרות כלליות&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;form id="admin-settings-form"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label for="admin-shop-name"&gt;שם המכון&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="text" id="admin-shop-name"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label for="admin-logo-upload"&gt;העלאת לוגו חדש&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="file" id="admin-logo-upload" accept="image/*"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Other settings inputs... --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="submit" class="btn btn-primary"&gt;שמירת הגדרות&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- MODALS (Common Pop-ups) <span class="Apple-converted-space">                  </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Generic Modal Container --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="general-modal" class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="close-btn" data-action-click="closeModal"&gt;&amp;times;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 id="modal-title"&gt;הודעה&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="modal-message"&gt;תוכן ההודעה.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-primary" id="modal-action-btn" style="margin-top: 20px;"&gt;אישור&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ImgBB Upload Modal (Used for Logo/Gallery/Avatar) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="imgbb-modal" class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="close-btn" data-action-click="closeModal"&gt;&amp;times;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;🖼️ העלאת תמונה דרך ImgBB&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;אנא העלה את התמונה ל-ImgBB כדי לקבל קישור ציבורי:&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="file" id="imgbb-upload-file" accept="image/*" style="margin-bottom: 15px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-primary" data-action-click="uploadImageViaImgBB"&gt;העלה תמונה&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="imgbb-status" style="margin-top: 15px; color: var(--secondary-text-color);"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- END OF BODY CONTENT --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ====================================== --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// ==========================================================</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// START OF JAVASCRIPT LOGIC (THE ENTIRE CORE)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// ==========================================================</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Global State &amp; Constants (Блок 3) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let state = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>dates: {}, <span class="Apple-converted-space">          </span>// { "2025-01-15": ["09:00","10:00"] }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bookings: [],<span class="Apple-converted-space">        </span>// массив объектов бронирований</p>
+<p class="p1"><span class="Apple-converted-space">            </span>counter: 0,<span class="Apple-converted-space">          </span>// счётчик ID бронирований</p>
+<p class="p1"><span class="Apple-converted-space">            </span>reviews: [], <span class="Apple-converted-space">        </span>// массив отзывов</p>
+<p class="p1"><span class="Apple-converted-space">            </span>settings: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: '💈 Haimov Barbershop',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>logo: '',<span class="Apple-converted-space">          </span>// URL (ImgBB)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>address: 'רחוב הרצל 12, תל אביב',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>hours: "א׳-ה׳ 9:00-20:00 | ו׳ עד 15:00",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>accentColor: '#c9a96e',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>bgColor: '#1c1b1a',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>imgbbKey: '',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ntfyTopic: ''</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gallery: [], <span class="Apple-converted-space">        </span>// [{ src: URL_or_base64, caption: '' }]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>services: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{id:1, name:'תספורת גבר', desc:'כולל שטיפה', price:'₪60', icon:'✂️'},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{id:2, name:'גילוח זקן', desc:'עם תער מסורתי', price:'₪40', icon:'🪒'},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{id:3, name:'תספורת + זקן', desc:'חבילה מלאה', price:'₪90', icon:'💈'},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{id:4, name:'תספורת ילד', desc:'עד גיל 12', price:'₪40', icon:'👦'},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>users: {}, <span class="Apple-converted-space">          </span>// { uid: { uid, name, phone, passHash, role, canReview, avatar, registeredAt } }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>curatorPassHash: '',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sessionToken: '',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>fridayCap: '15:00', <span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>maxTime: '20:00', <span class="Apple-converted-space">   </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>barberPhones: ['+972544570982'], // Пример</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Локальные флаги</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isDeveloperMode: localStorage.getItem('bb_admin_ul') === 'true'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Global DOM elements references (for performance)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const DOM = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>body: document.body,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>header: document.querySelector('header'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>logoImg: document.getElementById('logo-img'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>shopName: document.getElementById('shop-name'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// ... more DOM elements</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Utility Functions (Hashing, Dates, etc.) ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Simple SHA-256 hash generator */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function hashPassword(password) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const encoder = new TextEncoder();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const data = encoder.encode(password);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Using Web Crypto API for secure hashing (assuming modern browser environment)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const hashBuffer = await crypto.subtle.digest('SHA-256', data);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const hashArray = Array.from(new Uint8Array(hashBuffer));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const hashHex = hashArray.map(b =&gt; b.toString(16).padStart(2, '0')).join('');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return hashHex;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Formats phone number: +972-054-XXX-XXXX */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function phoneDisplay(phone) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!phone || phone.length &lt; 10) return phone;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return `+972-05${phone.substring(2, 5)}-${phone.substring(5, 8)}-${phone.substring(8, 12)}`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Persistence Layer (Блок 5) ---</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 1. Local Storage Saving (lsSave)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function lsSave() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('bb_v081', JSON.stringify({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dates: state.dates,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>bookings: state.bookings.map(b =&gt; ({ date: b.date, bookedBy: b.bookedBy, serviceId: b.serviceId, time: b.time })),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>settings: state.settings,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gallery: state.gallery.filter(g =&gt; !g.base64), // Only basic state</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// ... other state properties that don't change often</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('bb_gal_v2', JSON.stringify(state.gallery.filter(g =&gt; !g.base64)));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('bb_logo_v2', JSON.stringify(state.settings.logo));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 2. Cloud Saving (cloudSave) - Stripting base64</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function cloudSave() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dataToSave = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dates: state.dates,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>bookings: state.bookings,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>settings: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>name: state.settings.name,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>address: state.settings.address,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>hours: state.settings.hours,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Only save HTTP URLs</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>logo: state.settings.logo &amp;&amp; state.settings.logo.startsWith('http://') ? state.settings.logo : '',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>accentColor: state.settings.accentColor,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>bgColor: state.settings.bgColor,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gallery: state.gallery.filter(g =&gt; g.src &amp;&amp; g.src.startsWith('http')),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>users: state.users // Assume user data is safe or only http avatars</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const response = await fetch(`https://jsonbin.io/b/69c391f6c3097a1dd559d814?key=${process.env.JSONBIN_KEY}`);<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const data = await response.json();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (data.status === 'success') {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.log('✅ Successfully saved to JSONBin.');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Update state with successful cloud changes</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>state.settings.logo = data.settings.logo;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.error('❌ Error saving to JSONBin:', data.message);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error('⚠️ Cloud save failed (offline or key issue). Falling back to local cache.', error);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 3. The Unified Save Function</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function save() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.log('--- Starting Save Cycle ---');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>await lsSave();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>await cloudSave();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.log('--- Save Cycle Complete ---');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 4. Cloud Loading (Handles potential failures)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function cloudLoad() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const url = `https://jsonbin.io/b/69c391f6c3097a1dd559d814?key=${process.env.JSONBIN_KEY}`;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const response = await fetch(url);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const data = await response.json();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (data &amp;&amp; data.data) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.log('☁️ Data successfully loaded from cloud.');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Merge core data, but keep local overrides (base64) if necessary</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Object.assign(state, data.data);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>return data.data;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (e) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.warn('☁️ Could not connect to cloud. Using local storage.', e);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return null;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 5. Initialization Loader (Load, Norm)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function loadState() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 1. Try loading from Cloud first</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let cloudData = await cloudLoad();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let loadedSettings = null;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (cloudData) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Merge core data from cloud</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Object.keys(state).forEach(key =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (typeof state[key] === 'object' &amp;&amp; !Array.isArray(state[key])) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>if (cloudData[key]) {</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>// Deep merge for settings, users, etc.</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>Object.assign(state[key], cloudData[key]);</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Save cloud data locally immediately</p>
+<p class="p1"><span class="Apple-converted-space">                </span>lsSave();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>loadedSettings = cloudData;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 2. Fallback to Local Storage</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const localData = localStorage.getItem('bb_v081');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (localData) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Object.assign(state, JSON.parse(localData));</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.log('💾 Loaded data from local storage.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Final step: Ensure the UI reflects the loaded state</p>
+<p class="p1"><span class="Apple-converted-space">            </span>applyTheme();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderShopDetails();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.log('*** STATE INITIALIZED ***');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Core Logic Functions (Booking/Time Management) ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Calculates available slots for a given date and service */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getAvailableSlots(dateString, serviceDurationMinutes) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Implement complex time slot logic (considering daily limits, max time, etc.)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// For now, return mock data</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const slots = [];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (let i = 0; i &lt; 5; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>slots.push({ time: `${(9 + i) % 5}:00`, available: true });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return slots;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Finds the next available slot for a user/service */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function findNextAvailableSlot(serviceId, date, initialTime) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Complex logic check against state.bookings and state.dates</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return { time: `${Math.floor(Math.random() * 5) + 9}:00`, available: true };</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- UI Rendering Functions ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Updates the visual theme based on state.settings */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function applyTheme() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.documentElement.style.setProperty('--primary-bg-color', state.bgColor || '#0f0e0d');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.documentElement.style.setProperty('--secondary-text-color', state.settings.accentColor || '#c9a96e');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// ... apply other variables</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Renders shop details (Name, Address, Hours) to the splash page */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderShopDetails() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('shop-name').textContent = state.settings.name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('shop-hours-display').textContent = state.settings.hours;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('shop-address-display').textContent = state.settings.address;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update logo</p>
+<p class="p1"><span class="Apple-converted-space">            </span>DOM.logoImg.src = state.settings.logo || 'placeholder-logo.png';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>applyTheme();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- EVENT HANDLERS (Using data-* attributes) ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 1. Global Navigation Handler (sSplash, sBooking, etc.)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.querySelectorAll('[data-target], [data-action-click], [data-adk-target]').forEach(button =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>button.addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const target = e.currentTarget.dataset.target;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const action = e.currentTarget.dataset.actionClick;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (action) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Execute specific action (e.g., openBookingView)</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>window[action]();<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else if (target) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Switch between main screens (e.g., sLogin, sAdmin)</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>showScreen(target);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function showScreen(id) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Utility function to hide/show main sections</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.querySelectorAll('.screen-section, .admin-panel').forEach(sec =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>sec.style.display = (sec.id === id || sec.id === 'sAdmin') ? 'block' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (id === 'sAdmin') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('sAdmin').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Initialize admin view components</p>
+<p class="p1"><span class="Apple-converted-space">                </span>initAdminPanel(state.users);<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 2. Event Listener for Booking Process (Needs complex delegation)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('sBooking').addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (e.target.hasAttribute('data-dock-target') || e.target.dataset.dockTarget === 'book') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Handle tab switching logic</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 3. Event Listener for Form Submission</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('login-form').addEventListener('submit', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>e.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Simulate login/API call</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (document.getElementById('login-phone').value === '+9720544570982') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Добро пожаловать! Вы вошли в систему.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Set session token and redirect to main view</p>
+<p class="p1"><span class="Apple-converted-space">                </span>state.sessionToken = 'mock_token';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('sSplash').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Неверные данные.');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 4. Initializer on Load</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.onload = async () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>await loadState();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Initial UI setup</p>
+<p class="p1"><span class="Apple-converted-space">            </span>showScreen('sSplash');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
